@@ -1,0 +1,3159 @@
+﻿Program.Sub.ScreenSU.Start
+Gui.f_Status..Create(BaseForm)
+Gui.f_Status..Caption("TCS Status")
+Gui.f_Status..Size(635,316)
+Gui.f_Status..MinX(0)
+Gui.f_Status..MinY(0)
+Gui.f_Status..Position(0,0)
+Gui.f_Status..AlwaysOnTop(False)
+Gui.f_Status..FontName("Tahoma")
+Gui.f_Status..FontSize(8.25)
+Gui.f_Status..ControlBox(True)
+Gui.f_Status..MaxButton(False)
+Gui.f_Status..MinButton(True)
+Gui.f_Status..MousePointer(0)
+Gui.f_Status..Moveable(True)
+Gui.f_Status..Sizeable(False)
+Gui.f_Status..ShowInTaskBar(True)
+Gui.f_Status..TitleBar(True)
+Gui.f_Status..Event(UnLoad,f_Main_UnLoad)
+Gui.f_Status.frameCust.Create(Frame)
+Gui.f_Status.frameCust.Enabled(True)
+Gui.f_Status.frameCust.Visible(True)
+Gui.f_Status.frameCust.Zorder(0)
+Gui.f_Status.frameCust.Size(198,254)
+Gui.f_Status.frameCust.Position(11,10)
+Gui.f_Status.frameCust.Caption("Customer TCS Status")
+Gui.f_Status.frameCust.FontName("Tahoma")
+Gui.f_Status.frameCust.FontSize(8.25)
+Gui.f_Status.frameCust.BorderStyle(2)
+Gui.f_Status.lblCust.Create(Label,"Customer:",True,50,13,0,16,37,True,0,"Tahoma",8.25,,0,0)
+Gui.f_Status.lblCust.BorderStyle(0)
+Gui.f_Status.lblCust.Parent("frameCust")
+Gui.f_Status.txtCust.Create(TextBox,"",True,100,20,0,78,33,False,0,"Tahoma",8.25,,1)
+Gui.f_Status.txtCust.Parent("frameCust")
+Gui.f_Status.txtCust.Locked(True)
+Gui.f_Status.txtShipTo.Create(TextBox,"",True,100,20,0,78,69,False,0,"Tahoma",8.25,,1)
+Gui.f_Status.txtShipTo.Locked(True)
+Gui.f_Status.txtShipTo.Parent("frameCust")
+Gui.f_Status.lblShipTo.Create(Label,"Ship To ID:",True,53,13,0,16,73,True,0,"Tahoma",8.25,,0,0)
+Gui.f_Status.lblShipTo.BorderStyle(0)
+Gui.f_Status.lblShipTo.Parent("frameCust")
+Gui.f_Status.lblB2Status.Create(Label,"Bill To Addr Status:",True,91,13,0,16,106,True,0,"Tahoma",8.25,,0,0)
+Gui.f_Status.lblB2Status.BorderStyle(0)
+Gui.f_Status.lblB2Status.Parent("frameCust")
+Gui.f_Status.lblS2Status.Create(Label,"Ship To Addr Status:",True,99,13,0,16,158,True,0,"Tahoma",8.25,,0,0)
+Gui.f_Status.lblS2Status.BorderStyle(0)
+Gui.f_Status.lblS2Status.Parent("frameCust")
+Gui.f_Status.txtB2Status.Create(TextBox,"",True,163,20,0,16,125,False,0,"Tahoma",8.25,,1)
+Gui.f_Status.txtB2Status.Locked(True)
+Gui.f_Status.txtB2Status.Parent("frameCust")
+Gui.f_Status.txtS2Status.Create(TextBox,"",True,163,20,0,16,176,False,0,"Tahoma",8.25,,1)
+Gui.f_Status.txtS2Status.Locked(True)
+Gui.f_Status.txtS2Status.Parent("frameCust")
+Gui.f_Status.frameOrder.Create(Frame)
+Gui.f_Status.frameOrder.Enabled(True)
+Gui.f_Status.frameOrder.Visible(True)
+Gui.f_Status.frameOrder.Zorder(0)
+Gui.f_Status.frameOrder.Size(200,254)
+Gui.f_Status.frameOrder.Position(219,10)
+Gui.f_Status.frameOrder.Caption("Order TCS Status")
+Gui.f_Status.frameOrder.FontName("Tahoma")
+Gui.f_Status.frameOrder.FontSize(8.25)
+Gui.f_Status.frameOrder.BorderStyle(2)
+Gui.f_Status.txtOrdNo.Create(TextBox,"",True,115,20,0,10,53,False,0,"Tahoma",8.25,,1)
+Gui.f_Status.txtOrdNo.Locked(True)
+Gui.f_Status.txtOrdNo.Parent("frameOrder")
+Gui.f_Status.lblOrd.Create(Label,"Order No:",True,48,13,0,10,34,True,0,"Tahoma",8.25,,0,0)
+Gui.f_Status.lblOrd.BorderStyle(0)
+Gui.f_Status.lblOrd.Parent("frameOrder")
+Gui.f_Status.txtLineStatus.Create(TextBoxR)
+Gui.f_Status.txtLineStatus.Enabled(True)
+Gui.f_Status.txtLineStatus.Visible(True)
+Gui.f_Status.txtLineStatus.Zorder(0)
+Gui.f_Status.txtLineStatus.Size(178,142)
+Gui.f_Status.txtLineStatus.Position(10,105)
+Gui.f_Status.txtLineStatus.FontName("Tahoma")
+Gui.f_Status.txtLineStatus.FontSize(6)
+Gui.f_Status.txtLineStatus.Parent("frameOrder")
+Gui.f_Status.lblLineStatus.Create(Label,"Line TCS Status:",True,79,13,0,10,86,True,0,"Tahoma",8.25,,0,0)
+Gui.f_Status.lblLineStatus.BorderStyle(0)
+Gui.f_Status.lblLineStatus.Parent("frameOrder")
+Gui.f_Status.ShipFrame.Create(Frame)
+Gui.f_Status.ShipFrame.Enabled(True)
+Gui.f_Status.ShipFrame.Visible(True)
+Gui.f_Status.ShipFrame.Zorder(0)
+Gui.f_Status.ShipFrame.Size(200,254)
+Gui.f_Status.ShipFrame.Position(425,10)
+Gui.f_Status.ShipFrame.Caption("Shipment TCS Status")
+Gui.f_Status.ShipFrame.FontName("Tahoma")
+Gui.f_Status.ShipFrame.FontSize(8.25)
+Gui.f_Status.ShipFrame.BorderStyle(2)
+Gui.f_Status.lblShipNo.Create(Label,"Order No:",True,48,13,0,9,34,True,0,"Tahoma",8.25,,0,0)
+Gui.f_Status.lblShipNo.BorderStyle(0)
+Gui.f_Status.lblShipNo.Parent("ShipFrame")
+Gui.f_Status.lblPckNo.Create(Label,"Packing List:",True,59,13,0,102,34,True,0,"Tahoma",8.25,,0,0)
+Gui.f_Status.lblPckNo.BorderStyle(0)
+Gui.f_Status.lblPckNo.Parent("ShipFrame")
+Gui.f_Status.txtShipNo.Create(TextBox,"",True,77,20,0,9,53,False,0,"Tahoma",8.25,,1)
+Gui.f_Status.txtShipNo.Parent("ShipFrame")
+Gui.f_Status.txtShipNo.Locked(True)
+Gui.f_Status.txtPckNo.Create(TextBox,"",True,70,20,0,100,53,False,0,"Tahoma",8.25,,1)
+Gui.f_Status.txtPckNo.Parent("ShipFrame")
+Gui.f_Status.txtPckNo.Locked(True)
+Gui.f_Status.txtShipLineStatus.Create(TextBoxR)
+Gui.f_Status.txtShipLineStatus.Enabled(True)
+Gui.f_Status.txtShipLineStatus.Visible(True)
+Gui.f_Status.txtShipLineStatus.Zorder(0)
+Gui.f_Status.txtShipLineStatus.Size(178,142)
+Gui.f_Status.txtShipLineStatus.Position(5,105)
+Gui.f_Status.txtShipLineStatus.FontName("Tahoma")
+Gui.f_Status.txtShipLineStatus.FontSize(8.25)
+Gui.f_Status.txtShipLineStatus.Parent("ShipFrame")
+Gui.f_Status.lblShipLineStatus.Create(Label,"TCS Status:",True,57,13,0,5,86,True,0,"Tahoma",8.25,,0,0)
+Gui.f_Status.lblShipLineStatus.BorderStyle(0)
+Gui.f_Status.lblShipLineStatus.Parent("ShipFrame")
+Program.Sub.ScreenSU.End
+
+Program.Sub.Preflight.Start
+V.Global.bError.Declare(Boolean)
+V.Global.bUnattended.Declare(Boolean)
+V.Global.sUsername.Declare(String)
+V.Global.sPassword.Declare(String)
+V.Global.sURL.Declare(String)
+V.Global.sSSLCert.Declare(String)
+V.Global.sContentType.Declare(String)
+V.Global.sPartUsername.Declare(String)
+V.Global.sPartPassword.Declare(String)
+V.Global.sPartURL.Declare(String)
+Program.Sub.Preflight.End
+
+Program.Sub.Main.Start
+F.Intrinsic.Control.Try
+V.Local.sRet.Declare(String)
+V.Local.sSQL.Declare(String)
+V.Local.sTitles.Declare(String)
+V.Local.iWidths.Declare(Long)
+V.Local.sOrderNo.Declare(String)
+Function.Intrinsic.UI.UsePixels ' Allows you to use Pixels instead of Twips throughout
+
+'open a connection to the db
+F.ODBC.Connection!con.OpenConnection(V.Ambient.PDSN, V.Ambient.PUser, V.Ambient.PPass)
+
+'﻿﻿Packing List Browser Hook - 38440
+'--(Staging Shipments Open/Delete) Hook fires when click Packing List browser button.
+'Customer Browser Hook - 38425
+'-- (Staging Shipments New) Hook fires when click Customer Browser button.
+'Customer Field Change Hook - 38426
+'-- (Staging Shipments New) Hook fires when manually enter customer number and tab out of field.
+'ShipTo ID Browser Hook - 38427
+'--(Staging Shipments New) Hook fires when click ShipTO ID browser
+'ShipTo ID Field Change Hook - 38428
+'-- (Staging Shipments New)Hook fires when manually enter ShipTo ID and Tab out of field.
+'Order Field Change Hook - 38429
+'-- Hook fires when manually enter order number and tab out of field
+'Order Save Button Pre Process Hook - 38430
+'-- Hook fires when click Order Save button before Save process.
+'Order Save Button Post Process Hook - 38431
+'-- Hook fires when click Order Save button at end of Save process.
+'Delete Button Pre Process Hook - 38432
+'-- (Staging Shipments Delete) Hook fires when click Delete Button, before Delete process.
+'Delete Button Post Process Hook - 38438
+'-- (Staging Shipments Delete) Hook fires when click Delete Button, at the end of delete process
+'Clear Button Pre Process Hook - 38439
+'-- Hook fires when click Clear button, before clear process runs.
+'Clear Button Post Process Hook - 38435
+'-- Hook fires when click Clear button, at end of clear process.
+'Print Button Pre Process Hook - 38436
+'-- Hook fires when click Print button, before print process runs.
+'Print Button Post Process Hook - 38437
+'-- Hook fires when click Print button, at end of print proces
+'check the caller hooks
+F.Intrinsic.Control.SelectCase(V.Caller.Hook)
+	F.Intrinsic.Control.Case(38401)
+	'staging shipments populate hook
+		V.Passed.000093.Set("Trade Stat")
+		'Lock the order number text box so the value can't be manually typed
+'		V.Passed.000037.Set("")
+'		F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000037, "LOCK",1)
+		
+		'Callsub to end script
+		F.Intrinsic.Control.CallSub(f_Main_Unload)
+	F.Intrinsic.Control.Case(38405)
+	'staging shipments pre order browser hook
+		'set override variable
+		
+		V.Passed.CANCEL.Set(-1)
+		V.Passed.777777.Set(-1)
+	'V.Local.sOrderNo.Set(V.Passed.000058.Trim)
+	'	F.Intrinsic.String.LPad(V.Local.sOrderNo, "0", 6, V.Local.sOrderNo)
+		'V.passed.000059 - Ship to ID
+		'build query to pull the sales orderst that match the customer and ship to id
+		F.Intrinsic.String.Build("select DISTINCT ORDER_NO,CUSTOMER, SHIP_ID from V_ORDER_LINES ORDER BY ORDER_NO, RECORD_NO, SHIP_ID", V.Local.sOrderNo.Trim,V.passed.000059.Trim, V.Local.sSQL)
+		'order no, customer,due date, customer PO
+		'build the titles
+		F.Intrinsic.String.Split("Order No*!*Customer*!*Ship To ID", "*!*", V.Local.sTitles)
+		'build the widths
+		F.Intrinsic.String.Split("1000*!*1000*!*1000", "*!*",V.Local.iWidths)
+		'build the browser
+		F.Intrinsic.UI.Browser("Select an Order", "con", V.Local.sSQL, V.Local.sTitles, V.Local.iWidths, V.Local.sRet)
+		F.Intrinsic.Control.If(V.Local.sRet.Trim, <>,"***CANCEL***")
+			F.Intrinsic.String.Split(V.Local.sRet,"*!*", V.Local.sRet)
+		'user the order selected to populate the text box
+			V.Passed.000037.Set(V.Local.sRet(0).Trim)
+		'	V.Local.sOrderNo.Set(V.Local.sRet(1).Trim)
+		'	F.Intrinsic.String.LPad(V.Local.sOrderNo, "0", 6, V.Local.sOrderNo)
+			v.Passed.000058.Set(V.Local.sRet(1).Trim)
+			V.Passed.000059.Set(V.Local.sRet(2).Trim)
+		F.Intrinsic.Control.EndIf
+
+		V.Passed.CANCEL.Set(-1)
+		V.Passed.777777.Set(-1)
+
+	F.Intrinsic.Control.Case(38425)
+	'staging shipment customer browser hook
+		'set override variable
+		V.Passed.CANCEL.Set(-1)
+		V.Passed.777777.Set(-1)
+		'show custom browser
+		F.Intrinsic.UI.Browser(205, "", V.Local.sRet)
+		F.Intrinsic.Control.If(V.Local.sRet.Trim, <>,"***CANCEL***")
+			F.Intrinsic.String.Split(V.Local.sRet,"*!*", V.Local.sRet)
+			V.Passed.000058.Set(V.Local.sRet(0).Trim)
+			V.Passed.000020.Set(V.Local.sRet(1).Trim)
+		F.Intrinsic.Control.EndIf
+		
+		V.Passed.CANCEL.Set(-1)
+		V.Passed.777777.Set(-1)
+	f.Intrinsic.Control.Case(38426)
+	'staging shipment customer tab hook
+	'Callsub to pull status information for customer
+'		F.Intrinsic.Control.CallSub(CustomerStatus)
+'		Gui.f_Status..ApplyTheme
+		
+		'show the Form
+'		Gui.f_Status..Show
+		V.Passed.CANCEL.Set(-1)
+		V.Passed.777777.Set(-1)
+	F.Intrinsic.Control.Case(38427)
+	'staging shipment shipto id browser
+		'set override variable
+		V.Passed.CANCEL.Set(-1)
+		V.Passed.777777.Set(-1)
+		'show custom browser
+		F.Intrinsic.String.Build("((SELECT A.SHIP_SEQ AS SHIPTOID,A.CUSTOMER_NAME AS NAME, A.SHIP_CITY AS CITY, A.SHIP_STATE AS STATE, A.SHIP_COUNTRY AS COUNTRY FROM V_OE_MULTI_SHIP A WHERE A.CUSTOMER = '{0}') UNION (SELECT '' AS SHIPTOID, B.NAME_CUSTOMER_SHIP AS NAME, B.CITY_SHIP AS CITY, B.STATE_SHIP AS STATE, B.COUNTRY_SHIP AS COUNTRY FROM V_CUSTOMER_SHIPTO B WHERE B.CUSTOMER = '{0}')) ORDER BY SHIPTOID", V.Passed.000058.Trim, V.Local.sSQL)
+		'set the browser titles and width
+		F.Intrinsic.String.Split("Ship To ID*!*Customer Name*!*City*!*State*!*Country", "*!*", V.Local.sTitles)
+		F.Intrinsic.String.Split("1000*!*2500*!*1000*!*750*!*750", "*!*", V.Local.iWidths)
+		F.Intrinsic.UI.Browser("Select a Ship To ID", "con", V.Local.sSQL, V.Local.sTitles, V.Local.iWidths, V.Local.sRet)
+		F.Intrinsic.Control.If(V.Local.sRet.Trim, <>,"***CANCEL***")
+			F.Intrinsic.String.Split(V.Local.sRet,"*!*", V.Local.sRet)
+			V.Passed.000059.Set(V.Local.sRet(0).Trim)
+		F.Intrinsic.Control.EndIf
+		
+		V.Passed.CANCEL.Set(-1)
+		V.Passed.777777.Set(-1)
+	F.Intrinsic.Control.Case(38428)
+	'staging shipment shipto id tab hook
+	'Callsub to pull status information for customer
+	'	F.Intrinsic.Control.CallSub(CustomerStatus)
+	'	Gui.f_Status..ApplyTheme
+		
+		'show the Form
+	'	Gui.f_Status..Show
+		V.Passed.CANCEL.Set(-1)
+		V.Passed.777777.Set(-1)
+	F.Intrinsic.Control.Case(38429)
+	'staging shipment order field change hook
+		V.Passed.CANCEL.Set(-1)
+		V.Passed.777777.Set(-1)
+		'callsub to pull customer status 
+'		F.Intrinsic.Control.CallSub(CustomerStatus)
+		'callsub to pull status information for order header
+'		F.Intrinsic.Control.CallSub(OrderHeaderStatus)
+		
+'		Gui.f_Status..ApplyTheme
+		
+		'show the Form
+'		Gui.f_Status..Show
+	F.Intrinsic.Control.Case(38402)	
+	'staging shipments Script 1 Hook
+		F.Intrinsic.BDF.Load("AUX001", "AUX001")
+		'Callsub to pull status information for customer
+		F.Intrinsic.Control.CallSub(CustomerStatus)
+		
+		'callsub to pull status information for order header
+		F.Intrinsic.Control.CallSub(OrderHeaderStatus)
+		
+		'callsub to pull status information for shipment header
+		F.Intrinsic.Control.CallSub(ShipHeaderStatus)
+		
+		Gui.f_Status..ApplyTheme
+		
+		'show the Form
+		Gui.f_Status..Show
+	
+	F.Intrinsic.Control.Case(38420)
+	'staging shipments pre exit hook
+		'check for file that indicates the order was blocked in some way. If found, don't allow the process to save
+		'If file found, set override variable
+		
+	F.Intrinsic.Control.Case(38423)
+	'staging shipments pre save hook
+		F.Intrinsic.BDF.Load("AUX001", "AUX001")
+		'callsub to check order status and line status
+		F.Intrinsic.Control.CallSub(OrderHeadStatusCheck)
+		'callsub to get HTTP settings
+		F.Intrinsic.Control.CallSub(HTTPSettings)
+		'callsub to build XML packet
+		F.Intrinsic.Control.CallSub(BuildXML)
+		'Callsub to end script
+		F.Intrinsic.Control.CallSub(f_Main_Unload)
+		
+	F.Intrinsic.Control.Case(38430)
+		'staging shipment order pre process save to mini window hook
+	'	V.Passed.CANCEL.Set(-1)
+	'	V.Passed.777777.Set(-1)
+		'callsub to pull customer status 
+		F.Intrinsic.Control.CallSub(CustomerStatus)
+		F.Intrinsic.BDF.Load("AUX001", "AUX001")
+		'callsub to pull status information for order header
+		F.Intrinsic.Control.CallSub(OrderHeaderStatus)
+		
+		Gui.f_Status..ApplyTheme
+		
+		'show the Form
+		Gui.f_Status..Show
+	'	Gui.f_Status..Size(424, 298)
+	
+	F.Intrinsic.Control.Case(38411)
+		'Callsub to pull status information for customer
+		F.Intrinsic.Control.CallSub(CustomerStatus)
+		
+		F.Intrinsic.BDF.Load("AUX001", "AUX001")
+		'callsub to pull status information for order header
+		F.Intrinsic.Control.CallSub(OrderHeaderStatus)
+		
+		'callsub to pull status information for shipment header
+		F.Intrinsic.Control.CallSub(ShipHeaderStatus)
+		
+		Gui.f_Status..ApplyTheme
+		
+		'show the Form
+		Gui.f_Status..Show
+
+	F.Intrinsic.Control.Case(38424)
+	'staging shipments pre ship hook
+	'Fires when user clicks 'Ship'
+	
+		'Callsub to pull status information for customer
+		F.Intrinsic.Control.CallSub(CustomerStatus)
+		
+		F.Intrinsic.BDF.Load("AUX001", "AUX001")
+		'callsub to pull status information for order header
+		F.Intrinsic.Control.CallSub(OrderHeaderStatus)
+		
+		'callsub to pull status information for shipment header
+		F.Intrinsic.Control.CallSub(ShipHeaderStatus)
+
+		F.Intrinsic.Control.CallSub(PreShipCheck)
+		'check to see if any blocks
+		'if no blocks, check if the ship address has changed
+		'if the ship address has changed, notify the user that it needs to be sent to TA for screening and don't allow the ship process to continue
+		
+'		F.Intrinsic.Control.CallSub(f_Main_Unload)
+
+	F.Intrinsic.Control.Case(38432)
+	'pre delete line button hook
+	'pck no - V.passed.000006 - needs padding
+		'callsub to delete the staged shipment from the custom table
+		F.Intrinsic.Control.CallSub(DeleteStagedShipment)
+		F.Intrinsic.Control.CallSub(f_Main_Unload)
+
+F.Intrinsic.Control.EndSelect
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.Control.CallSub(ErrorMessage, "ErrorNumber", V.Ambient.ErrorNumber, "ErrorDescription", V.Ambient.ErrorDescription, "Subroutine", V.Ambient.CurrentSubroutine, "UNATTENDED", V.Global.bUnattended, "Project", "6625", "ProjectTitle", "TCS Shipment Process", "Callback", "f_Main_UnLoad")
+F.Intrinsic.Control.EndTry
+Program.Sub.Main.End
+
+Program.Sub.CustomerStatus.Start
+F.Intrinsic.Control.Try
+V.Local.sCustomer.Declare(String)
+V.Local.sShipToID.Declare(String)
+V.Local.sSQL.Declare(String)
+V.Local.sRet.Declare(String)
+V.Local.sB2Status.Declare(String)
+V.Local.sS2Status.Declare(String)
+V.Local.sPckNo.Declare(String)
+v.Local.sOrderNo.Declare(String)
+
+V.Local.sPckNo.Set(V.Passed.000006)
+F.Intrinsic.String.LPad(V.Local.sPckNo, "0", 7, V.Local.sPckNo)
+'if there is a packing list number, use it to get teh customer value and ship to ID
+F.Intrinsic.Control.If(V.Passed.000006.Trim,<>,"", "AND", V.Passed.000058.Trim,=,"")
+	F.Intrinsic.String.Build("SELECT CUSTOMER, SHIP_ID FROM V_SHIPMENT_HEADER WHERE PCK_NO = '{0}'", V.Local.sPckNo.Trim, V.Local.sSQL)
+	F.ODBC.Connection!con.ExecuteAndReturn(V.Local.sSQL, V.Local.sRet)
+	F.Intrinsic.Control.If(V.Local.sRet.Trim,<>,"")
+		F.Intrinsic.String.Split(V.Local.sRet,"*!*", V.Local.sRet)
+		V.Local.sCustomer.Set(V.Local.sRet(0).Trim)
+		V.Local.sShipToID.Set(V.Local.sRet(1).Trim)
+	F.Intrinsic.Control.EndIf
+F.Intrinsic.Control.Else
+	'set the passed variables
+	V.Local.sCustomer.Set(V.Passed.000058)
+	V.Local.sShipToID.Set(V.Passed.000059)
+F.Intrinsic.Control.EndIf
+
+'F.Intrinsic.String.Right(V.Local.sShipToID,3, V.Local.sShipToID)
+Gui.f_Status.txtShipTo.Text(V.Local.sShipToID.Trim)
+
+F.Intrinsic.Control.If(V.Local.sShipToID.Trim,=,"")
+	V.Local.sShipToID.Set("000000")
+F.Intrinsic.Control.EndIf
+
+Gui.f_Status..ApplyTheme
+Gui.f_Status.txtCust.Text(V.Local.sCustomer.Trim)
+
+
+F.Intrinsic.String.Build("SELECT PARTNER_ID, DECISION FROM GCG_6625_PARTNER WHERE CO_CODE = '{0}' AND PARTNER_TYPE = 'C' AND PARTNER_ID = '{1}'", V.Caller.CompanyCode, V.Local.sCustomer.Trim, V.Local.sSQL)
+F.ODBC.Connection!con.ExecuteAndReturn(V.Local.sSQL, V.Local.sRet)
+F.Intrinsic.Control.If(V.Local.sRet.Trim,<>,"")
+	F.Intrinsic.String.Split(V.Local.sRet, "*!*", V.Local.sRet)
+	V.Local.sB2Status.Set(V.Local.sRet(1).Trim)
+	F.Intrinsic.Control.SelectCase(V.Local.sB2Status.Trim)
+		F.Intrinsic.Control.Case("N")
+			Gui.f_Status.txtB2Status.Text("No Match, Approved")
+		F.Intrinsic.Control.Case("P")
+			Gui.f_Status.txtB2Status.Text("Potential Match")
+		F.Intrinsic.Control.Case("M")
+			Gui.f_Status.txtB2Status.Text("Match")
+		F.Intrinsic.Control.Case("X")
+			Gui.f_Status.txtB2Status.Text("Awaiting TCS Status")
+	F.Intrinsic.Control.EndSelect
+	
+F.Intrinsic.Control.ElseIf(V.Local.sRet.Trim,=,"")
+	V.Local.sB2Status.Set("")
+	Gui.f_Status.txtB2Status.Text("Unscreened Address")
+F.Intrinsic.Control.EndIf
+
+'build query for GCG_6625_Partner to pull all statuses that match the customer number
+F.Intrinsic.String.Build("SELECT PARTNER_ID, DECISION FROM GCG_6625_PARTNER WHERE CO_CODE = '{0}' AND PARTNER_TYPE = 'C' AND PARTNER_ID = '{1}_{2}'", V.Caller.CompanyCode, V.Local.sCustomer.Trim, V.Local.sShipToID.Trim, V.Local.sSQL)
+F.ODBC.Connection!con.ExecuteAndReturn(V.Local.sSQL, V.Local.sRet)
+F.Intrinsic.Control.If(V.Local.sRet.Trim,<>,"")
+	F.Intrinsic.String.Split(V.Local.sRet,"*!*", V.Local.sRet)
+	V.Local.sS2Status.Set(V.Local.sRet(1).Trim)
+	F.Intrinsic.Control.SelectCase(V.Local.sS2Status.Trim)
+		F.Intrinsic.Control.Case("N")
+			Gui.f_Status.txtS2Status.Text("No Match, Approved")
+		F.Intrinsic.Control.Case("P")
+			Gui.f_Status.txtS2Status.Text("Potential Match")
+		F.Intrinsic.Control.Case("M")
+			Gui.f_Status.txtS2Status.Text("Match")
+		F.Intrinsic.Control.Case("X")
+			Gui.f_Status.txtS2Status.Text("Awaiting TCS Status")
+	F.Intrinsic.Control.EndSelect
+F.Intrinsic.Control.ElseIf(V.Local.sRet.Trim,=,"")
+	V.Local.sS2Status.Set("")
+	Gui.f_Status.txtS2Status.Text("Unscreened Address")
+F.Intrinsic.Control.EndIf
+
+'only show the customer status 
+'Gui.f_Status..Size(217,255)
+'if any of the statuses are blocked, diasble the save, print, email and lines button and set message box that the customer is blocked and the order cannot be entered
+F.Intrinsic.Control.If(V.Local.sB2Status.Trim,=,"P", "OR", V.Local.sB2Status.Trim,=,"M")
+	V.Passed.777777.Set(1)
+	'Ship Button
+	'V.Passed.000015
+	F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000015, "LOCK",1)
+	'Save Button
+	'V.Passed.000012
+	F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000012, "LOCK",1)
+	'Packing Button
+	'V.Passed.000016
+	F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000016, "LOCK",1)
+	'Print Button
+	'V.Passed.000057
+	F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000057, "LOCK",1)
+	
+	'show message box that tells the user that the customer is blocked by TCS
+	F.Intrinsic.UI.Msgbox("Potential Restricted Party Match. Cannot create Staged Shipment.", "Global Trade Block")
+	V.Passed.777777.Set(1)
+		
+	V.Passed.CANCEL.Set(1)
+	F.Intrinsic.Control.CallSub(f_Main_UnLoad)
+
+
+F.Intrinsic.Control.ElseIf(V.Local.sB2Status.Trim,=,"X")
+	V.Passed.777777.Set(1)
+	'Ship Button
+	'V.Passed.000015
+	F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000015, "LOCK",1)
+	'Save Button
+	'V.Passed.000012
+	F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000012, "LOCK",1)
+	'Packing Button
+	'V.Passed.000016
+	F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000016, "LOCK",1)
+	'Print Button
+	'V.Passed.000057
+	F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000057, "LOCK",1)
+	
+	'show message box that tells the user that the customer is blocked by TCS
+	F.Intrinsic.UI.Msgbox("Customer Awaiting TCS Status. Staged Shipment cannot be created.", "Global Trade Block")
+	V.Passed.777777.Set(1)
+		
+	V.Passed.CANCEL.Set(1)
+	F.Intrinsic.Control.CallSub(f_Main_UnLoad)
+
+
+F.Intrinsic.Control.ElseIf(V.Local.sB2Status.Trim,=,"")
+	V.Passed.777777.Set(1)
+	'Ship Button
+	'V.Passed.000015
+	F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000015, "LOCK",1)
+	'Save Button
+	'V.Passed.000012
+	F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000012, "LOCK",1)
+	'Packing Button
+	'V.Passed.000016
+	F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000016, "LOCK",1)
+	'Print Button
+	'V.Passed.000057
+	F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000057, "LOCK",1)
+	
+	'show message box that tells the user that the customer is blocked by TCS
+	F.Intrinsic.UI.Msgbox("Customer has not been sent to TCS for screening. Staged Shipment cannot be created.", "Global Trade Block")
+	V.Passed.777777.Set(1)
+		
+	V.Passed.CANCEL.Set(1)
+	F.Intrinsic.Control.CallSub(f_Main_UnLoad)
+
+F.Intrinsic.Control.ElseIf(V.Local.sB2Status.Trim,=,"N")
+	'check the status for the ship to address 
+	F.Intrinsic.Control.If(V.Local.sS2Status.Trim,=,"P", "OR", V.Local.sS2Status.Trim,=,"M")
+		V.Passed.777777.Set(1)
+		'Ship Button
+		'V.Passed.000015
+		F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000015, "LOCK",1)
+		'Save Button
+		'V.Passed.000012
+		F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000012, "LOCK",1)
+		'Packing Button
+		'V.Passed.000016
+		F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000016, "LOCK",1)
+		'Print Button
+		'V.Passed.000057
+		F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000057, "LOCK",1)
+		
+		'show message box that tells the user that the customer is blocked by TCS
+		F.Intrinsic.UI.Msgbox("Potential Restricted Party Match. Cannot created Staged Shipment.", "Global Trade Block")
+
+		V.Passed.777777.Set(1)
+		
+		V.Passed.CANCEL.Set(1)
+		F.Intrinsic.Control.CallSub(f_Main_UnLoad)
+	F.Intrinsic.Control.ElseIf(V.Local.sS2Status.Trim,=,"X")
+		V.Passed.777777.Set(1)
+		'Ship Button
+		'V.Passed.000015
+		F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000015, "LOCK",1)
+		'Save Button
+		'V.Passed.000012
+		F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000012, "LOCK",1)
+		'Packing Button
+		'V.Passed.000016
+		F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000016, "LOCK",1)
+		'Print Button
+		'V.Passed.000057
+		F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000057, "LOCK",1)
+		
+		'show message box that tells the user that the customer is blocked by TCS
+		F.Intrinsic.UI.Msgbox("Customer Ship To Address Awaiting TCS Status. Staged Shipment cannot be created.", "Global Trade Block")
+	
+		V.Passed.777777.Set(1)
+		
+		V.Passed.CANCEL.Set(1)
+		F.Intrinsic.Control.CallSub(f_Main_UnLoad)
+	F.Intrinsic.Control.ElseIf(V.Local.sS2Status.Trim,=,"")
+		V.Passed.777777.Set(1)
+		'Ship Button
+		'V.Passed.000015
+		F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000015, "LOCK",1)
+		'Save Button
+		'V.Passed.000012
+		F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000012, "LOCK",1)
+		'Packing Button
+		'V.Passed.000016
+		F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000016, "LOCK",1)
+		'Print Button
+		'V.Passed.000057
+		F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000057, "LOCK",1)
+		
+		'show message box that tells the user that the customer is blocked by TCS
+		F.Intrinsic.UI.Msgbox("Customer has not been sent to TCS for screening. Staged Shipment cannot be created.", "Global Trade Block")
+	
+		V.Passed.777777.Set(1)
+		
+		V.Passed.CANCEL.Set(1)
+		F.Intrinsic.Control.CallSub(f_Main_UnLoad)
+	F.Intrinsic.Control.ElseIf(V.Local.sS2Status.Trim,=,"N")
+		F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000012, "LOCK",0)
+		F.Intrinsic.Control.ExitSub
+	F.Intrinsic.Control.EndIf
+F.Intrinsic.Control.EndIf
+
+F.Intrinsic.Control.ExitSub
+F.Intrinsic.Control.Catch
+	F.Intrinsic.Control.CallSub(ErrorMessage, "ErrorNumber", V.Ambient.ErrorNumber, "ErrorDescription", V.Ambient.ErrorDescription, "Subroutine", V.Ambient.CurrentSubroutine, "UNATTENDED", V.Global.bUnattended, "Project", "6625", "ProjectTitle", "TCS Shipment Process", "Callback", "f_Main_UnLoad")
+F.Intrinsic.Control.EndTry
+Program.Sub.CustomerStatus.End
+
+Program.Sub.OrderHeaderStatus.Start
+F.Intrinsic.Control.Try
+V.Local.bAwaitingStatus.Declare(Boolean)
+V.Local.iRows.Declare(Long)
+V.Local.sCustomer.Declare(String)
+V.Local.sOrderNo.Declare(String)
+V.Local.sSQL.Declare(String)
+V.Local.sRet.Declare(String)
+V.Local.sStatus.Declare(String)
+V.Local.sTemp.Declare(String)
+V.Local.sStatus2.Declare(String)
+V.Local.sPckNo.Declare(String)
+
+'set passed variables
+V.Local.sPckNo.Set(V.Passed.000006)
+f.Intrinsic.String.LPad(v.Local.sPckNo, "0", 7, v.Local.sPckNo)
+F.Intrinsic.Control.If(V.Local.sPckNo.Trim,<>,"", "AND",V.Passed.000058.Trim,=,"")
+	'query shipment header to get the order no and ucstomer
+	F.Intrinsic.String.Build("SELECT ORDER_NO, CUSTOMER FROM V_SHIPMENT_HEADER WHERE PCK_NO = '{0}'", V.Local.sPckNo, V.Local.sSQL)
+	F.ODBC.Connection!con.ExecuteAndReturn(V.Local.sSQL, V.Local.sRet)
+	F.Intrinsic.Control.If(V.Local.sRet.Trim,<>,"")
+		F.Intrinsic.String.Split(V.Local.sRet, "*!*",V.Local.sRet)
+		V.Local.sOrderNo.Set(V.Local.sRet(0).Trim)
+		V.Local.sCustomer.Set(V.Local.sRet(1).Trim)
+	F.Intrinsic.Control.EndIf
+F.Intrinsic.Control.Else
+	V.Local.sCustomer.Set(V.Passed.000058)
+
+	V.Local.sOrderNo.Set(V.Passed.000037)
+	F.Intrinsic.Control.If(V.Local.sOrderNo.Trim,=,"")
+		F.Intrinsic.String.Build("SELECT ORDER_NO, CUSTOMER FROM V_SHIPMENT_HEADER WHERE PCK_NO = '{0}'", V.Local.sPckNo, V.Local.sSQL)
+		F.ODBC.Connection!con.ExecuteAndReturn(V.Local.sSQL, V.Local.sRet)
+		F.Intrinsic.Control.If(V.Local.sRet.Trim,<>,"")
+			F.Intrinsic.String.Split(V.Local.sRet, "*!*",V.Local.sRet)
+			V.Local.sOrderNo.Set(V.Local.sRet(0).Trim)
+		F.Intrinsic.Control.EndIf
+	F.Intrinsic.Control.EndIf
+	
+	F.Intrinsic.String.LPad(V.Local.sOrderNo, "0", 7, V.Local.sOrderNo)
+F.Intrinsic.Control.EndIf
+
+
+'no longer need to read the BDF to get the order header status information
+Gui.f_Status.txtOrdNo.Text(V.Local.sOrderNo.Trim)
+'Build query for order header status
+F.Intrinsic.String.Build("SELECT PASS_FAIL_DPL, PASS_FAIL_EUC FROM GCG_6625_ORD_DELIV WHERE TRANS_ID = '{0}' AND TRANS_TYPE = 'O' ", V.Local.sOrderNo.Trim, V.Local.sSQL)
+F.Intrinsic.Control.If(V.DataTable.dtOrdStatus.Exists)
+	F.Data.DataTable.Close("dtOrdStatus")
+F.Intrinsic.Control.EndIf
+	
+F.Data.DataTable.CreateFromSQL("dtOrdStatus", "con", V.Local.sSQL, True)
+F.Intrinsic.Control.If(V.DataTable.dtOrdStatus.RowCount--,>,-1)
+	V.Local.sStatus.Set("")
+	F.Intrinsic.String.Build("SELECT TOP 1 APPROVAL_FLAG FROM GCG_6093_SO_LINE_APP WHERE ORDER_NO = '{0}' ORDER BY ORDER_LINE DESC", V.Local.sOrderNo.Trim, V.Local.sSQL)
+	F.ODBC.Connection!con.ExecuteAndReturn(V.Local.sSQL, V.Local.sRet)
+	F.Intrinsic.Control.If(V.Local.sRet.Trim,<>,"")
+		F.Intrinsic.Control.If(V.Local.sRet.Long,=,0)
+			V.Local.sStatus.Set("Order Not Approved")
+			F.Intrinsic.Control.ExitSub
+		F.Intrinsic.Control.EndIf
+	F.Intrinsic.Control.ElseIf(V.Local.sRet.Trim,=,"")
+		V.Local.sStatus.Set("Order Not Approved")
+		F.Intrinsic.Control.ExitSub
+	F.Intrinsic.Control.EndIf
+	
+
+'	F.Data.DataView.Create("dtOrdStatus", "dvDPL", 22, "[PASS_FAIL_DPL] = 'Y'", "")
+'	F.Data.DataView.Create("dtOrdStatus", "dvEUC", 22, "[PASS_FAIL_EUC] = 'Y'", "")
+'		
+'	F.Intrinsic.Control.If(V.DataView.dtOrdStatus!dvDPL.RowCount--,>,-1)
+'		V.Local.sStatus.Set("DPL Fail Status")
+'	F.Intrinsic.Control.Else
+'		V.Local.sStatus.Set("")
+'	F.Intrinsic.Control.EndIf
+'		
+'	F.Intrinsic.Control.If(V.DataView.dtOrdStatus!dvEUC.RowCount--,>,-1)
+'		F.Intrinsic.Control.If(V.Local.sStatus.Trim,<>,"")
+'			F.Intrinsic.String.Build("{0}{1}EUC Fail Status", V.Local.sStatus, V.Ambient.NewLine, V.Local.sStatus)
+'		F.Intrinsic.Control.Else
+'			V.Local.sStatus.Set("EUC Fail Status")
+'		F.Intrinsic.Control.EndIf
+'	F.Intrinsic.Control.Else
+'		F.Intrinsic.Control.If(V.Local.sStatus.Trim,=,"")
+'			V.Local.sStatus.Set("")
+'		F.Intrinsic.Control.EndIf
+'	F.Intrinsic.Control.EndIf
+'		
+'	F.Data.DataView.Close("dtOrdStatus","dvDPL")
+'	F.Data.DataView.Close("dtOrdStatus","dvEUC")
+'		
+'	F.Intrinsic.Control.If(V.Local.sStatus.Trim,=,"")
+'		F.Data.DataView.Create("dtOrdStatus", "dvDPL", 22, "[PASS_FAIL_DPL] = 'X'", "")
+'		F.Data.DataView.Create("dtOrdStatus", "dvEUC", 22, "[PASS_FAIL_EUC] = 'X'", "")
+'			
+'		F.Intrinsic.Control.If(V.DataView.dtOrdStatus!dvDPL.RowCount--,>,-1)
+'			V.Local.sStatus2.Set("Awaiting TCS Status")
+'		F.Intrinsic.Control.Else
+'			V.Local.sStatus2.Set("")
+'		F.Intrinsic.Control.EndIf
+'			
+'			
+'		F.Intrinsic.Control.If(V.DataView.dtOrdStatus!dvEUC.RowCount--,>,-1)
+'			F.Intrinsic.Control.If(V.Local.sStatus2.Trim,<>,"")
+'				F.Intrinsic.String.Build("{0}{1}Awaiting TCS Status", V.Local.sStatus2, V.Ambient.NewLine, V.Local.sStatus2)
+'			F.Intrinsic.Control.Else
+'				V.Local.sStatus2.Set("Awaiting TCS Status")
+'			F.Intrinsic.Control.EndIf
+'		F.Intrinsic.Control.Else
+'			F.Intrinsic.Control.If(V.Local.sStatus2.Trim,=,"")
+'				V.Local.sStatus2.Set("")
+'			F.Intrinsic.Control.EndIf
+'		F.Intrinsic.Control.EndIf
+'			
+'		F.Intrinsic.String.IsInString(V.Local.sStatus2, "Awaiting TCS Status", True, V.Local.bAwaitingStatus)
+'		F.Intrinsic.Control.If(V.Local.bAwaitingStatus,=,True)
+'			V.Local.sStatus.Set("Awaiting TCS Status")
+'			V.Passed.777777.Set(1)
+'			'Ship Button
+'			'V.Passed.000015
+'			F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000015, "LOCK",1)
+'			'Save Button
+'			'V.Passed.000012
+'			F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000012, "LOCK",1)
+'			'Packing Button
+'			'V.Passed.000016
+'			F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000016, "LOCK",1)
+'			'Print Button
+'			'V.Passed.000057
+'			F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000057, "LOCK",1)
+'			
+'			'show message box that tells the user that the order is waiting to be screened
+'			F.Intrinsic.UI.Msgbox("Order awaiting TCS Status. Cannot create Staged Shipment.", "Global Trade Block")
+
+'			V.Passed.777777.Set(1)
+'			
+'			V.Passed.CANCEL.Set(1)
+'			F.Intrinsic.Control.CallSub(f_Main_UnLoad)
+'		F.Intrinsic.Control.ElseIf(V.Local.bAwaitingStatus,=,False)
+'			F.Intrinsic.Control.If(V.Local.sStatus2.Trim,=,"")
+'				V.Local.sStatus.Set("TA Pass")
+'				'set the size so that all the information shows
+'				Gui.f_Status..Size(594, 255)
+
+'			F.Intrinsic.Control.Else
+'				V.Passed.777777.Set(1)
+'				'Ship Button
+'				'V.Passed.000015
+'				F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000015, "LOCK",1)
+'				'Save Button
+'				'V.Passed.000012
+'				F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000012, "LOCK",1)
+'				'Packing Button
+'				'V.Passed.000016
+'				F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000016, "LOCK",1)
+'				'Print Button
+'				'V.Passed.000057
+'				F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000057, "LOCK",1)
+'				
+'				'show message box that tells the user that the order is waiting to be screened
+'				F.Intrinsic.UI.Msgbox("Order has failed TA Screen. Staged Shipment cannot be created.", "Global Trade Block")
+'	
+'				V.Passed.777777.Set(1)
+'				
+'				V.Passed.CANCEL.Set(1)
+'				F.Intrinsic.Control.CallSub(f_Main_UnLoad)
+'			F.Intrinsic.Control.EndIf
+'			F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000037, "LOCK",1)
+'		F.Intrinsic.Control.EndIf
+'		
+'		F.Data.DataView.Close("dtOrdStatus","dvDPL")
+'		F.Data.DataView.Close("dtOrdStatus","dvEUC")
+'	F.Intrinsic.Control.EndIf
+'	
+'	
+'	Gui.f_Status.txtStatus.Text(V.Local.sStatus.Trim)
+'		
+'	F.Data.DataTable.Close("dtOrdStatus")
+		
+	'callsub to pull status information for order line
+	F.Intrinsic.Control.CallSub(OrderLineStatus)
+
+	'set the size so that all the information shows
+'	Gui.f_Status..Size(424, 298)
+
+F.Intrinsic.Control.Else
+	'check approval status
+	F.Intrinsic.String.Build("SELECT TOP 1 APPROVAL_FLAG FROM GCG_6093_SO_LINE_APP WHERE ORDER_NO = '{0}' ORDER BY ORDER_LINE DESC", V.Local.sOrderNo.Trim, V.Local.sSQL)
+	F.ODBC.Connection!con.ExecuteAndReturn(V.Local.sSQL, V.Local.sRet)
+	F.Intrinsic.Control.If(V.Local.sRet.Trim,<>,"")
+		F.Intrinsic.Control.If(V.Local.sRet.Long,=,0)
+			V.Local.sStatus.Set("Order Not Approved")
+		F.Intrinsic.Control.ElseIf(V.Local.sRet.Long,=,1)
+			V.Local.sStatus.Set("Order Not Screened. Cannot create Staged Shipment.")
+			F.Intrinsic.UI.Msgbox(V.Local.sStatus.Trim, "Global Trade Block")
+			V.Passed.777777.Set(1)
+		
+
+			V.Passed.777777.Set(1)
+			'Ship Button
+			'V.Passed.000015
+			F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000015, "LOCK",1)
+			'Save Button
+			'V.Passed.000012
+			F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000012, "LOCK",1)
+			'Packing Button
+			'V.Passed.000016
+			F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000016, "LOCK",1)
+			'Print Button
+			'V.Passed.000057
+			F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000057, "LOCK",1)
+			F.Intrinsic.Control.CallSub(f_Main_UnLoad)
+		F.Intrinsic.Control.EndIf
+	F.Intrinsic.Control.ElseIf(V.Local.sRet.Trim,=,"")
+		V.Local.sStatus.Set("Order Not Approved. Cannot create Staged Shipment.")
+		
+		F.Intrinsic.UI.Msgbox(V.Local.sStatus.Trim, "Global Trade Block")
+		V.Passed.777777.Set(1)
+		
+
+		V.Passed.777777.Set(1)
+		'Ship Button
+		'V.Passed.000015
+		F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000015, "LOCK",1)
+		'Save Button
+		'V.Passed.000012
+		F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000012, "LOCK",1)
+		'Packing Button
+		'V.Passed.000016
+		F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000016, "LOCK",1)
+		'Print Button
+		'V.Passed.000057
+		F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000057, "LOCK",1)
+		F.Intrinsic.Control.CallSub(f_Main_UnLoad)
+	F.Intrinsic.Control.EndIf
+	
+'	Gui.f_Status.txtStatus.Text(V.Local.sStatus.Trim)
+	'set the size so that all the information shows
+'	Gui.f_Status..Size(424, 298)
+F.Intrinsic.Control.EndIf
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.Control.CallSub(ErrorMessage, "ErrorNumber", V.Ambient.ErrorNumber, "ErrorDescription", V.Ambient.ErrorDescription, "Subroutine", V.Ambient.CurrentSubroutine, "UNATTENDED", V.Global.bUnattended, "Project", "6625", "ProjectTitle", "TCS Shipment Process", "Callback", "f_Main_UnLoad")
+F.Intrinsic.Control.EndTry
+Program.Sub.OrderHeaderStatus.End
+
+Program.Sub.OrderLineStatus.Start
+F.Intrinsic.Control.Try
+V.Local.bAwaitingStatus.Declare(Boolean)
+V.Local.iCnt.Declare(Long)
+V.Local.iColumns.Declare(Long)
+V.Local.iRows.Declare(Long)
+V.Local.sCustomer.Declare(String)
+V.Local.sOrderNo.Declare(String)
+V.Local.sOrderLine.Declare(String)
+V.Local.sSQL.Declare(String)
+V.Local.sRet.Declare(String)
+V.Local.sTitles.Declare(String)
+V.Local.sDataTypes.Declare(String)
+V.Local.sTemp.Declare(String)
+V.Local.sPart.Declare(String)
+V.Local.sLoc.Declare(String)
+V.Local.sStatus.Declare(String)
+V.Local.sFullStatus.Declare(String)
+V.Local.sStatus2.Declare(String)
+v.Local.sPckNo.Declare(String)
+'use the order number to query order lines to find the lines
+
+'set passed variables
+V.Local.sPckNo.Set(V.Passed.000006)
+f.Intrinsic.String.LPad(v.Local.sPckNo, "0", 7, v.Local.sPckNo)
+F.Intrinsic.Control.If(V.Local.sPckNo.Trim,<>,"", "AND",V.Passed.000058.Trim,=,"")
+	'query shipment header to get the order no and ucstomer
+	F.Intrinsic.String.Build("SELECT ORDER_NO, CUSTOMER FROM V_SHIPMENT_HEADER WHERE PCK_NO = '{0}'", V.Local.sPckNo, V.Local.sSQL)
+	F.ODBC.Connection!con.ExecuteAndReturn(V.Local.sSQL, V.Local.sRet)
+	F.Intrinsic.Control.If(V.Local.sRet.Trim,<>,"")
+		F.Intrinsic.String.Split(V.Local.sRet, "*!*",V.Local.sRet)
+		V.Local.sOrderNo.Set(V.Local.sRet(0).Trim)
+		V.Local.sCustomer.Set(V.Local.sRet(1).Trim)
+	F.Intrinsic.Control.EndIf
+F.Intrinsic.Control.Else
+	V.Local.sCustomer.Set(V.Passed.000058)
+
+	V.Local.sOrderNo.Set(V.Passed.000037)
+	F.Intrinsic.Control.If(V.Local.sOrderNo.Trim,=,"")
+		'query shipment header to get the order no and ucstomer
+		F.Intrinsic.String.Build("SELECT ORDER_NO, CUSTOMER FROM V_SHIPMENT_HEADER WHERE PCK_NO = '{0}'", V.Local.sPckNo, V.Local.sSQL)
+		F.ODBC.Connection!con.ExecuteAndReturn(V.Local.sSQL, V.Local.sRet)
+		F.Intrinsic.Control.If(V.Local.sRet.Trim,<>,"")
+			F.Intrinsic.String.Split(V.Local.sRet, "*!*",V.Local.sRet)
+			V.Local.sOrderNo.Set(V.Local.sRet(0).Trim)
+		F.Intrinsic.Control.EndIf
+	F.Intrinsic.Control.EndIf
+	F.Intrinsic.String.LPad(V.Local.sOrderNo, "0", 7, V.Local.sOrderNo)
+F.Intrinsic.Control.EndIf
+	
+F.Intrinsic.Control.If(V.Local.sOrderNo.Trim,<>,"0000000")
+	'query order lines to get all of the lines that might apply
+	F.Intrinsic.Control.If(V.Local.sPckNo.Trim,<>,"", "AND",V.Passed.000058.Trim,=,"")
+		F.Intrinsic.String.Build("SELECT ORDER_REC FROM V_SHIPMENT_LINES WHERE PCK_NO = '{0}' AND CUSTOMER = '{1}' AND LINE_TYPE <> 'F' ORDER BY ORDER_REC", V.Local.sPckNo.Trim, V.Local.sCustomer.Trim, V.Local.sSQL)
+	F.Intrinsic.Control.Else
+		F.Intrinsic.String.Build("SELECT RECORD_NO FROM V_ORDER_LINES WHERE ORDER_NO = '{0}' AND CUSTOMER = '{1}' AND LINE_TYPE <> 'F' ORDER BY RECORD_NO", V.Local.sOrderNo.Trim, V.Local.sCustomer.Trim, V.Local.sSQL)
+	F.Intrinsic.Control.EndIf
+	F.ODBC.Connection!con.ExecuteAndReturn(V.Local.sSQL, V.Local.sRet)
+	F.Intrinsic.Control.If(V.Local.sRet.Trim,<>,"")
+		F.Intrinsic.String.Split(V.Local.sRet, "#$#", V.Local.sRet)
+		F.Intrinsic.Control.For(V.Local.iCnt, V.Local.sRet.LBound, V.Local.sRet.UBound, 1)
+			V.Local.sStatus.Set("")
+			V.Local.sOrderLine.Set(V.Local.sRet(V.Local.iCnt).Trim)
+				
+			'query ord_deliv table to get status
+			F.Intrinsic.String.Build("SELECT PASS_FAIL_DPL, PASS_FAIL_LIC, PASS_FAIL_DATA, PASS_FAIL_EUC FROM GCG_6625_ORD_DELIV WHERE TRANS_TYPE = 'O' AND TRANS_ID = '{0}' AND POSNR = '{1}'", V.Local.sOrderNo.Trim, V.Local.sOrderLine.Trim, V.Local.sSQL)
+			
+			F.Intrinsic.Control.If(V.DataTable.dtOrdStatus.Exists)
+				F.Data.DataTable.Close("dtOrdStatus")
+			F.Intrinsic.Control.EndIf
+				
+			F.Data.DataTable.CreateFromSQL("dtOrdStatus", "con", V.Local.sSQL, True)
+			F.Intrinsic.Control.If(V.DataTable.dtOrdStatus.RowCount--,>,-1)
+				V.Local.sStatus.Set("")
+				F.Data.DataView.Create("dtOrdStatus", "dvDPL", 22, "[PASS_FAIL_DPL] = 'Y'", "")
+				F.Data.DataView.Create("dtOrdStatus", "dvLIC", 22, "[PASS_FAIL_LIC] = 'Y'", "")
+				F.Data.DataView.Create("dtOrdStatus", "dvData", 22, "[PASS_FAIL_DATA] = 'Y'", "")
+				F.Data.DataView.Create("dtOrdStatus", "dvEUC", 22, "[PASS_FAIL_EUC] = 'Y'", "")
+					
+				'build status string with record no and status
+				F.Intrinsic.Control.If(V.DataView.dtOrdStatus!dvDPL.RowCount--,>,-1)
+					V.Local.sStatus.Set("DPL Fail Status")
+				F.Intrinsic.Control.Else
+					V.Local.sStatus.Set("")
+				F.Intrinsic.Control.EndIf
+					
+				F.Intrinsic.Control.If(V.DataView.dtOrdStatus!dvLIC.RowCount--,>,-1)
+					F.Intrinsic.Control.If(V.Local.sStatus.Trim,<>,"")
+						F.Intrinsic.String.Build("{0}{1}LIC Fail Status", V.Local.sStatus, V.Ambient.NewLine, V.Local.sStatus)
+					F.Intrinsic.Control.Else
+						V.Local.sStatus.Set("LIC Fail Status")
+					F.Intrinsic.Control.EndIf
+				F.Intrinsic.Control.Else
+					F.Intrinsic.Control.If(V.Local.sStatus.Trim,=,"")
+						V.Local.sStatus.Set("")
+					F.Intrinsic.Control.EndIf
+				F.Intrinsic.Control.EndIf
+					
+				F.Intrinsic.Control.If(V.DataView.dtOrdStatus!dvData.RowCount--,>,-1)
+					F.Intrinsic.Control.If(V.Local.sStatus.Trim,<>,"")
+						F.Intrinsic.String.Build("{0}{1}Data Fail Status", V.Local.sStatus, V.Ambient.NewLine, V.Local.sStatus)
+					F.Intrinsic.Control.Else
+						V.Local.sStatus.Set("Data Fail Status")
+					F.Intrinsic.Control.EndIf
+				F.Intrinsic.Control.Else
+					F.Intrinsic.Control.If(V.Local.sStatus.Trim,=,"")
+						V.Local.sStatus.Set("")
+					F.Intrinsic.Control.EndIf
+				F.Intrinsic.Control.EndIf
+					
+				F.Intrinsic.Control.If(V.DataView.dtOrdStatus!dvEUC.RowCount--,>,-1)
+					F.Intrinsic.Control.If(V.Local.sStatus.Trim,<>,"")
+						F.Intrinsic.String.Build("{0}{1}EUC Fail Status", V.Local.sStatus, V.Ambient.NewLine, V.Local.sStatus)
+					F.Intrinsic.Control.Else
+						V.Local.sStatus.Set("EUC Fail Status")
+					F.Intrinsic.Control.EndIf
+				F.Intrinsic.Control.Else
+					F.Intrinsic.Control.If(V.Local.sStatus.Trim,=,"")
+						V.Local.sStatus.Set("")
+					F.Intrinsic.Control.EndIf
+				F.Intrinsic.Control.EndIf
+					
+				F.Data.DataView.Close("dtOrdStatus","dvDPL")
+				F.Data.DataView.Close("dtOrdStatus","dvLIC")
+				F.Data.DataView.Close("dtOrdStatus","dvData")
+				F.Data.DataView.Close("dtOrdStatus","dvEUC")
+	
+				F.Intrinsic.Control.If(V.Local.sStatus.Trim,=,"")
+					F.Data.DataView.Create("dtOrdStatus", "dvDPL", 22, "[PASS_FAIL_DPL] = 'X'", "")
+					F.Data.DataView.Create("dtOrdStatus", "dvLIC", 22, "[PASS_FAIL_LIC] = 'X'", "")
+					F.Data.DataView.Create("dtOrdStatus", "dvData", 22, "[PASS_FAIL_DATA] = 'X'", "")
+					F.Data.DataView.Create("dtOrdStatus", "dvEUC", 22, "[PASS_FAIL_EUC] = 'X'", "")
+				
+					F.Intrinsic.Control.If(V.DataView.dtOrdStatus!dvDPL.RowCount--,>,-1)
+						V.Local.sStatus2.Set("Awaiting TCS Status")
+					F.Intrinsic.Control.Else
+						V.Local.sStatus2.Set("")
+					F.Intrinsic.Control.EndIf
+			
+					F.Intrinsic.Control.If(V.DataView.dtOrdStatus!dvLIC.RowCount--,>,-1)
+						F.Intrinsic.Control.If(V.Local.sStatus2.Trim,<>,"")
+							F.Intrinsic.String.Build("{0}{1}Awaiting TCS Status", V.Local.sStatus2, V.Ambient.NewLine, V.Local.sStatus2)
+						F.Intrinsic.Control.Else
+							V.Local.sStatus2.Set("Awaiting TCS Status")
+						F.Intrinsic.Control.EndIf
+					F.Intrinsic.Control.Else
+						F.Intrinsic.Control.If(V.Local.sStatus2.Trim,=,"")
+							V.Local.sStatus2.Set("")
+						F.Intrinsic.Control.EndIf
+					F.Intrinsic.Control.EndIf
+				
+					F.Intrinsic.Control.If(V.DataView.dtOrdStatus!dvData.RowCount--,>,-1)
+						F.Intrinsic.Control.If(V.Local.sStatus2.Trim,<>,"")
+							F.Intrinsic.String.Build("{0}{1}Awaiting TCS Status", V.Local.sStatus2, V.Ambient.NewLine, V.Local.sStatus2)
+						F.Intrinsic.Control.Else
+							V.Local.sStatus2.Set("Awaiting TCS Status")
+						F.Intrinsic.Control.EndIf
+					F.Intrinsic.Control.Else
+						F.Intrinsic.Control.If(V.Local.sStatus2.Trim,=,"")
+							V.Local.sStatus2.Set("")
+						F.Intrinsic.Control.EndIf
+					F.Intrinsic.Control.EndIf
+			
+					F.Intrinsic.Control.If(V.DataView.dtOrdStatus!dvEUC.RowCount--,>,-1)
+						F.Intrinsic.Control.If(V.Local.sStatus2.Trim,<>,"")
+							F.Intrinsic.String.Build("{0}{1}Awaiting TCS Status", V.Local.sStatus2, V.Ambient.NewLine, V.Local.sStatus2)
+						F.Intrinsic.Control.Else
+							V.Local.sStatus2.Set("Awaiting TCS Status")
+						F.Intrinsic.Control.EndIf
+					F.Intrinsic.Control.Else
+						F.Intrinsic.Control.If(V.Local.sStatus2.Trim,=,"")
+							V.Local.sStatus2.Set("")
+						F.Intrinsic.Control.EndIf
+					F.Intrinsic.Control.EndIf
+				
+					F.Intrinsic.String.IsInString(V.Local.sStatus2, "Awaiting TCS Status", True, V.Local.bAwaitingStatus)
+					F.Intrinsic.Control.If(V.Local.bAwaitingStatus,=,True)
+						V.Local.sStatus.Set("Awaiting TCS Status")
+						
+						V.Passed.777777.Set(1)
+						'Ship Button
+						'V.Passed.000015
+						F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000015, "LOCK",1)
+						'Save Button
+						'V.Passed.000012
+						'F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000012, "LOCK",1)
+						'Packing Button
+						'V.Passed.000016
+						F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000016, "LOCK",1)
+						'Print Button
+						'V.Passed.000057
+						F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000057, "LOCK",1)
+						
+						'show message box that tells the user that the order is waiting to be screened
+						F.Intrinsic.UI.Msgbox("Order Line awaiting TCS Status. Staged Shipment cannot be created.", "Global Trade Block")
+			
+						V.Passed.777777.Set(1)
+						
+						V.Passed.CANCEL.Set(1)
+						F.Intrinsic.Control.CallSub(f_Main_UnLoad)
+					F.Intrinsic.Control.Else
+						F.Intrinsic.Control.If(V.Local.sStatus2.Trim,=,"")
+							V.Local.sStatus.Set("TA Line Pass")
+						F.Intrinsic.Control.EndIf
+						
+					F.Intrinsic.Control.EndIf
+						
+					F.Data.DataView.Close("dtOrdStatus","dvDPL")
+					F.Data.DataView.Close("dtOrdStatus","dvLIC")
+					F.Data.DataView.Close("dtOrdStatus","dvData")
+					F.Data.DataView.Close("dtOrdStatus","dvEUC")
+				
+				F.Intrinsic.Control.ElseIf(V.Local.sStatus.Trim,<>,"")
+					V.Passed.777777.Set(1)
+					'Ship Button
+					'V.Passed.000015
+					F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000015, "LOCK",1)
+					'Save Button
+					'V.Passed.000012
+					F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000012, "LOCK",1)
+					'Packing Button
+					'V.Passed.000016
+					F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000016, "LOCK",1)
+					'Print Button
+					'V.Passed.000057
+					F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000057, "LOCK",1)
+					
+					'show message box that tells the user that the order is waiting to be screened
+					F.Intrinsic.UI.Msgbox("Line(s) has failed TA Screen. Staged Shipment cannot be created.", "Global Trade Block")
+		
+					V.Passed.777777.Set(1)
+					
+					V.Passed.CANCEL.Set(1)
+					F.Intrinsic.Control.CallSub(f_Main_UnLoad)
+				F.Intrinsic.Control.EndIf
+				
+				
+				F.Data.DataTable.Close("dtOrdStatus")
+				
+				F.Intrinsic.Control.If(V.Local.iCnt,=,0)
+					F.Intrinsic.Control.If(V.Local.sStatus.Trim,<>,"")
+						F.Intrinsic.String.Build("Line Item: {0}{1}{2}", V.Local.sOrderLine.Trim, V.Ambient.NewLine, V.Local.sStatus.Trim, V.Local.sFullStatus)
+					F.Intrinsic.Control.EndIf
+				F.Intrinsic.Control.Else
+					F.Intrinsic.Control.If(V.Local.sStatus.Trim,<>,"")
+						F.Intrinsic.String.Build("{0}{1}{1}Line Item: {2}{1}{3}",V.Local.sFullStatus, V.Ambient.NewLine, V.Local.sOrderLine.Trim, V.Local.sStatus.Trim, V.Local.sFullStatus)
+					F.Intrinsic.Control.EndIf
+				F.Intrinsic.Control.EndIf
+			
+			F.Intrinsic.Control.Else
+				V.Local.sStatus.Set("Order Lines Not Screened. Cannot create Staged Shipment.")
+				F.Intrinsic.UI.Msgbox(V.Local.sStatus.Trim, "Global Trade Block")
+				V.Passed.777777.Set(1)
+			
+				V.Passed.CANCEL.Set(1)
+				F.Intrinsic.Control.CallSub(f_Main_UnLoad)
+			F.Intrinsic.Control.EndIf
+		F.Intrinsic.Control.Next(V.Local.iCnt)
+			
+			'F.Intrinsic.String.Build("Order No: {0}{1}{1}{2}", V.Local.sOrderNo.Trim, V.Ambient.NewLine, V.Local.sFullStatus.Trim, V.Local.sFullStatus)
+			'set the label to the status
+		Gui.f_Status.txtLineStatus.Text(V.Local.sFullStatus)
+'		Gui.f_Status..Size(424, 298)
+	F.Intrinsic.Control.EndIf
+F.Intrinsic.Control.Else
+'	Gui.f_Status..Size(217,255)
+F.Intrinsic.Control.EndIf
+	
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.Control.CallSub(ErrorMessage, "ErrorNumber", V.Ambient.ErrorNumber, "ErrorDescription", V.Ambient.ErrorDescription, "Subroutine", V.Ambient.CurrentSubroutine, "UNATTENDED", V.Global.bUnattended, "Project", "6625", "ProjectTitle", "TCS Shipment Process", "Callback", "f_Main_UnLoad")
+F.Intrinsic.Control.EndTry
+Program.Sub.OrderLineStatus.End
+
+Program.Sub.OrderHeadStatusCheck.Start
+F.Intrinsic.Control.Try
+V.Local.bAwaitingStatus.Declare(Boolean)
+V.Local.iRow.Declare(Long)
+V.Local.iCnt.Declare(Long)
+V.Local.sCustomer.Declare(String)
+V.Local.sOrderNo.Declare(String)
+V.Local.sStatus.Declare(String)
+V.Local.sRet.Declare(String)
+V.Local.sTemp.Declare(String)
+V.Local.sSQL.Declare(String)
+V.Local.sStatus2.Declare(String)
+
+
+'set passed variables
+V.Local.sCustomer.Set(V.Passed.000058)
+
+'load the BDF
+'F.Intrinsic.BDF.Load("AUX001", "AUX001")
+F.Intrinsic.BDF.ReadRowCount("AUX001", V.Local.iRow)
+F.Intrinsic.Math.Sub(V.Local.iRow, 1, V.Local.iRow)
+F.Intrinsic.Control.If(V.Local.iRow,>,-1)
+	'read the first row
+	F.Intrinsic.BDF.ReadRow("AUX001", 0, V.Local.sTemp)
+	F.Intrinsic.String.Split(V.Local.sTemp, "|~|", V.Local.sRet)
+	V.Local.sOrderNo.Set(v.Local.sRet(1).Trim)
+	F.Intrinsic.String.LPad(V.Local.sOrderNo, "0", 7, V.Local.sOrderNo)
+	
+	F.Intrinsic.String.Build("SELECT PASS_FAIL_DPL, PASS_FAIL_EUC FROM GCG_6625_ORD_DELIV WHERE TRANS_ID = '{0}' AND TRANS_TYPE = 'O' ", V.Local.sOrderNo.Trim, V.Local.sSQL)
+	F.Intrinsic.Control.If(V.DataTable.dtOrdStatus.Exists)
+		F.Data.DataTable.Close("dtOrdStatus")
+	F.Intrinsic.Control.EndIf
+	
+	F.Data.DataTable.CreateFromSQL("dtOrdStatus", "con", V.Local.sSQL, True)
+	F.Intrinsic.Control.If(V.DataTable.dtOrdStatus.RowCount--,>,-1)
+		V.Local.sStatus.Set("")
+'		F.Data.DataView.Create("dtOrdStatus", "dvDPL", 22, "[PASS_FAIL_DPL] = 'Y'", "")
+'		F.Data.DataView.Create("dtOrdStatus", "dvEUC", 22, "[PASS_FAIL_EUC] = 'Y'", "")
+'			
+'		F.Intrinsic.Control.If(V.DataView.dtOrdStatus!dvDPL.RowCount--,>,-1)
+'			V.Local.sStatus.Set("DPL Fail Status")
+'		F.Intrinsic.Control.Else
+'			V.Local.sStatus.Set("")
+'		F.Intrinsic.Control.EndIf
+'			
+'		F.Intrinsic.Control.If(V.DataView.dtOrdStatus!dvEUC.RowCount--,>,-1)
+'			F.Intrinsic.Control.If(V.Local.sStatus.Trim,<>,"")
+'				F.Intrinsic.String.Build("{0}{1}EUC Fail Status", V.Local.sStatus, V.Ambient.NewLine, V.Local.sStatus)
+'			F.Intrinsic.Control.Else
+'				V.Local.sStatus.Set("EUC Fail Status")
+'			F.Intrinsic.Control.EndIf
+'		F.Intrinsic.Control.Else
+'			V.Local.sStatus.Set("")
+'		F.Intrinsic.Control.EndIf
+'		
+'		F.Data.DataView.Close("dtOrdStatus","dvDPL")
+'		F.Data.DataView.Close("dtOrdStatus","dvEUC")
+'		
+'		F.Intrinsic.Control.If(V.Local.sStatus.Trim,=,"")
+'			F.Data.DataView.Create("dtOrdStatus", "dvDPL", 22, "[PASS_FAIL_DPL] = 'X'", "")
+'			F.Data.DataView.Create("dtOrdStatus", "dvEUC", 22, "[PASS_FAIL_EUC] = 'X'", "")
+'		
+'			F.Intrinsic.Control.If(V.DataView.dtOrdStatus!dvDPL.RowCount--,>,-1)
+'				V.Local.sStatus2.Set("Awaiting TCS Status")
+'			F.Intrinsic.Control.Else
+'				V.Local.sStatus2.Set("")
+'			F.Intrinsic.Control.EndIf
+'			
+'			
+'			F.Intrinsic.Control.If(V.DataView.dtOrdStatus!dvEUC.RowCount--,>,-1)
+'				F.Intrinsic.Control.If(V.Local.sStatus2.Trim,<>,"")
+'					F.Intrinsic.String.Build("{0}{1}Awaiting TCS Status", V.Local.sStatus2, V.Ambient.NewLine, V.Local.sStatus2)
+'				F.Intrinsic.Control.Else
+'					V.Local.sStatus2.Set("Awaiting TCS Status")
+'				F.Intrinsic.Control.EndIf
+'			F.Intrinsic.Control.Else
+'				F.Intrinsic.Control.If(V.Local.sStatus2.Trim,=,"")
+'					V.Local.sStatus2.Set("")
+'				F.Intrinsic.Control.EndIf
+'			F.Intrinsic.Control.EndIf
+'			
+'			F.Intrinsic.String.IsInString(V.Local.sStatus2, "Awaiting TCS Status", True, V.Local.bAwaitingStatus)
+'			F.Intrinsic.Control.If(V.Local.bAwaitingStatus,=,True)
+'				V.Local.sStatus.Set("Awaiting TCS Status. The Staged Shipment cannot be created.")
+'				
+
+'				F.Intrinsic.UI.Msgbox(V.Local.sStatus.Trim, "Global Trade Block")
+'		
+'				V.Passed.777777.Set(1)
+'				'Ship Button
+'				'V.Passed.000015
+'				F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000015, "LOCK",1)
+'				'Save Button
+'				'V.Passed.000012
+'				F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000012, "LOCK",1)
+'				'Packing Button
+'				'V.Passed.000016
+'				F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000016, "LOCK",1)
+'				'Print Button
+'				'V.Passed.000057
+'				F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000057, "LOCK",1)
+'			F.Intrinsic.Control.EndIf
+'			
+'		'	Gui.f_Status.txtStatus.Text(V.Local.sStatus.Trim)
+'			F.Data.DataView.Close("dtOrdStatus","dvDPL")
+'			F.Data.DataView.Close("dtOrdStatus","dvEUC")
+'		F.Intrinsic.Control.EndIf
+		
+'		F.Data.DataTable.Close("dtOrdStatus")
+		
+'	
+'		F.Intrinsic.Control.If(V.Local.sStatus.Trim,<>,"")
+'			V.Passed.777777.Set(1)
+'			'Ship Button
+'			'V.Passed.000015
+'			F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000015, "LOCK",1)
+'			'Save Button
+'			'V.Passed.000012
+'			F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000012, "LOCK",1)
+'			'Packing Button
+'			'V.Passed.000016
+'			F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000016, "LOCK",1)
+'			'Print Button
+'			'V.Passed.000057
+'			F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000057, "LOCK",1)
+'	
+'			'show message box that tells the user that the customer is blocked by TCS
+'			F.Intrinsic.UI.Msgbox("The Entire Order has been blocked by Trade Automation. The Staged Shipment cannot be created.", "Global Trade Block")
+
+'			F.Intrinsic.Control.CallSub(f_Main_Unload)
+'		F.Intrinsic.Control.ElseIf(V.Local.sStatus.Trim,=,"")
+			F.Intrinsic.Control.CallSub(OrderLineStatusCheck)
+			F.Intrinsic.Control.ExitSub
+	'	F.Intrinsic.Control.EndIf
+'	F.Intrinsic.Control.Else
+'		V.Passed.777777.Set(1)
+'		'Ship Button
+'		'V.Passed.000015
+'		F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000015, "LOCK",1)
+'		'Save Button
+'		'V.Passed.000012
+'		F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000012, "LOCK",1)
+'		'Packing Button
+'		'V.Passed.000016
+'		F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000016, "LOCK",1)
+'		'Print Button
+'		'V.Passed.000057
+'		F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000057, "LOCK",1)
+'		'show message box that tells the user that the customer is blocked by TCS
+'		F.Intrinsic.UI.Msgbox("The Order has not been screend by Trade Automation. Staged Shipment cannot be created.", "Global Trade Block")
+
+'		F.Intrinsic.Control.CallSub(f_Main_Unload)
+	F.Intrinsic.Control.EndIf
+F.Intrinsic.Control.EndIf
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.Control.CallSub(ErrorMessage, "ErrorNumber", V.Ambient.ErrorNumber, "ErrorDescription", V.Ambient.ErrorDescription, "Subroutine", V.Ambient.CurrentSubroutine, "UNATTENDED", V.Global.bUnattended, "Project", "6625", "ProjectTitle", "TCS Shipment Process", "Callback", "f_Main_UnLoad")
+F.Intrinsic.Control.EndTry
+Program.Sub.OrderHeadStatusCheck.End
+
+Program.Sub.OrderLineStatusCheck.Start
+F.Intrinsic.Control.Try
+V.Local.bAwaitingStatus.Declare(Boolean)
+V.Local.iRows.Declare(Long)
+V.Local.iCnt.Declare(Long)
+V.Local.sCustomer.Declare(String)
+V.Local.sOrderNo.Declare(String)
+V.Local.sOrderLine.Declare(String)
+V.Local.sSQL.Declare(String)
+V.Local.sTemp.Declare(String)
+V.Local.sRet.Declare(String)
+V.Local.sStatus.Declare(String)
+V.Local.sFullStatus.Declare(String)
+V.Local.sStatus2.Declare(String)
+
+
+F.Intrinsic.BDF.ReadRowCount("AUX001", V.Local.iRows)
+F.Intrinsic.Math.Sub(V.Local.iRows,1,V.Local.iRows)
+F.Intrinsic.Control.If(V.Local.iRows,>,-1)
+	F.Intrinsic.Control.For(V.Local.iCnt,0,V.Local.iRows,1)
+		V.Local.sStatus.Set("")
+		F.Intrinsic.BDF.ReadRow("AUX001", V.Local.iCnt, V.Local.sTemp)
+		F.Intrinsic.String.Split(V.Local.sTemp, "|~|", V.Local.sRet)
+		
+		V.Local.sOrderNo.Set(V.Local.sRet(1).Trim)
+		F.Intrinsic.String.LPad(V.Local.sOrderNo, "0", 7, V.Local.sOrderNo)
+		V.Local.sOrderLine.Set(V.Local.sRet(2).Trim)
+		F.Intrinsic.String.LPad(V.Local.sOrderLine, "0",3, V.Local.sOrderLine)
+		F.Intrinsic.String.RPad(V.Local.sOrderLine, "0", 4, V.Local.sOrderLine)
+		
+		'query ord_deliv table to get status
+		F.Intrinsic.String.Build("SELECT PASS_FAIL_DPL, PASS_FAIL_LIC, PASS_FAIL_DATA, PASS_FAIL_EUC FROM GCG_6625_ORD_DELIV WHERE TRANS_TYPE = 'O' AND TRANS_ID = '{0}' AND POSNR = '{1}'", V.Local.sOrderNo.Trim, V.Local.sOrderLine.Trim, V.Local.sSQL)
+		
+		F.Intrinsic.Control.If(V.DataTable.dtOrdStatus.Exists)
+			F.Data.DataTable.Close("dtOrdStatus")
+		F.Intrinsic.Control.EndIf
+		
+		F.Data.DataTable.CreateFromSQL("dtOrdStatus", "con", V.Local.sSQL, True)
+		F.Intrinsic.Control.If(V.DataTable.dtOrdStatus.RowCount--,>,-1)
+			V.Local.sStatus.Set("")
+			F.Data.DataView.Create("dtOrdStatus", "dvDPL", 22, "[PASS_FAIL_DPL] = 'Y'", "")
+			F.Data.DataView.Create("dtOrdStatus", "dvLIC", 22, "[PASS_FAIL_LIC] = 'Y'", "")
+			F.Data.DataView.Create("dtOrdStatus", "dvData", 22, "[PASS_FAIL_DATA] = 'Y'", "")
+			F.Data.DataView.Create("dtOrdStatus", "dvEUC", 22, "[PASS_FAIL_EUC] = 'Y'", "")
+			
+			'build status string with record no and status
+			F.Intrinsic.Control.If(V.DataView.dtOrdStatus!dvDPL.RowCount--,>,-1)
+				V.Local.sStatus.Set("DPL Fail Status")
+			F.Intrinsic.Control.Else
+				V.Local.sStatus.Set("")
+			F.Intrinsic.Control.EndIf
+			
+			F.Intrinsic.Control.If(V.DataView.dtOrdStatus!dvLIC.RowCount--,>,-1)
+				F.Intrinsic.Control.If(V.Local.sStatus.Trim,<>,"")
+					F.Intrinsic.String.Build("{0}{1}LIC Fail Status", V.Local.sStatus, V.Ambient.NewLine, V.Local.sStatus)
+				F.Intrinsic.Control.Else
+					V.Local.sStatus.Set("LIC Fail Status")
+				F.Intrinsic.Control.EndIf
+			F.Intrinsic.Control.Else
+				F.Intrinsic.Control.If(V.Local.sStatus.Trim,=,"")
+					V.Local.sStatus.Set("")
+				F.Intrinsic.Control.EndIf
+			F.Intrinsic.Control.EndIf
+			
+			F.Intrinsic.Control.If(V.DataView.dtOrdStatus!dvData.RowCount--,>,-1)
+				F.Intrinsic.Control.If(V.Local.sStatus.Trim,<>,"")
+					F.Intrinsic.String.Build("{0}{1}Data Fail Status", V.Local.sStatus, V.Ambient.NewLine, V.Local.sStatus)
+				F.Intrinsic.Control.Else
+					V.Local.sStatus.Set("Data Fail Status")
+				F.Intrinsic.Control.EndIf
+			F.Intrinsic.Control.Else
+				F.Intrinsic.Control.If(V.Local.sStatus.Trim,=,"")
+					V.Local.sStatus.Set("")
+				F.Intrinsic.Control.EndIf
+			F.Intrinsic.Control.EndIf
+			
+			F.Intrinsic.Control.If(V.DataView.dtOrdStatus!dvEUC.RowCount--,>,-1)
+				F.Intrinsic.Control.If(V.Local.sStatus.Trim,<>,"")
+					F.Intrinsic.String.Build("{0}{1}EUC Fail Status", V.Local.sStatus, V.Ambient.NewLine, V.Local.sStatus)
+				F.Intrinsic.Control.Else
+					V.Local.sStatus.Set("EUC Fail Status")
+				F.Intrinsic.Control.EndIf
+			F.Intrinsic.Control.Else
+				F.Intrinsic.Control.If(V.Local.sStatus.Trim,=,"")
+					V.Local.sStatus.Set("")
+				F.Intrinsic.Control.EndIf
+			F.Intrinsic.Control.EndIf
+			
+			F.Data.DataView.Close("dtOrdStatus","dvDPL")
+			F.Data.DataView.Close("dtOrdStatus","dvLIC")
+			F.Data.DataView.Close("dtOrdStatus","dvData")
+			F.Data.DataView.Close("dtOrdStatus","dvEUC")
+	
+			F.Intrinsic.Control.If(V.Local.sStatus.Trim,=,"")
+				F.Data.DataView.Create("dtOrdStatus", "dvDPL", 22, "[PASS_FAIL_DPL] = 'X'", "")
+				F.Data.DataView.Create("dtOrdStatus", "dvLIC", 22, "[PASS_FAIL_LIC] = 'X'", "")
+				F.Data.DataView.Create("dtOrdStatus", "dvData", 22, "[PASS_FAIL_DATA] = 'X'", "")
+				F.Data.DataView.Create("dtOrdStatus", "dvEUC", 22, "[PASS_FAIL_EUC] = 'X'", "")
+				
+				F.Intrinsic.Control.If(V.DataView.dtOrdStatus!dvDPL.RowCount--,>,-1)
+					V.Local.sStatus2.Set("Awaiting TCS Status")
+				F.Intrinsic.Control.Else
+					V.Local.sStatus2.Set("")
+				F.Intrinsic.Control.EndIf
+				
+				F.Intrinsic.Control.If(V.DataView.dtOrdStatus!dvLIC.RowCount--,>,-1)
+					F.Intrinsic.Control.If(V.Local.sStatus2.Trim,<>,"")
+						F.Intrinsic.String.Build("{0}{1}Awaiting TCS Status", V.Local.sStatus2, V.Ambient.NewLine, V.Local.sStatus2)
+					F.Intrinsic.Control.Else
+						V.Local.sStatus2.Set("Awaiting TCS Status")
+					F.Intrinsic.Control.EndIf
+				F.Intrinsic.Control.Else
+					F.Intrinsic.Control.If(V.Local.sStatus2.Trim,=,"")
+							V.Local.sStatus2.Set("")
+					F.Intrinsic.Control.EndIf
+				F.Intrinsic.Control.EndIf
+				
+				F.Intrinsic.Control.If(V.DataView.dtOrdStatus!dvData.RowCount--,>,-1)
+					F.Intrinsic.Control.If(V.Local.sStatus2.Trim,<>,"")
+						F.Intrinsic.String.Build("{0}{1}Awaiting TCS Status", V.Local.sStatus2, V.Ambient.NewLine, V.Local.sStatus2)
+					F.Intrinsic.Control.Else
+						V.Local.sStatus2.Set("Awaiting TCS Status")
+					F.Intrinsic.Control.EndIf
+				F.Intrinsic.Control.Else
+					F.Intrinsic.Control.If(V.Local.sStatus2.Trim,=,"")
+						V.Local.sStatus2.Set("")
+					F.Intrinsic.Control.EndIf
+				F.Intrinsic.Control.EndIf
+				
+				F.Intrinsic.Control.If(V.DataView.dtOrdStatus!dvEUC.RowCount--,>,-1)
+					F.Intrinsic.Control.If(V.Local.sStatus2.Trim,<>,"")
+						F.Intrinsic.String.Build("{0}{1}Awaiting TCS Status", V.Local.sStatus2, V.Ambient.NewLine, V.Local.sStatus2)
+					F.Intrinsic.Control.Else
+						V.Local.sStatus2.Set("Awaiting TCS Status")
+					F.Intrinsic.Control.EndIf
+				F.Intrinsic.Control.Else
+					F.Intrinsic.Control.If(V.Local.sStatus2.Trim,=,"")
+						V.Local.sStatus2.Set("")
+					F.Intrinsic.Control.EndIf
+				F.Intrinsic.Control.EndIf
+				
+				F.Intrinsic.String.IsInString(V.Local.sStatus2, "Awaiting TCS Status", True, V.Local.bAwaitingStatus)
+				F.Intrinsic.Control.If(V.Local.bAwaitingStatus,=,True)
+					V.Local.sStatus.Set("Awaiting TCS Status")
+				F.Intrinsic.Control.EndIf
+
+				
+				F.Data.DataView.Close("dtOrdStatus","dvDPL")
+				F.Data.DataView.Close("dtOrdStatus","dvLIC")
+				F.Data.DataView.Close("dtOrdStatus","dvData")
+				F.Data.DataView.Close("dtOrdStatus","dvEUC")
+			F.Intrinsic.Control.EndIf
+			F.Data.DataTable.Close("dtOrdStatus")
+		F.Intrinsic.Control.Else
+			V.Passed.777777.Set(1)
+			'Ship Button
+			'V.Passed.000015
+			F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000015, "LOCK",1)
+			'Save Button
+			'V.Passed.000012
+			F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000012, "LOCK",1)
+			'Packing Button
+			'V.Passed.000016
+			F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000016, "LOCK",1)
+			'Print Button
+			'V.Passed.000057
+			F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000057, "LOCK",1)
+			'show message box that tells the user that the customer is blocked by TCS
+			F.Intrinsic.UI.Msgbox("The Order Lines has not been screend by Trade Automation. Staged Shipment cannot be created.", "Global Trade Block")
+	
+			F.Intrinsic.Control.CallSub(f_Main_Unload)
+		F.Intrinsic.Control.EndIf
+		
+		F.Intrinsic.Control.If(V.Local.iCnt,=,0)
+			F.Intrinsic.Control.If(V.Local.sStatus.Trim,<>,"")
+				F.Intrinsic.String.Build("Line Item: {0}{1}{2}", V.Local.sOrderLine.Trim, V.Ambient.NewLine, V.Local.sStatus.Trim, V.Local.sFullStatus)
+			F.Intrinsic.Control.EndIf
+		F.Intrinsic.Control.Else
+			F.Intrinsic.Control.If(V.Local.sStatus.Trim,<>,"")
+				F.Intrinsic.String.Build("{0}{1}{1}Line Item: {2}{1}{3}",V.Local.sFullStatus, V.Ambient.NewLine, V.Local.sOrderLine.Trim, V.Local.sStatus.Trim, V.Local.sFullStatus)
+			F.Intrinsic.Control.EndIf
+		F.Intrinsic.Control.EndIf
+		
+	F.Intrinsic.Control.Next(V.Local.iCnt)
+	
+	F.Intrinsic.Control.If(V.Local.sFullStatus.Trim,<>,"")
+		V.Passed.777777.Set(1)
+		F.Intrinsic.String.Build("The following lines have been blocked by Trade Automation:{0}{1}",  V.Ambient.NewLine, V.Local.sFullStatus.Trim, V.Local.sFullStatus)
+		F.Intrinsic.UI.Msgbox(V.Local.sFullStatus.Trim, "Order Lines Blocked")
+		
+		'Ship Button
+		'V.Passed.000015
+		F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000015, "LOCK",1)
+		'Save Button
+		'V.Passed.000012
+		F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000012, "LOCK",1)
+		'Packing Button
+		'V.Passed.000016
+		F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000016, "LOCK",1)
+		'Print Button
+		'V.Passed.000057
+		F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000057, "LOCK",1)
+		
+		F.Intrinsic.Control.CallSub(f_Main_Unload)
+	F.Intrinsic.Control.Else
+		F.Intrinsic.Control.ExitSub
+	F.Intrinsic.Control.EndIf
+f.Intrinsic.Control.EndIf
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.Control.CallSub(ErrorMessage, "ErrorNumber", V.Ambient.ErrorNumber, "ErrorDescription", V.Ambient.ErrorDescription, "Subroutine", V.Ambient.CurrentSubroutine, "UNATTENDED", V.Global.bUnattended, "Project", "6625", "ProjectTitle", "TCS Shipment Process", "Callback", "f_Main_UnLoad")
+F.Intrinsic.Control.EndTry
+Program.Sub.OrderLineStatusCheck.End
+
+Program.Sub.ShipHeaderStatus.Start
+F.Intrinsic.Control.Try
+V.Local.bAwaitingStatus.Declare(Boolean)
+V.Local.iRows.Declare(Long)
+V.Local.sCustomer.Declare(String)
+V.Local.sOrderNo.Declare(String)
+V.Local.sSQL.Declare(String)
+V.Local.sRet.Declare(String)
+V.Local.sStatus.Declare(String)
+V.Local.sTemp.Declare(String)
+V.Local.sPckNo.Declare(String)	
+V.Local.sStatus2.Declare(String)
+
+
+V.Local.sPckNo.Set(V.Passed.000006)
+f.Intrinsic.String.LPad(v.Local.sPckNo, "0", 7, v.Local.sPckNo)
+F.Intrinsic.Control.If(V.Local.sPckNo.Trim,<>,"", "AND",V.Passed.000058.Trim,=,"")
+	'query shipment header to get the order no and ucstomer
+	F.Intrinsic.String.Build("SELECT ORDER_NO, CUSTOMER FROM V_SHIPMENT_HEADER WHERE PCK_NO = '{0}'", V.Local.sPckNo, V.Local.sSQL)
+	F.ODBC.Connection!con.ExecuteAndReturn(V.Local.sSQL, V.Local.sRet)
+	F.Intrinsic.Control.If(V.Local.sRet.Trim,<>,"")
+		F.Intrinsic.String.Split(V.Local.sRet, "*!*",V.Local.sRet)
+		V.Local.sOrderNo.Set(V.Local.sRet(0).Trim)
+		V.Local.sCustomer.Set(V.Local.sRet(1).Trim)
+	F.Intrinsic.Control.EndIf
+F.Intrinsic.Control.Else
+	V.Local.sCustomer.Set(V.Passed.000058)
+
+	V.Local.sOrderNo.Set(V.Passed.000037)
+	F.Intrinsic.String.LPad(V.Local.sOrderNo, "0", 7, V.Local.sOrderNo)
+F.Intrinsic.Control.EndIf
+
+'load the BDF
+'F.Intrinsic.BDF.Load("AUX001", "AUX001")
+
+'check to see if the order no has been selected yet
+F.Intrinsic.Control.If(V.Local.sOrderNo.Trim,<>,"0000000")
+	Gui.f_Status.txtPckNo.Text(V.Local.sPckNo.Trim)
+	Gui.f_Status.txtShipNo.Text(V.Local.sOrderNo.Trim)
+	'Build query for order header status
+	F.Intrinsic.String.Build("SELECT PASS_FAIL_DPL, PASS_FAIL_EUC FROM GCG_6625_ORD_DELIV WHERE PACKING_LIST = '{0}' AND TRANS_TYPE = 'D'", V.Local.sPckNo.Trim, V.Local.sSQL)
+	F.Intrinsic.Control.If(V.DataTable.dtOrdStatus.Exists)
+		F.Data.DataTable.Close("dtOrdStatus")
+	F.Intrinsic.Control.EndIf
+	
+	F.Data.DataTable.CreateFromSQL("dtOrdStatus", "con", V.Local.sSQL, True)
+	F.Intrinsic.Control.If(V.DataTable.dtOrdStatus.RowCount--,>,-1)
+		V.Local.sStatus.Set("")
+'		F.Data.DataView.Create("dtOrdStatus", "dvDPL", 22, "[PASS_FAIL_DPL] = 'Y'", "")
+'		F.Data.DataView.Create("dtOrdStatus", "dvEUC", 22, "[PASS_FAIL_EUC] = 'Y'", "")
+'		
+'		F.Intrinsic.Control.If(V.DataView.dtOrdStatus!dvDPL.RowCount--,>,-1)
+'			V.Local.sStatus.Set("DPL Fail Status")
+'		F.Intrinsic.Control.Else
+'			V.Local.sStatus.Set("")
+'		F.Intrinsic.Control.EndIf
+'		
+'		F.Intrinsic.Control.If(V.DataView.dtOrdStatus!dvEUC.RowCount--,>,-1)
+'			F.Intrinsic.Control.If(V.Local.sStatus.Trim,<>,"")
+'				F.Intrinsic.String.Build("{0}{1}EUC Fail Status", V.Local.sStatus, V.Ambient.NewLine, V.Local.sStatus)
+'			F.Intrinsic.Control.Else
+'				V.Local.sStatus.Set("EUC Fail Status")
+'			F.Intrinsic.Control.EndIf
+'		F.Intrinsic.Control.Else
+'			F.Intrinsic.Control.If(V.Local.sStatus.Trim,=,"")
+'				V.Local.sStatus.Set("")
+'			F.Intrinsic.Control.EndIf
+'		F.Intrinsic.Control.EndIf
+'		
+'		F.Data.DataView.Close("dtOrdStatus","dvDPL")
+'		F.Data.DataView.Close("dtOrdStatus","dvEUC")
+'		
+'		F.Intrinsic.Control.If(V.Local.sStatus.Trim,=,"")
+'			F.Data.DataView.Create("dtOrdStatus", "dvDPL", 22, "[PASS_FAIL_DPL] = 'X'", "")
+'			F.Data.DataView.Create("dtOrdStatus", "dvEUC", 22, "[PASS_FAIL_EUC] = 'X'", "")
+'		
+'			F.Intrinsic.Control.If(V.DataView.dtOrdStatus!dvDPL.RowCount--,>,-1)
+'				V.Local.sStatus2.Set("Awaiting TCS Status")
+'			F.Intrinsic.Control.Else
+'				V.Local.sStatus2.Set("")
+'			F.Intrinsic.Control.EndIf
+'			
+'			
+'			F.Intrinsic.Control.If(V.DataView.dtOrdStatus!dvEUC.RowCount--,>,-1)
+'				F.Intrinsic.Control.If(V.Local.sStatus2.Trim,<>,"")
+'					F.Intrinsic.String.Build("{0}{1}Awaiting TCS Status", V.Local.sStatus2, V.Ambient.NewLine, V.Local.sStatus2)
+'				F.Intrinsic.Control.Else
+'					V.Local.sStatus2.Set("Awaiting TCS Status")
+'				F.Intrinsic.Control.EndIf
+'			F.Intrinsic.Control.Else
+'				F.Intrinsic.Control.If(V.Local.sStatus2.Trim,=,"")
+'					V.Local.sStatus2.Set("")
+'				F.Intrinsic.Control.EndIf
+'			F.Intrinsic.Control.EndIf
+'			
+'			F.Intrinsic.String.IsInString(V.Local.sStatus2, "Awaiting TCS Status", True, V.Local.bAwaitingStatus)
+'			F.Intrinsic.Control.If(V.Local.bAwaitingStatus,=,True)
+'				V.Local.sStatus.Set("Awaiting TCS Status")
+'				V.Passed.777777.Set(1)
+'		
+''		
+''				V.Passed.777777.Set(1)
+''				'Ship Button
+''				'V.Passed.000015
+''				F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000015, "LOCK",1)
+''				'Save Button
+''				'V.Passed.000012
+''				F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000012, "LOCK",1)
+''				'Packing Button
+''				'V.Passed.000016
+''				F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000016, "LOCK",1)
+''				'Print Button
+''				'V.Passed.000057
+''				F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000057, "LOCK",1)
+''				F.Intrinsic.Control.CallSub(f_Main_UnLoad)
+'			F.Intrinsic.Control.Else
+'				F.Intrinsic.Control.If(V.Local.sStatus2.Trim,=,"")
+'					V.Local.sStatus.Set("TA Pass")
+'				F.Intrinsic.Control.EndIf
+'			F.Intrinsic.Control.EndIf
+'			
+'			F.Data.DataView.Close("dtOrdStatus","dvDPL")
+'			F.Data.DataView.Close("dtOrdStatus","dvEUC")
+'		F.Intrinsic.Control.EndIf
+'			
+'		'	Gui.f_Status.txtStatus.Text(V.Local.sStatus.Trim)
+'		
+'	'	Gui.f_Status.txtShipStatus.Text(V.Local.sStatus.Trim)
+'		
+'		F.Data.DataTable.Close("dtOrdStatus")
+		
+		'callsub to pull status information for order line
+		F.Intrinsic.Control.CallSub(ShipLineStatus)
+	
+		'set the size so that all the information shows
+		
+'		Gui.f_Status..Size(631, 299)
+	
+	F.Intrinsic.Control.Else
+		V.Local.sStatus.Set("Staged Shipment Not Screened")
+		
+'		F.Intrinsic.UI.Msgbox(V.Local.sStatus.Trim, "Global Trade Block")
+'		V.Passed.777777.Set(1)
+'		
+
+'		V.Passed.777777.Set(1)
+'		'Ship Button
+'		'V.Passed.000015
+'		F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000015, "LOCK",1)
+'		'Save Button
+'		'V.Passed.000012
+'		F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000012, "LOCK",1)
+'		'Packing Button
+'		'V.Passed.000016
+'		F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000016, "LOCK",1)
+'		'Print Button
+'		'V.Passed.000057
+'		F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000057, "LOCK",1)
+'		F.Intrinsic.Control.CallSub(f_Main_UnLoad)
+		Gui.f_Status.txtShipLineStatus.Text(V.Local.sStatus.Trim)
+	F.Intrinsic.Control.EndIf
+F.Intrinsic.Control.Else
+'	F.Intrinsic.BDF.Load("AUX001", "AUX001")
+	F.Intrinsic.BDF.ReadRowCount("AUX001", V.Local.iRows)
+	F.Intrinsic.Math.Sub(V.Local.iRows,1,V.Local.iRows)
+	F.Intrinsic.Control.If(V.Local.iRows,>,-1)
+		'read the first row
+		F.Intrinsic.BDF.ReadRow("AUX001", 0, V.Local.sTemp)
+		F.Intrinsic.String.Split(V.Local.sTemp, "|~|", V.Local.sRet)
+		V.Local.sOrderNo.Set(v.Local.sRet(1).Trim)
+		F.Intrinsic.String.LPad(V.Local.sOrderNo, "0", 7, V.Local.sOrderNo)
+		Gui.f_Status.txtShipNo.Text(V.Local.sOrderNo.Trim)
+		Gui.f_Status.txtPckNo.Text(V.Local.sPckNo.Trim)
+		'Build query for order header status
+		F.Intrinsic.String.Build("SELECT PASS_FAIL_DPL, PASS_FAIL_EUC FROM GCG_6625_ORD_DELIV WHERE PACKING_LIST = '{0}' AND TRANS_TYPE = 'D'", V.Local.sPckNo.Trim, V.Local.sSQL)
+		F.Intrinsic.Control.If(V.DataTable.dtOrdStatus.Exists)
+			F.Data.DataTable.Close("dtOrdStatus")
+		F.Intrinsic.Control.EndIf
+		
+		F.Data.DataTable.CreateFromSQL("dtOrdStatus", "con", V.Local.sSQL, True)
+		F.Intrinsic.Control.If(V.DataTable.dtOrdStatus.RowCount--,>,-1)
+			V.Local.sStatus.Set("")
+'			F.Data.DataView.Create("dtOrdStatus", "dvDPL", 22, "[PASS_FAIL_DPL] = 'Y'", "")
+'			F.Data.DataView.Create("dtOrdStatus", "dvEUC", 22, "[PASS_FAIL_EUC] = 'Y'", "")
+'			
+'			F.Intrinsic.Control.If(V.DataView.dtOrdStatus!dvDPL.RowCount--,>,-1)
+'				V.Local.sStatus.Set("DPL Fail Status")
+'			F.Intrinsic.Control.Else
+'				V.Local.sStatus.Set("")
+'			F.Intrinsic.Control.EndIf
+'			
+'			F.Intrinsic.Control.If(V.DataView.dtOrdStatus!dvEUC.RowCount--,>,-1)
+'				F.Intrinsic.Control.If(V.Local.sStatus.Trim,<>,"")
+'					F.Intrinsic.String.Build("{0}{1}EUC Fail Status", V.Local.sStatus, V.Ambient.NewLine, V.Local.sStatus)
+'				F.Intrinsic.Control.Else
+'					V.Local.sStatus.Set("EUC Fail Status")
+'				F.Intrinsic.Control.EndIf
+'			F.Intrinsic.Control.Else
+'				F.Intrinsic.Control.If(V.Local.sStatus.Trim,=,"")
+'					V.Local.sStatus.Set("")
+'				F.Intrinsic.Control.EndIf
+'			F.Intrinsic.Control.EndIf
+'			
+'			F.Data.DataView.Close("dtOrdStatus","dvDPL")
+'			F.Data.DataView.Close("dtOrdStatus","dvEUC")
+'		
+'			F.Intrinsic.Control.If(V.Local.sStatus.Trim,=,"")
+'				F.Data.DataView.Create("dtOrdStatus", "dvDPL", 22, "[PASS_FAIL_DPL] = 'X'", "")
+'				F.Data.DataView.Create("dtOrdStatus", "dvEUC", 22, "[PASS_FAIL_EUC] = 'X'", "")
+'		
+'				F.Intrinsic.Control.If(V.DataView.dtOrdStatus!dvDPL.RowCount--,>,-1)
+'					V.Local.sStatus2.Set("Awaiting TCS Status")
+'				F.Intrinsic.Control.Else
+'					V.Local.sStatus2.Set("")
+'				F.Intrinsic.Control.EndIf
+'			
+'			
+'				F.Intrinsic.Control.If(V.DataView.dtOrdStatus!dvEUC.RowCount--,>,-1)
+'					F.Intrinsic.Control.If(V.Local.sStatus2.Trim,<>,"")
+'						F.Intrinsic.String.Build("{0}{1}Awaiting TCS Status", V.Local.sStatus2, V.Ambient.NewLine, V.Local.sStatus2)
+'					F.Intrinsic.Control.Else
+'						V.Local.sStatus2.Set("Awaiting TCS Status")
+'					F.Intrinsic.Control.EndIf
+'				F.Intrinsic.Control.Else
+'					F.Intrinsic.Control.If(V.Local.sStatus2.Trim,=,"")
+'						V.Local.sStatus2.Set("")
+'					F.Intrinsic.Control.EndIf
+'				F.Intrinsic.Control.EndIf
+'			
+'				F.Intrinsic.String.IsInString(V.Local.sStatus2, "Awaiting TCS Status", True, V.Local.bAwaitingStatus)
+'				F.Intrinsic.Control.If(V.Local.bAwaitingStatus,=,True)
+'					V.Local.sStatus.Set("Awaiting TCS Status")
+''					V.Passed.777777.Set(1)
+''		
+''					V.Passed.777777.Set(1)
+''					'Ship Button
+''					'V.Passed.000015
+''					F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000015, "LOCK",1)
+''					'Save Button
+''					'V.Passed.000012
+''					F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000012, "LOCK",1)
+''					'Packing Button
+''					'V.Passed.000016
+''					F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000016, "LOCK",1)
+''					'Print Button
+''					'V.Passed.000057
+''					F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000057, "LOCK",1)
+''					F.Intrinsic.Control.CallSub(f_Main_UnLoad)
+'				F.Intrinsic.Control.Else
+'					F.Intrinsic.Control.If(V.Local.sStatus2.Trim,=,"")
+'						V.Local.sStatus.Set("TA Pass")
+'					F.Intrinsic.Control.EndIf
+'					
+'				F.Intrinsic.Control.EndIf
+'				
+'				F.Data.DataView.Close("dtOrdStatus","dvDPL")
+'				F.Data.DataView.Close("dtOrdStatus","dvEUC")
+'			F.Intrinsic.Control.EndIf
+'			
+'			'Gui.f_Status.txtShipStatus.Text(V.Local.sStatus)
+
+'			F.Data.DataTable.Close("dtOrdStatus")
+	'		Gui.f_Status..Size(631, 299)
+			
+			'callsub to pull status information for order line
+			F.Intrinsic.Control.CallSub(ShipLineStatus)
+			
+			'set the size so that all the information shows
+		'	Gui.f_Status..Size(631, 299)
+		F.Intrinsic.Control.Else
+			V.Local.sStatus.Set("Staged Shipment Not Screened")
+			
+'			F.Intrinsic.UI.Msgbox(V.Local.sStatus.Trim, "Global Trade Block")
+'			V.Passed.777777.Set(1)
+'			
+'	
+'			V.Passed.777777.Set(1)
+'			'Ship Button
+'			'V.Passed.000015
+'			F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000015, "LOCK",1)
+'			'Save Button
+'			'V.Passed.000012
+'			F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000012, "LOCK",1)
+'			'Packing Button
+'			'V.Passed.000016
+'			F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000016, "LOCK",1)
+'			'Print Button
+'			'V.Passed.000057
+'			F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000057, "LOCK",1)
+'			F.Intrinsic.Control.CallSub(f_Main_UnLoad)
+			Gui.f_Status.txtShipLineStatus.Text(V.Local.sStatus.Trim)
+		F.Intrinsic.Control.EndIf
+	F.Intrinsic.Control.Else
+	'	Gui.f_Status..Size(427, 303)
+		F.Intrinsic.Control.ExitSub
+	F.Intrinsic.Control.EndIf
+
+F.Intrinsic.Control.EndIf
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.Control.CallSub(ErrorMessage, "ErrorNumber", V.Ambient.ErrorNumber, "ErrorDescription", V.Ambient.ErrorDescription, "Subroutine", V.Ambient.CurrentSubroutine, "UNATTENDED", V.Global.bUnattended, "Project", "6625", "ProjectTitle", "TCS Shipment Process", "Callback", "f_Main_UnLoad")
+F.Intrinsic.Control.EndTry
+Program.Sub.ShipHeaderStatus.End
+
+Program.Sub.ShipLineStatus.Start
+F.Intrinsic.Control.Try
+V.Local.bAwaitingStatus.Declare(Boolean)
+V.Local.iCnt.Declare(Long)
+V.Local.iColumns.Declare(Long)
+V.Local.iRows.Declare(Long)
+V.Local.sCustomer.Declare(String)
+V.Local.sOrderNo.Declare(String)
+V.Local.sOrderLine.Declare(String)
+V.Local.sSQL.Declare(String)
+V.Local.sRet.Declare(String)
+V.Local.sTitles.Declare(String)
+V.Local.sDataTypes.Declare(String)
+V.Local.sTemp.Declare(String)
+V.Local.sPart.Declare(String)
+V.Local.sLoc.Declare(String)
+V.Local.sStatus.Declare(String)
+V.Local.sFullStatus.Declare(String)
+V.Local.sStatus2.Declare(String)
+V.Local.sPckNo.Declare(String)
+
+V.Local.sPckNo.Set(V.Passed.000006)
+F.Intrinsic.String.LPad(V.Local.sPckNo, "0", 7, V.Local.sPckNo)
+'LOAD THE BDF
+'F.Intrinsic.BDF.Load("AUX001", "AUX001")
+F.Intrinsic.BDF.ReadRowCount("AUX001", V.Local.iRows)
+F.Intrinsic.Math.Sub(V.Local.iRows,1,V.Local.iRows)
+F.Intrinsic.Control.If(V.Local.iRows,>,-1)
+	F.Intrinsic.Control.For(V.Local.iCnt,0,V.Local.iRows,1)
+		F.Intrinsic.BDF.ReadRow("AUX001", V.Local.iCnt, V.Local.sTemp)
+		F.Intrinsic.String.Split(V.Local.sTemp, "|~|", V.Local.sRet)
+		
+		V.Local.sOrderNo.Set(V.Local.sRet(1).Trim)
+		F.Intrinsic.String.LPad(V.Local.sOrderNo, "0", 7, V.Local.sOrderNo)
+		V.Local.sOrderLine.Set(V.Local.sRet(2).Trim)
+		F.Intrinsic.String.LPad(V.Local.sOrderLine, "0",3, V.Local.sOrderLine)
+		F.Intrinsic.String.RPad(V.Local.sOrderLine, "0", 4, V.Local.sOrderLine)
+		V.Local.sPart.Set(V.Local.sRet(4))
+		V.Local.sLoc.Set(V.Local.sRet(5))
+		
+		'query ord_deliv table to get status
+		F.Intrinsic.String.Build("SELECT PASS_FAIL_DPL, PASS_FAIL_LIC, PASS_FAIL_DATA, PASS_FAIL_EUC FROM GCG_6625_ORD_DELIV WHERE TRANS_TYPE = 'D' AND TRANS_ID = '{0}' AND PACKING_LIST = '{1}' ", V.Local.sOrderNo.Trim, V.Local.sPckNo.Trim, V.Local.sSQL)
+		
+		F.Intrinsic.Control.If(V.DataTable.dtOrdStatus.Exists)
+			F.Data.DataTable.Close("dtOrdStatus")
+		F.Intrinsic.Control.EndIf
+		
+		F.Data.DataTable.CreateFromSQL("dtOrdStatus", "con", V.Local.sSQL, True)
+		F.Intrinsic.Control.If(V.DataTable.dtOrdStatus.RowCount--,>,-1)
+			F.Data.DataView.Create("dtOrdStatus", "dvDPL", 22, "[PASS_FAIL_DPL] = 'Y'", "")
+			F.Data.DataView.Create("dtOrdStatus", "dvLIC", 22, "[PASS_FAIL_LIC] = 'Y'", "")
+			F.Data.DataView.Create("dtOrdStatus", "dvData", 22, "[PASS_FAIL_DATA] = 'Y'", "")
+			F.Data.DataView.Create("dtOrdStatus", "dvEUC", 22, "[PASS_FAIL_EUC] = 'Y'", "")
+			
+			'build status string with record no and status
+			F.Intrinsic.Control.If(V.DataView.dtOrdStatus!dvDPL.RowCount--,>,-1)
+				V.Local.sStatus.Set("DPL Fail Status")
+			F.Intrinsic.Control.Else
+				V.Local.sStatus.Set("")
+			F.Intrinsic.Control.EndIf
+			
+			F.Intrinsic.Control.If(V.DataView.dtOrdStatus!dvLIC.RowCount--,>,-1)
+				F.Intrinsic.Control.If(V.Local.sStatus.Trim,<>,"")
+					F.Intrinsic.String.Build("{0}{1}LIC Fail Status", V.Local.sStatus, V.Ambient.NewLine, V.Local.sStatus)
+				F.Intrinsic.Control.Else
+					V.Local.sStatus.Set("LIC Fail Status")
+				F.Intrinsic.Control.EndIf
+			F.Intrinsic.Control.Else
+				F.Intrinsic.Control.If(V.Local.sStatus.Trim,=,"")
+					V.Local.sStatus.Set("")
+				F.Intrinsic.Control.EndIf
+			F.Intrinsic.Control.EndIf
+			
+			F.Intrinsic.Control.If(V.DataView.dtOrdStatus!dvData.RowCount--,>,-1)
+				F.Intrinsic.Control.If(V.Local.sStatus.Trim,<>,"")
+					F.Intrinsic.String.Build("{0}{1}Data Fail Status", V.Local.sStatus, V.Ambient.NewLine, V.Local.sStatus)
+				F.Intrinsic.Control.Else
+					V.Local.sStatus.Set("Data Fail Status")
+				F.Intrinsic.Control.EndIf
+			F.Intrinsic.Control.Else
+				F.Intrinsic.Control.If(V.Local.sStatus.Trim,=,"")
+					V.Local.sStatus.Set("")
+				F.Intrinsic.Control.EndIf
+			F.Intrinsic.Control.EndIf
+			
+			F.Intrinsic.Control.If(V.DataView.dtOrdStatus!dvEUC.RowCount--,>,-1)
+				F.Intrinsic.Control.If(V.Local.sStatus.Trim,<>,"")
+					F.Intrinsic.String.Build("{0}{1}EUC Fail Status", V.Local.sStatus, V.Ambient.NewLine, V.Local.sStatus)
+				F.Intrinsic.Control.Else
+					V.Local.sStatus.Set("EUC Fail Status")
+				F.Intrinsic.Control.EndIf
+			F.Intrinsic.Control.Else
+				F.Intrinsic.Control.If(V.Local.sStatus.Trim,=,"")
+					V.Local.sStatus.Set("")
+				F.Intrinsic.Control.EndIf
+			F.Intrinsic.Control.EndIf
+			
+			F.Data.DataView.Close("dtOrdStatus","dvDPL")
+			F.Data.DataView.Close("dtOrdStatus","dvLIC")
+			F.Data.DataView.Close("dtOrdStatus","dvData")
+			F.Data.DataView.Close("dtOrdStatus","dvEUC")
+	
+			F.Intrinsic.Control.If(V.Local.sStatus.Trim,=,"")
+				F.Data.DataView.Create("dtOrdStatus", "dvDPL", 22, "[PASS_FAIL_DPL] = 'X'", "")
+				F.Data.DataView.Create("dtOrdStatus", "dvLIC", 22, "[PASS_FAIL_LIC] = 'X'", "")
+				F.Data.DataView.Create("dtOrdStatus", "dvData", 22, "[PASS_FAIL_DATA] = 'X'", "")
+				F.Data.DataView.Create("dtOrdStatus", "dvEUC", 22, "[PASS_FAIL_EUC] = 'X'", "")
+				
+				F.Intrinsic.Control.If(V.DataView.dtOrdStatus!dvDPL.RowCount--,>,-1)
+					V.Local.sStatus2.Set("Awaiting TCS Status")
+				F.Intrinsic.Control.Else
+					V.Local.sStatus2.Set("")
+				F.Intrinsic.Control.EndIf
+				
+				F.Intrinsic.Control.If(V.DataView.dtOrdStatus!dvLIC.RowCount--,>,-1)
+					F.Intrinsic.Control.If(V.Local.sStatus2.Trim,<>,"")
+						F.Intrinsic.String.Build("{0}{1}Awaiting TCS Status", V.Local.sStatus2, V.Ambient.NewLine, V.Local.sStatus2)
+					F.Intrinsic.Control.Else
+						V.Local.sStatus2.Set("Awaiting TCS Status")
+					F.Intrinsic.Control.EndIf
+				F.Intrinsic.Control.Else
+					F.Intrinsic.Control.If(V.Local.sStatus2.Trim,=,"")
+						V.Local.sStatus2.Set("")
+					F.Intrinsic.Control.EndIf
+				F.Intrinsic.Control.EndIf
+				
+				F.Intrinsic.Control.If(V.DataView.dtOrdStatus!dvData.RowCount--,>,-1)
+					F.Intrinsic.Control.If(V.Local.sStatus2.Trim,<>,"")
+						F.Intrinsic.String.Build("{0}{1}Awaiting TCS Status", V.Local.sStatus2, V.Ambient.NewLine, V.Local.sStatus2)
+					F.Intrinsic.Control.Else
+						V.Local.sStatus2.Set("Awaiting TCS Status")
+					F.Intrinsic.Control.EndIf
+				F.Intrinsic.Control.Else
+					F.Intrinsic.Control.If(V.Local.sStatus2.Trim,=,"")
+						V.Local.sStatus2.Set("")
+					F.Intrinsic.Control.EndIf
+				F.Intrinsic.Control.EndIf
+				
+				F.Intrinsic.Control.If(V.DataView.dtOrdStatus!dvEUC.RowCount--,>,-1)
+					F.Intrinsic.Control.If(V.Local.sStatus2.Trim,<>,"")
+						F.Intrinsic.String.Build("{0}{1}Awaiting TCS Status", V.Local.sStatus2, V.Ambient.NewLine, V.Local.sStatus2)
+					F.Intrinsic.Control.Else
+						V.Local.sStatus2.Set("Awaiting TCS Status")
+					F.Intrinsic.Control.EndIf
+				F.Intrinsic.Control.Else
+					F.Intrinsic.Control.If(V.Local.sStatus2.Trim,=,"")
+						V.Local.sStatus2.Set("")
+					F.Intrinsic.Control.EndIf
+				F.Intrinsic.Control.EndIf
+				
+				F.Intrinsic.String.IsInString(V.Local.sStatus2, "Awaiting TCS Status", True, V.Local.bAwaitingStatus)
+				F.Intrinsic.Control.If(V.Local.bAwaitingStatus,=,True)
+					V.Local.sStatus.Set("Awaiting TCS Status")
+		
+'					F.Intrinsic.UI.Msgbox(V.Local.sStatus.Trim, "Global Trade Block")
+'					V.Passed.777777.Set(1)
+'					'Ship Button
+'					'V.Passed.000015
+'					F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000015, "LOCK",1)
+'					'Save Button
+'					'V.Passed.000012
+'					F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000012, "LOCK",1)
+'					'Packing Button
+'					'V.Passed.000016
+'					F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000016, "LOCK",1)
+'					'Print Button
+'					'V.Passed.000057
+'					F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000057, "LOCK",1)
+				F.Intrinsic.Control.Else
+					F.Intrinsic.Control.If(V.Local.sStatus2.Trim,=,"")
+						V.Local.sStatus.Set("TA Pass")
+					F.Intrinsic.Control.EndIf
+				F.Intrinsic.Control.EndIf
+				
+				F.Data.DataView.Close("dtOrdStatus","dvDPL")
+				F.Data.DataView.Close("dtOrdStatus","dvLIC")
+				F.Data.DataView.Close("dtOrdStatus","dvData")
+				F.Data.DataView.Close("dtOrdStatus","dvEUC")
+			F.Intrinsic.Control.EndIf
+				
+			F.Data.DataTable.Close("dtOrdStatus")
+		
+		F.Intrinsic.Control.Else
+			V.Local.sStatus.Set("Shipment Not Screened. Save the Staged Shipment to send the information to Trade Automation.")
+'		
+'			F.Intrinsic.UI.Msgbox(V.Local.sStatus.Trim, "Global Trade Block")
+'			V.Passed.777777.Set(1)
+'			
+'	
+'			V.Passed.777777.Set(1)
+'			'Ship Button
+'			'V.Passed.000015
+'			F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000015, "LOCK",1)
+'			'Save Button
+'			'V.Passed.000012
+'			F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000012, "LOCK",1)
+'			'Packing Button
+'			'V.Passed.000016
+'			F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000016, "LOCK",1)
+'			'Print Button
+'			'V.Passed.000057
+'			F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000057, "LOCK",1)
+'			F.Intrinsic.Control.CallSub(f_Main_UnLoad)
+		F.Intrinsic.Control.EndIf
+		
+		F.Intrinsic.Control.If(V.Local.iCnt,=,0)
+			
+			V.Local.sFullStatus.Set(V.Local.sStatus.Trim)
+			Gui.f_Status.txtShipLineStatus.Text(V.Local.sFullStatus.Trim)
+		F.Intrinsic.Control.Else
+			F.Intrinsic.Control.ExitFor(V.Local.iCnt)
+		F.Intrinsic.Control.EndIf
+		
+	F.Intrinsic.Control.Next(V.Local.iCnt)
+	
+'	F.Intrinsic.String.Build("Order No: {0}{1}{1}{2}", V.Local.sOrderNo.Trim, V.Ambient.NewLine, V.Local.sFullStatus.Trim, V.Local.sFullStatus)
+
+	'set the label to the status
+	
+'	Gui.f_Status..Size(631, 299)
+F.Intrinsic.Control.Else
+	'set passed variables	
+	V.Local.sPckNo.Set(V.Passed.000006)
+	f.Intrinsic.String.LPad(v.Local.sPckNo, "0", 7, v.Local.sPckNo)
+	F.Intrinsic.Control.If(V.Local.sPckNo.Trim,<>,"", "AND",V.Passed.000058.Trim,=,"")
+		'query shipment header to get the order no and ucstomer
+		F.Intrinsic.String.Build("SELECT ORDER_NO, CUSTOMER FROM V_SHIPMENT_HEADER WHERE PCK_NO = '{0}'", V.Local.sPckNo, V.Local.sSQL)
+		F.ODBC.Connection!con.ExecuteAndReturn(V.Local.sSQL, V.Local.sRet)
+		F.Intrinsic.Control.If(V.Local.sRet.Trim,<>,"")
+			F.Intrinsic.String.Split(V.Local.sRet, "*!*",V.Local.sRet)
+			V.Local.sOrderNo.Set(V.Local.sRet(0).Trim)
+			V.Local.sCustomer.Set(V.Local.sRet(1).Trim)
+		F.Intrinsic.Control.EndIf
+	F.Intrinsic.Control.Else
+		V.Local.sCustomer.Set(V.Passed.000058)
+	
+		V.Local.sOrderNo.Set(V.Passed.000037)
+		F.Intrinsic.String.LPad(V.Local.sOrderNo, "0", 7, V.Local.sOrderNo)
+	F.Intrinsic.Control.EndIf
+	
+	F.Intrinsic.Control.If(V.Local.sOrderNo.Trim,<>,"0000000")
+		'query order lines to get all of the lines that might apply
+		F.Intrinsic.String.Build("SELECT ORDER_REC FROM V_SHIPMENT_LINES WHERE PCK_NO = '{0}' AND CUSTOMER = '{1}' AND LINE_TYPE <> 'F' ORDER BY ORDER_REC", V.Local.sPckNo.Trim, V.Local.sCustomer.Trim, V.Local.sSQL)
+		F.ODBC.Connection!con.ExecuteAndReturn(V.Local.sSQL, V.Local.sRet)
+		F.Intrinsic.Control.If(V.Local.sRet.Trim,<>,"")
+			F.Intrinsic.String.Split(V.Local.sRet, "#$#", V.Local.sRet)
+			F.Intrinsic.Control.For(V.Local.iCnt, V.Local.sRet.LBound, V.Local.sRet.UBound, 1)
+				V.Local.sOrderLine.Set(V.Local.sRet(V.Local.iCnt).Trim)
+				
+				'query ord_deliv table to get status
+				F.Intrinsic.String.Build("SELECT PASS_FAIL_DPL, PASS_FAIL_LIC, PASS_FAIL_DATA, PASS_FAIL_EUC FROM GCG_6625_ORD_DELIV WHERE TRANS_TYPE = 'D' AND TRANS_ID = '{0}' AND PACKING_LIST = '{1}' ", V.Local.sOrderNo.Trim, V.Local.sPckNo.Trim, V.Local.sOrderLine.Trim, V.Local.sSQL)
+				
+				F.Intrinsic.Control.If(V.DataTable.dtOrdStatus.Exists)
+					F.Data.DataTable.Close("dtOrdStatus")
+				F.Intrinsic.Control.EndIf
+				
+				F.Data.DataTable.CreateFromSQL("dtOrdStatus", "con", V.Local.sSQL, True)
+				F.Intrinsic.Control.If(V.DataTable.dtOrdStatus.RowCount--,>,-1)
+					V.Local.sStatus.Set("")
+					F.Data.DataView.Create("dtOrdStatus", "dvDPL", 22, "[PASS_FAIL_DPL] = 'Y'", "")
+					F.Data.DataView.Create("dtOrdStatus", "dvLIC", 22, "[PASS_FAIL_LIC] = 'Y'", "")
+					F.Data.DataView.Create("dtOrdStatus", "dvData", 22, "[PASS_FAIL_DATA] = 'Y'", "")
+					F.Data.DataView.Create("dtOrdStatus", "dvEUC", 22, "[PASS_FAIL_EUC] = 'Y'", "")
+					
+					'build status string with record no and status
+					F.Intrinsic.Control.If(V.DataView.dtOrdStatus!dvDPL.RowCount--,>,-1)
+						V.Local.sStatus.Set("DPL Fail Status")
+					F.Intrinsic.Control.Else
+						V.Local.sStatus.Set("")
+					F.Intrinsic.Control.EndIf
+					
+					F.Intrinsic.Control.If(V.DataView.dtOrdStatus!dvLIC.RowCount--,>,-1)
+						F.Intrinsic.Control.If(V.Local.sStatus.Trim,<>,"")
+							F.Intrinsic.String.Build("{0}{1}LIC Fail Status", V.Local.sStatus, V.Ambient.NewLine, V.Local.sStatus)
+						F.Intrinsic.Control.Else
+							V.Local.sStatus.Set("LIC Fail Status")
+						F.Intrinsic.Control.EndIf
+					F.Intrinsic.Control.Else
+						F.Intrinsic.Control.If(V.Local.sStatus.Trim,=,"")
+							V.Local.sStatus.Set("")
+						F.Intrinsic.Control.EndIf
+					F.Intrinsic.Control.EndIf
+					
+					F.Intrinsic.Control.If(V.DataView.dtOrdStatus!dvData.RowCount--,>,-1)
+						F.Intrinsic.Control.If(V.Local.sStatus.Trim,<>,"")
+							F.Intrinsic.String.Build("{0}{1}Data Fail Status", V.Local.sStatus, V.Ambient.NewLine, V.Local.sStatus)
+						F.Intrinsic.Control.Else
+							V.Local.sStatus.Set("Data Fail Status")
+						F.Intrinsic.Control.EndIf
+					F.Intrinsic.Control.Else
+						F.Intrinsic.Control.If(V.Local.sStatus.Trim,=,"")
+							V.Local.sStatus.Set("")
+						F.Intrinsic.Control.EndIf
+					F.Intrinsic.Control.EndIf
+					
+					F.Intrinsic.Control.If(V.DataView.dtOrdStatus!dvEUC.RowCount--,>,-1)
+						F.Intrinsic.Control.If(V.Local.sStatus.Trim,<>,"")
+							F.Intrinsic.String.Build("{0}{1}EUC Fail Status", V.Local.sStatus, V.Ambient.NewLine, V.Local.sStatus)
+						F.Intrinsic.Control.Else
+							V.Local.sStatus.Set("EUC Fail Status")
+						F.Intrinsic.Control.EndIf
+					F.Intrinsic.Control.Else
+						F.Intrinsic.Control.If(V.Local.sStatus.Trim,=,"")
+							V.Local.sStatus.Set("")
+						F.Intrinsic.Control.EndIf
+					F.Intrinsic.Control.EndIf
+					
+					F.Data.DataView.Close("dtOrdStatus","dvDPL")
+					F.Data.DataView.Close("dtOrdStatus","dvLIC")
+					F.Data.DataView.Close("dtOrdStatus","dvData")
+					F.Data.DataView.Close("dtOrdStatus","dvEUC")
+	
+					F.Intrinsic.Control.If(V.Local.sStatus.Trim,=,"")
+						F.Data.DataView.Create("dtOrdStatus", "dvDPL", 22, "[PASS_FAIL_DPL] = 'X'", "")
+						F.Data.DataView.Create("dtOrdStatus", "dvLIC", 22, "[PASS_FAIL_LIC] = 'X'", "")
+						F.Data.DataView.Create("dtOrdStatus", "dvData", 22, "[PASS_FAIL_DATA] = 'X'", "")
+						F.Data.DataView.Create("dtOrdStatus", "dvEUC", 22, "[PASS_FAIL_EUC] = 'X'", "")
+				
+						F.Intrinsic.Control.If(V.DataView.dtOrdStatus!dvDPL.RowCount--,>,-1)
+							V.Local.sStatus2.Set("Awaiting TCS Status")
+						F.Intrinsic.Control.Else
+							V.Local.sStatus2.Set("")
+						F.Intrinsic.Control.EndIf
+				
+						F.Intrinsic.Control.If(V.DataView.dtOrdStatus!dvLIC.RowCount--,>,-1)
+							F.Intrinsic.Control.If(V.Local.sStatus2.Trim,<>,"")
+								F.Intrinsic.String.Build("{0}{1}Awaiting TCS Status", V.Local.sStatus2, V.Ambient.NewLine, V.Local.sStatus2)
+							F.Intrinsic.Control.Else
+								V.Local.sStatus2.Set("Awaiting TCS Status")
+							F.Intrinsic.Control.EndIf
+						F.Intrinsic.Control.Else
+							F.Intrinsic.Control.If(V.Local.sStatus2.Trim,=,"")
+								V.Local.sStatus2.Set("")
+							F.Intrinsic.Control.EndIf
+						F.Intrinsic.Control.EndIf
+				
+						F.Intrinsic.Control.If(V.DataView.dtOrdStatus!dvData.RowCount--,>,-1)
+							F.Intrinsic.Control.If(V.Local.sStatus2.Trim,<>,"")
+								F.Intrinsic.String.Build("{0}{1}Awaiting TCS Status", V.Local.sStatus2, V.Ambient.NewLine, V.Local.sStatus2)
+							F.Intrinsic.Control.Else
+								V.Local.sStatus2.Set("Awaiting TCS Status")
+							F.Intrinsic.Control.EndIf
+						F.Intrinsic.Control.Else
+							F.Intrinsic.Control.If(V.Local.sStatus2.Trim,=,"")
+								V.Local.sStatus2.Set("")
+							F.Intrinsic.Control.EndIf
+						F.Intrinsic.Control.EndIf
+				
+						F.Intrinsic.Control.If(V.DataView.dtOrdStatus!dvEUC.RowCount--,>,-1)
+							F.Intrinsic.Control.If(V.Local.sStatus2.Trim,<>,"")
+								F.Intrinsic.String.Build("{0}{1}Awaiting TCS Status", V.Local.sStatus2, V.Ambient.NewLine, V.Local.sStatus2)
+							F.Intrinsic.Control.Else
+								V.Local.sStatus2.Set("Awaiting TCS Status")
+							F.Intrinsic.Control.EndIf
+						F.Intrinsic.Control.Else
+							F.Intrinsic.Control.If(V.Local.sStatus2.Trim,=,"")
+								V.Local.sStatus2.Set("")
+							F.Intrinsic.Control.EndIf
+						F.Intrinsic.Control.EndIf
+				
+						F.Intrinsic.String.IsInString(V.Local.sStatus2, "Awaiting TCS Status", True, V.Local.bAwaitingStatus)
+						F.Intrinsic.Control.If(V.Local.bAwaitingStatus,=,True)
+							V.Local.sStatus.Set("Awaiting TCS Status")
+'		
+'							F.Intrinsic.UI.Msgbox(V.Local.sStatus.Trim, "Global Trade Block")
+'							V.Passed.777777.Set(1)
+'							'Ship Button
+'							'V.Passed.000015
+'							F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000015, "LOCK",1)
+'							'Save Button
+'							'V.Passed.000012
+'							F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000012, "LOCK",1)
+'							'Packing Button
+'							'V.Passed.000016
+'							F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000016, "LOCK",1)
+'							'Print Button
+'							'V.Passed.000057
+'							F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000057, "LOCK",1)
+						F.Intrinsic.Control.Else
+							F.Intrinsic.Control.If(V.Local.sStatus2.Trim,=,"")
+								V.Local.sStatus.Set("TA Pass")
+							F.Intrinsic.Control.EndIf
+						F.Intrinsic.Control.EndIf
+					
+						F.Data.DataView.Close("dtOrdStatus","dvDPL")
+						F.Data.DataView.Close("dtOrdStatus","dvLIC")
+						F.Data.DataView.Close("dtOrdStatus","dvData")
+						F.Data.DataView.Close("dtOrdStatus","dvEUC")
+					
+					F.Intrinsic.Control.EndIf
+				F.Intrinsic.Control.Else
+					V.Local.sStatus.Set("Shipment Not Screened. Save the Staged Shipment to send the information to Trade Automation.")
+'		
+'					F.Intrinsic.UI.Msgbox(V.Local.sStatus.Trim, "Global Trade Block")
+'					V.Passed.777777.Set(1)
+'					
+'			
+'					V.Passed.777777.Set(1)
+'					'Ship Button
+'					'V.Passed.000015
+'					F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000015, "LOCK",1)
+'					'Save Button
+'					'V.Passed.000012
+'					F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000012, "LOCK",1)
+'					'Packing Button
+'					'V.Passed.000016
+'					F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000016, "LOCK",1)
+'					'Print Button
+'					'V.Passed.000057
+'					F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000057, "LOCK",1)
+'					F.Intrinsic.Control.CallSub(f_Main_UnLoad)
+				F.Intrinsic.Control.EndIf
+				
+				F.Data.DataTable.Close("dtOrdStatus")
+				
+				F.Intrinsic.Control.If(V.Local.iCnt,=,0)
+			
+					V.Local.sFullStatus.Set(V.Local.sStatus.Trim)
+					Gui.f_Status.txtShipLineStatus.Text(V.Local.sFullStatus.Trim)
+				F.Intrinsic.Control.Else
+					F.Intrinsic.Control.ExitFor(V.Local.iCnt)
+				F.Intrinsic.Control.EndIf
+				
+			F.Intrinsic.Control.Next(V.Local.iCnt)
+			
+		'	Gui.f_Status..Size(643, 308)
+			'F.Intrinsic.String.Build("Order No: {0}{1}{1}{2}", V.Local.sOrderNo.Trim, V.Ambient.NewLine, V.Local.sFullStatus.Trim, V.Local.sFullStatus)
+			'set the label to the status
+		F.Intrinsic.Control.EndIf
+	'	Gui.f_Status..Size(643, 308)
+	F.Intrinsic.Control.Else
+	
+	'	Gui.f_Status..Size(427, 303)
+		
+	F.Intrinsic.Control.EndIf
+f.Intrinsic.Control.Else
+'	Gui.f_Status..Size(427, 303)
+F.Intrinsic.Control.EndIf
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.Control.CallSub(ErrorMessage, "ErrorNumber", V.Ambient.ErrorNumber, "ErrorDescription", V.Ambient.ErrorDescription, "Subroutine", V.Ambient.CurrentSubroutine, "UNATTENDED", V.Global.bUnattended, "Project", "6625", "ProjectTitle", "TCS Shipment Process", "Callback", "f_Main_UnLoad")
+F.Intrinsic.Control.EndTry
+Program.Sub.ShipLineStatus.End
+
+Program.Sub.HTTPSettings.Start
+F.Intrinsic.Control.Try
+V.Local.baValue.Declare(ByteArray)
+V.Local.sRet.Declare(String)
+V.Local.sSQL.Declare(String)
+V.Local.sTemp.Declare(String)
+
+'open Common Connection to DB
+F.ODBC.Connection!conCom.OpenCommonConnection
+'check to see if datatable exists
+F.Intrinsic.Control.If(V.DataTable.HTTPSettings.Exists)
+	F.Data.DataTable.Close("HTTPSettings")
+F.Intrinsic.Control.EndIf
+'build query to pull username, password and url from custom table
+F.Intrinsic.String.Build("SELECT HTTPUSER, HTTPPASSWORD, DELIV_URL FROM GCG_6625_SETTINGS WHERE ACTIVEENV = 'Y' AND CO_CODE = '{0}'", v.Caller.CompanyCode.Trim, v.Local.sSQL)
+F.Data.DataTable.CreateFromSQL("HTTPSettings", "conCom", v.Local.sSQL)
+F.Intrinsic.Control.If(V.DataTable.HTTPSettings.RowCount--,<>,-1)
+	'decrypt and set the credentials to the corresponding global variables
+	V.Local.sTemp.Set(V.DataTable.HTTPSettings(0).HTTPUSER!FieldValTrim)
+	F.Intrinsic.String.ConvertString2BA(V.Local.sTemp, V.Local.baValue)
+	F.Global.Encryption.Decrypt(V.Local.baValue,v.Local.sTemp)
+	V.Global.sUsername.Set(V.Local.sTemp.Trim)
+	
+	V.Local.sTemp.Set(V.DataTable.HTTPSettings(0).HTTPPASSWORD!FieldValTrim)
+	F.Intrinsic.String.ConvertString2BA(V.Local.sTemp, V.Local.baValue)
+	F.Global.Encryption.Decrypt(V.Local.baValue,v.Local.sTemp)
+	V.Global.sPassword.Set(V.Local.sTemp.Trim)
+	
+	V.Local.sTemp.Set(V.DataTable.HTTPSettings(0).DELIV_URL!FieldValTrim)
+	F.Intrinsic.String.ConvertString2BA(V.Local.sTemp, V.Local.baValue)
+	F.Global.Encryption.Decrypt(V.Local.baValue,v.Local.sTemp)
+	V.Global.sURL.Set(V.Local.sTemp.Trim)
+	
+F.Intrinsic.Control.Else
+	F.Intrinsic.UI.Msgbox("Configure HTTP Settings via System Support > Administration > HTTP Credentials (6625)", "Configure Settings")
+	F.ODBC.Connection!conCom.Close
+	F.Intrinsic.Control.CallSub(f_Main_Unload)
+F.Intrinsic.Control.EndIf
+
+'check to see if datatable exists
+F.Intrinsic.Control.If(V.DataTable.HTTPPartSettings.Exists)
+	F.Data.DataTable.Close("HTTPPartSettings")
+F.Intrinsic.Control.EndIf
+'build query to pull username, password and url from custom table
+F.Intrinsic.String.Build("SELECT HTTPUSER, HTTPPASSWORD, PARTCLASS_URL FROM GCG_6625_SETTINGS WHERE ACTIVEENV = 'Y' AND CO_CODE = '{0}'", V.Caller.CompanyCode.Trim, V.Local.sSQL)
+F.Data.DataTable.CreateFromSQL("HTTPPartSettings", "conCom", V.Local.sSQL, True)
+F.Intrinsic.Control.If(V.DataTable.HTTPPartSettings.RowCount--,<>,-1)
+	'decrypt and set the credentials to the corresponding global variables
+	V.Local.sTemp.Set(V.DataTable.HTTPPartSettings(0).HTTPUSER!FieldValTrim)
+	F.Intrinsic.String.ConvertString2BA(V.Local.sTemp, V.Local.baValue)
+	F.Global.Encryption.Decrypt(V.Local.baValue,v.Local.sTemp)
+	V.Global.sPartUsername.Set(V.Local.sTemp.Trim)
+	
+	V.Local.sTemp.Set(V.DataTable.HTTPPartSettings(0).HTTPPASSWORD!FieldValTrim)
+	F.Intrinsic.String.ConvertString2BA(V.Local.sTemp, V.Local.baValue)
+	F.Global.Encryption.Decrypt(V.Local.baValue,v.Local.sTemp)
+	V.Global.sPartPassword.Set(V.Local.sTemp.Trim)
+	
+	V.Local.sTemp.Set(V.DataTable.HTTPPartSettings(0).PARTCLASS_URL!FieldValTrim)
+	F.Intrinsic.String.ConvertString2BA(V.Local.sTemp, V.Local.baValue)
+	F.Global.Encryption.Decrypt(V.Local.baValue,v.Local.sTemp)
+	V.Global.sPartURL.Set(V.Local.sTemp.Trim)
+	
+F.Intrinsic.Control.Else
+	F.Intrinsic.UI.Msgbox("Configure HTTP Settings via System Support > Administration > HTTP Credentials (6625)", "Configure Settings")
+	F.ODBC.Connection!conCom.Close
+	F.Intrinsic.Control.CallSub(f_Main_Unload)
+F.Intrinsic.Control.EndIf
+
+F.ODBC.Connection!conCom.Close
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.Control.CallSub(ErrorMessage, "ErrorNumber", V.Ambient.ErrorNumber, "ErrorDescription", V.Ambient.ErrorDescription, "Subroutine", V.Ambient.CurrentSubroutine, "UNATTENDED", V.Global.bUnattended, "Project", "6625", "ProjectTitle", "TCS Shipment Process", "Callback", "f_Main_UnLoad")
+F.Intrinsic.Control.EndTry
+Program.Sub.HTTPSettings.End
+
+Program.Sub.BuildXML.Start
+F.Intrinsic.Control.Try
+V.Local.iCnt.Declare(Long)
+v.Local.iCnt2.Declare(Long,0)
+V.Local.iCnt3.Declare(Long)
+V.Local.iRows.Declare(Long)
+V.Local.sCustomer.Declare(String)
+V.Local.sOrderNo.Declare(String)
+V.Local.sRecordNo.Declare(String)
+V.Local.sSQL.Declare(String)
+V.Local.sTemp.Declare(String)
+V.Local.sRet.Declare(String)
+V.Local.sRet2.Declare(String)
+V.Local.sSelected.Declare(String)
+V.Local.sFQP.Declare(String)
+V.Local.sSender.Declare(String)
+V.Local.sTempFQP.Declare(String)
+V.Local.sSAPCode.Declare(String)
+V.Local.sShipToID.Declare(String)
+V.Local.sPartnerID.Declare(String)
+V.Local.sCountry.Declare(String)
+v.Local.sCurrency.Declare(String)
+V.Local.sPckNo.Declare(String)
+V.Local.sResolutionPrtnrID.Declare(String)
+V.Local.sShipToRefResolution.Declare(String)
+V.Local.sSoldToRefResol.Declare(String)
+V.Local.sBillToRefResolution.Declare(String)
+V.Local.sPart.Declare(String)
+V.Local.sLoc.Declare(String)
+V.Local.sUM.Declare(String)
+V.Local.fQty.Declare(Float)
+V.Local.fPrice.Declare(Float)
+V.Local.sRev.Declare(String)
+V.Local.sLineDescription.Declare(String)
+V.Local.sPartDescription.Declare(String)
+V.Local.sLineResPrtnrID.Declare(String)
+V.Local.sTCPN.Declare(String)
+V.Local.sShipSuffix.Declare(String)
+V.Local.sTXID.Declare(String)
+V.Local.sRet3.Declare(String)
+V.Local.sOrgCode.Declare(String)
+V.Local.sRet4.Declare(String)
+V.Local.sSalesOrg.Declare(String)
+V.Local.sPlant.Declare(String)
+V.Local.sB2Name.Declare(String)
+V.Local.sB2Addr1.Declare(String)
+V.Local.sB2Addr2.Declare(String)
+V.Local.sB2Addr3.Declare(String)
+V.Local.sB2Addr4.Declare(String)
+V.Local.sB2Addr5.Declare(String)
+V.Local.sB2City.Declare(String)
+V.Local.sB2State.Declare(String)
+V.Local.sB2Zip.Declare(String)
+V.Local.sB2Country.Declare(String)
+V.Local.sS2Name.Declare(String)
+V.Local.sS2Addr1.Declare(String)
+V.Local.sS2Addr2.Declare(String)
+V.Local.sS2Addr3.Declare(String)
+V.Local.sS2Addr4.Declare(String)
+V.Local.sS2Addr5.Declare(String)
+V.Local.sS2City.Declare(String)
+V.Local.sS2State.Declare(String)
+V.Local.sS2Zip.Declare(String)
+V.Local.sS2Country.Declare(String)
+V.Local.sTempName.Declare(String)
+V.Local.sTempAddr1.Declare(String)
+V.Local.sTempAddr2.Declare(String)
+V.Local.sTempAddr3.Declare(String)
+V.Local.sTempAddr4.Declare(String)
+V.Local.sTempAddr5.Declare(String)
+V.Local.sTempCity.Declare(String)
+V.Local.sTempState.Declare(String)
+V.Local.sTemp2Zip.Declare(String)
+V.Local.sTempCountry.Declare(String)
+V.Local.sFullB2Address.Declare(String)
+V.Local.sTempPckNo.Declare(String)
+V.Local.fAllocated.Declare(Float)
+V.Local.bMatch.Declare(Boolean)
+V.Local.sCompanyCountry.Declare(String)
+V.Local.sXMLFileName.Declare(String)
+V.Local.sEndUserFQP.Declare(String)
+V.Local.sCust.Declare(String)
+V.Local.bFileExists.Declare(Boolean)
+V.Local.sXMLResponseFile.Declare(String)
+V.Local.sResponseData.Declare(String)
+V.Local.sDataPacket.Declare(String)
+V.Local.sCountryCode.Declare(String)
+V.Local.sProdDesc.Declare(String)
+V.Local.dImportDate.Declare(Date)
+V.Local.sImportDate.Declare(String)
+V.Local.sImportHTS.Declare(String)
+V.Local.dExportDate.Declare(Date)
+V.Local.sExportDate.Declare(String)
+V.Local.sExportHTS.Declare(String)
+V.Local.sECN.Declare(String)
+v.Local.sCRLF.Declare(String)
+v.Local.sResponsePacket.Declare(String)
+V.Local.sTempPartFQP.Declare(String)
+V.Local.sCopyFQP.Declare(String)
+V.Local.bProcessXML.Declare(Boolean, False)
+V.Local.sAvailQty.Declare(String)
+
+'set the sender value
+F.Intrinsic.String.Build("GSS_{0}", V.Caller.CompanyCode, V.Local.sSender)
+
+'build file path for sample datapacket
+F.Intrinsic.String.Build("{0}\tempDeliv.xml", V.Caller.FilesDir, V.Local.sTempFQP)
+
+'Check to see if the datatable already exists. If it does, close it
+F.Intrinsic.Control.If(V.DataTable.envelope.Exists)
+	F.Data.DataTable.Close("envelope")
+F.Intrinsic.Control.EndIf
+
+'load sample packet into datatbale
+F.Data.DataTable.CreateDatasetFromXML("envelope", V.Local.sTempFQP, True)
+
+F.ODBC.Connection!con.ExecuteAndReturn("SELECT COUNTRY FROM V_COMPANY WHERE REC = 1", v.Local.sCompanyCountry)
+
+'query custom cocode maint to get the SAP code for the company code
+F.Intrinsic.String.Build("SELECT SAP_CODE FROM GCG_6625_CCODE_MAINT WHERE GSS_CODE = '{0}'", V.Caller.CompanyCode, V.Local.sSQL)
+F.ODBC.Connection!con.ExecuteAndReturn(V.Local.sSQL, V.Local.sRet)
+F.Intrinsic.Control.If(V.Local.sRet.Trim,<>,"")
+	V.Local.sSAPCode.Set(V.Local.sRet.Trim)
+	'query ccode maint to get org code
+	F.Intrinsic.String.Build("SELECT ORG_CODE, SALES_ORG, TEC_PLANT FROM GCG_6625_CCODE_MAINT WHERE GSS_CODE = '{0}' AND SAP_CODE = '{1}'", V.Caller.CompanyCode, V.Local.sSAPCode.Trim, V.Local.sSQL)
+	F.ODBC.Connection!con.ExecuteAndReturn(V.Local.sSQL, V.Local.sRet4)
+	F.Intrinsic.Control.If(V.Local.sRet4.Trim,<>,"")
+		F.Intrinsic.String.Split(V.Local.sRet4,"*!*",V.Local.sRet4)
+		v.Local.sOrgCode.Set(V.Local.sRet4(0).Trim)
+		V.Local.sSalesOrg.Set(V.Local.sRet4(1).Trim)
+		V.Local.sPlant.Set(V.Local.sRet4(2).Trim)
+	F.Intrinsic.Control.EndIf
+	
+	V.Local.sCustomer.Set(V.Passed.000058)
+	V.Local.sShipToID.Set(V.Passed.000059)
+	' F.Intrinsic.String.Right(V.Local.sShipToID, 3, V.Local.sShipToID)
+	 F.Intrinsic.Control.If(V.Local.sShipToID.Trim,=,"")
+	 	V.Local.sShipToID.Set("000000")
+	 F.Intrinsic.Control.EndIf
+	 
+	V.Local.sPckNo.Set(V.Passed.000006)
+	F.Intrinsic.String.LPad(V.Local.sPckNo, "0", 7, V.Local.sPckNo)
+	
+	'LOAD THE BDF
+	F.Intrinsic.BDF.ReadRowCount("AUX001", V.Local.iRows)
+	F.Intrinsic.Math.Sub(V.Local.iRows,1,V.Local.iRows)
+	F.Intrinsic.Control.If(V.Local.iRows,>,-1)
+		F.Intrinsic.BDF.ReadRow("AUX001", 0, V.Local.sTemp)
+		F.Intrinsic.String.Split(V.Local.sTemp, "|~|", V.Local.sRet)
+			
+		V.Local.sOrderNo.Set(V.Local.sRet(1).Trim)
+		F.Intrinsic.String.LPad(V.Local.sOrderNo, "0", 7, V.Local.sOrderNo)
+	f.Intrinsic.Control.EndIf
+	
+	F.Intrinsic.String.Build("QB{0}", v.Local.sPckNo.Trim, v.Local.sTempPckNo)
+
+	V.Local.sCountry.Set(V.Passed.SHP700S5_000043.Trim)
+	'check to see if there is any information in address line 5. If there is, combine it with 4
+	F.Intrinsic.Control.If(V.Passed.SHP700S5_000038.Trim,<>,"")
+		F.Intrinsic.String.Build("{0} {1}",V.Passed.SHP700S5_000037.Trim, V.Passed.SHP700S5_000038.Trim, V.Local.sS2Addr4.Trim)
+	F.Intrinsic.Control.Else
+		V.Local.sS2Addr4.Set(V.Passed.SHP700S5_000037.Trim)
+	F.Intrinsic.Control.EndIf
+	
+	'check the same for the bill to address
+	F.Intrinsic.Control.If(V.Passed.SHP700S4_000038.Trim,<>,"")
+		F.Intrinsic.String.Build("{0} {1}", V.Passed.SHP700S4_000037.Trim, V.Passed.SHP700S4_000038.Trim, V.Local.sB2Addr4.Trim)
+	F.Intrinsic.Control.Else
+		V.Local.sB2Addr4.Set(V.Passed.SHP700S4_000037.Trim)
+	F.Intrinsic.Control.EndIf
+	
+	'ref resolution partner = PTNR_ID:Country of export-EXPORTER-01:PTNR_ORG_CODE:TEC_MASTER:PTNR_TYPE:EXPORTER
+	F.Intrinsic.String.Build("PTNR_ID:{0}-EXPORTER-01;PTNR_ORG_CODE:TEC_MASTER;PTNR_TYPE:EXPORTER", V.Local.sCompanyCountry.Trim, V.Local.sResolutionPrtnrID)
+	
+	'build ship to address ID - Customer name, ship to id (000 if it's the original ship to)
+	F.Intrinsic.String.Build("PTNR_ID:{2}_QB{0}_{1};PTNR_ORG_CODE:TEC_MASTER;PTNR_TYPE:SHIP_TO", V.Local.sCustomer.Trim, V.Local.sShipToID.Trim, V.Local.sSAPCode.Trim, V.Local.sShipToRefResolution)
+	
+	'build bill to address ID - Customer name, ship to id (000 if it's the original ship to)
+	F.Intrinsic.String.Build("PTNR_ID:{1}_QB{0};PTNR_ORG_CODE:TEC_MASTER;PTNR_TYPE:SOLD_TO", V.Local.sCustomer.Trim, v.Local.sSAPCode.Trim, V.Local.sSoldToRefResol)
+	
+	'build bill to address ID - Customer name, ship to id (000 if it's the original ship to)
+	F.Intrinsic.String.Build("PTNR_ID:{1}_QB{0};PTNR_ORG_CODE:TEC_MASTER;PTNR_TYPE:BILL_TO", V.Local.sCustomer.Trim, v.Local.sSAPCode.Trim,V.Local.sBillToRefResolution)
+	
+	F.Intrinsic.Control.For(V.Local.iCnt, 0, V.DataTable.envelope$INTEGRATION_MESSAGE_CONTROL.RowCount--,1)
+		'org code will eventually be maintained in settings table
+		F.Data.DataTable.SetValue("envelope$INTEGRATION_MESSAGE_CONTROL", V.Local.iCnt, "ACTION", "FULL_UPDATE", "ORG_CODE", V.Local.sOrgCode.Trim, "SENDER", V.Local.sSender.Trim, "BATCH_ID", "")
+	F.Intrinsic.Control.Next(V.Local.iCnt)
+	
+	F.Intrinsic.Control.For(V.Local.iCnt, 0, V.DataTable.envelope$BUS_KEY.RowCount--,1)
+		F.Data.DataTable.SetValue("envelope$BUS_KEY", V.Local.iCnt,"ORG_CODE", V.Local.sOrgCode.Trim, "TX_ID", V.Local.sTempPckNo.Trim)
+	F.Intrinsic.Control.Next(V.Local.iCnt)
+	
+	'query order header for currency	
+	F.Intrinsic.Control.For(V.Local.iCnt,0, V.DataTable.envelope$TRANSACTION_HEADER.RowCount--,1)
+		F.Data.DataTable.SetValue("envelope$TRANSACTION_HEADER", V.Local.iCnt, "CURRENCY_CODE", V.Local.sCurrency.Trim, "ORG_CODE", V.Local.sOrgCode.Trim, "SOURCE_SYSTEM", V.Local.sSender.Trim, "SOURCE_TX_ID", V.Local.sTempPckNo.Trim, "CTRY_OF_EXPORT", V.Local.sCompanyCountry.Trim, "TX_ID", V.Local.sTempPckNo.Trim, "TX_STATE", "O")
+	F.Intrinsic.Control.Next(V.Local.iCnt)
+
+
+	
+	'we need to check to see if the ship to addresses on the staged shipment are different than those on the sales order 
+	'set the ship to address variables
+	'query order header to get the order ship to addresses
+	'compare the ship to address from the order to the ship to address on the staged shipment
+	
+	F.Intrinsic.Control.If(V.DataTable.envelope$TRANSACTION_HEADER_PARTNER.RowCount--,>,-1)
+		F.Data.DataTable.SetValue("envelope$TRANSACTION_HEADER_PARTNER", 0, "REF_RESOLUTION_PARTNER", V.Local.sResolutionPrtnrID.Trim)
+		'update ship to information
+		F.Data.DataTable.SetValue("envelope$TRANSACTION_HEADER_PARTNER", 1, "REF_RESOLUTION_PARTNER", V.Local.sShipToRefResolution.Trim, "ADDRESS_LINE1", V.Passed.SHP700S5_000023.Trim,  "ADDRESS_LINE2", V.Passed.SHP700S5_000024.Trim,"ADDRESS_LINE3", V.Passed.SHP700S5_000027.Trim,  "ADDRESS_LINE4", V.Local.sS2Addr4.Trim,"CITY",V.Passed.SHP700S5_000039, "COUNTRY_CODE", V.Local.sCountry.Trim, "NAME", V.Passed.SHP700S5_000022.Trim, "POSTAL_CODE", V.Passed.SHP700S5_000041.Trim)
+		'update bill to records
+		F.Data.DataTable.SetValue("envelope$TRANSACTION_HEADER_PARTNER", 2, "REF_RESOLUTION_PARTNER", V.Local.sSoldToRefResol.Trim,"ADDRESS_LINE1", V.Passed.SHP700S4_000023.Trim, "ADDRESS_LINE2", V.Passed.SHP700S4_000024.Trim, "ADDRESS_LINE3", V.Passed.SHP700S4_000027.Trim, "ADDRESS_LINE4", V.Local.sB2Addr4.Trim, "CITY",V.Passed.SHP700S4_000039, "COUNTRY_CODE", V.Passed.SHP700S4_000043.Trim, "NAME", V.Passed.SHP700S4_000022.Trim, "POSTAL_CODE", V.Passed.SHP700S4_000041.Trim)
+		'update bill to information
+		F.Data.DataTable.SetValue("envelope$TRANSACTION_HEADER_PARTNER", 3, "REF_RESOLUTION_PARTNER", V.Local.sBillToRefResolution.Trim)
+	F.Intrinsic.Control.EndIf
+
+	F.Data.DataTable.AcceptChanges("envelope")
+	
+	'load the BDF
+'	F.Intrinsic.BDF.Load("AUX001", "AUX001")
+	F.Intrinsic.BDF.ReadRowCount("AUX001", V.Local.iRows)
+	F.Intrinsic.Math.Sub(V.Local.iRows,1,V.Local.iRows)
+	F.Intrinsic.Control.If(V.Local.iRows,>,-1)
+		'read the first row
+		F.Intrinsic.Control.For(V.Local.iCnt,0,V.Local.iRows,1)
+		
+			F.Intrinsic.BDF.ReadRow("AUX001", V.Local.iCnt, V.Local.sTemp)
+			F.Intrinsic.String.Split(V.Local.sTemp, "|~|", V.Local.sRet2)
+			V.Local.sSelected.Set(V.Local.sRet2(0).Trim)
+			V.Local.fAllocated.Set(V.Local.sRet2(10).Float)
+			V.Local.sAvailQty.Set(V.Local.sRet2(14))
+
+			F.Intrinsic.Control.If(V.Local.fAllocated,>,0, "OR", V.Local.sAvailQty.Trim.UCASE,=,"DROP")
+				V.Local.bProcessXML.Set(True)
+				V.Local.sOrderNo.Set(V.Local.sRet2(1).Trim)
+				F.Intrinsic.String.LPad(V.Local.sOrderNo, "0", 7, V.Local.sOrderNo)
+				V.Local.sRecordNo.Set(V.Local.sRet2(2).Trim)
+				F.Intrinsic.String.LPad(V.Local.sRecordNo, "0",3, V.Local.sRecordNo)
+				F.Intrinsic.String.RPad(V.Local.sRecordNo, "0", 4, V.Local.sRecordNo)
+				V.Local.sPart.Set(V.Local.sRet2(4))
+				V.Local.sLoc.Set(V.Local.sRet2(5))
+				V.Local.fQty.Set(V.Local.sRet2(7).Float)
+				V.Local.sUM.Set(V.Local.sRet2(15).Trim)
+				
+				'build query to pull price from order lines
+				F.Intrinsic.String.Build("SELECT PRICE FROM V_ORDER_LINES WHERE ORDER_NO = '{0}' AND RECORD_NO = '{1}' AND LINE_TYPE <> 'F' ", V.Local.sOrderNo.Trim, V.Local.sRecordNo, V.Local.sSQL)
+				F.ODBC.Connection!con.ExecuteAndReturn(V.Local.sSQL, V.Local.fPrice)
+				F.Intrinsic.Control.If(V.Local.fPrice,=,0)
+					'query inventory cost to pull cost
+					'If 0, pull total cost from INVENTORY_COST
+					F.Intrinsic.String.Build("SELECT COST FROM V_INVENTORY_COST WHERE PART = '{0}' AND LOCN = '{1}'", V.Local.sPart, V.Local.sLoc, V.Local.sSQL)
+					F.ODBC.Connection!con.ExecuteAndReturn(V.Local.sSQL, V.Local.fPrice)
+					F.Intrinsic.Control.If(V.Local.fPrice,=,0)
+						V.Local.fPrice.Set(0.01)
+					F.Intrinsic.Control.EndIf
+				F.Intrinsic.Control.EndIf
+
+				
+			'	F.Intrinsic.String.Right(V.Local.sPart, 3, V.Local.sRev)
+			'	F.Intrinsic.String.Left(V.Local.sPart, 17, V.Local.sPart)
+				F.Intrinsic.String.IsInString(V.Local.sPart, "||", True, V.Local.bMatch)
+				F.Intrinsic.Control.If(V.Local.bMatch,=,True)
+					'get the display part from inv_lxr
+					F.Intrinsic.String.Build("SELECT DISPLAY_PART FROM INV_LXR WHERE GSS_PART = '{0}'", v.Local.sPart, v.Local.sSQL)
+					F.ODBC.Connection!con.ExecuteAndReturn(V.Local.sSQL, V.Local.sTCPN)
+				F.Intrinsic.Control.Else
+					'get the left 16 of the part becuase the revision isn't needed
+					F.Intrinsic.String.Left(v.Local.sPart, 17, V.Local.sTCPN)
+				F.Intrinsic.Control.EndIf
+				
+				'query extra user fields to get the TCPN for the part
+			'	F.Intrinsic.String.Build("SELECT USER1 FROM INV_EXTRA WHERE PART = '{0}' AND REV = '{1}' AND LOCATION = '{2}'", V.Local.sPart, V.Local.sRev, V.Local.sLoc, V.Local.sSQL)
+			'	F.ODBC.Connection!con.ExecuteAndReturn(V.Local.sSQL, V.Local.sTCPN)
+			'	F.Intrinsic.Control.If(V.Local.sTCPN.Trim,<>,"")
+					'build ref resolution product (PROD_ID; (tcpn); PROD_ORG_CODE;TEC_MASTER||)
+			'		F.Intrinsic.String.Build("PROD_ID:{0};PROD_ORG_CODE:TEC_MASTER||", V.Local.sTCPN.Trim, V.Local.sLineResPrtnrID)
+			'	f.Intrinsic.Control.ElseIf(v.Local.sTCPN.Trim,=,"")
+					'build ref resolution product (PROD_ID; (tcpn); PROD_ORG_CODE;TEC_MASTER||)
+					F.Intrinsic.String.Build("PROD_ID:{0};PROD_ORG_CODE:TEC_MASTER||", V.Local.sTCPN.Trim, V.Local.sLineResPrtnrID)
+			'	F.Intrinsic.Control.EndIf
+				F.Data.DataTable.ShowHiddenColumns("envelope$TRANSACTION_LINE",true)
+				F.Intrinsic.Control.If(V.Local.iCnt2,=,0)
+					F.Data.DataTable.SetValue("envelope$TRANSACTION_LINE", 0, "COMMERCIAL_UOM", V.Local.sUM.Trim, "CTRY_OF_ORIGIN", V.Local.sCompanyCountry.Trim,"CURRENCY_CODE", V.Local.sCurrency.Trim, "CUSTOMS_PRICE_UNIT", V.Local.fPrice, "LINE_ID", V.Local.sRecordNo.Trim, "PRICE_UNIT", V.Local.fPrice, "QUANTITY", V.Local.fQty, "SOURCE_PROD_ID", V.Local.sTCPN.Trim, "REF_RESOLUTION_PRODUCT", V.Local.sLineResPrtnrID, "TRANSACTION_HEADER_ID", 0)
+				F.Intrinsic.Control.Else
+					
+					F.Data.DataTable.AddRow("envelope$TRANSACTION_LINE", "COMMERCIAL_UOM", V.Local.sUM.Trim, "CTRY_OF_ORIGIN", V.Local.sCompanyCountry.Trim,"CURRENCY_CODE", V.Local.sCurrency.Trim, "CUSTOMS_PRICE_UNIT", V.Local.fPrice, "LINE_ID", V.Local.sRecordNo.Trim,"LINE_TYPE", "MAIN","PRICE_UNIT", V.Local.fPrice, "QUANTITY", V.Local.fQty, "SOURCE_PROD_ID", V.Local.sTCPN.Trim, "REF_RESOLUTION_PRODUCT", V.Local.sLineResPrtnrID, "TRANSACTION_HEADER_ID", 0)
+				F.Intrinsic.Control.EndIf
+				F.Data.DataTable.ShowHiddenColumns("envelope$TRANSACTION_LINE",false)	
+			
+			'query ord deliv table to see if a record exists. If it does, update it. Otherwise, delete it
+				F.Intrinsic.String.Build("SELECT TRANS_ID FROM GCG_6625_ORD_DELIV WHERE TRANS_ID = '{0}' AND PACKING_LIST = '{1}' AND TRANS_TYPE = 'D' AND POSNR = '{2}' AND (STATUS3 = 'O' OR STATUS3 = 'H')", V.Local.sOrderNo.Trim, V.Local.sPckNo.Trim, v.Local.sRecordNo.Trim, V.Local.sSQL)
+				F.ODBC.Connection!con.ExecuteAndReturn(V.Local.sSQL, V.Local.sRet3)
+				F.Intrinsic.Control.If(V.Local.sRet3.Trim,<>,"")
+					F.Intrinsic.String.Build("UPDATE GCG_6625_ORD_DELIV SET STATUS3 = 'O',PASS_FAIL_DPL = 'X', PASS_FAIL_LIC = 'X', LIC_NUM = '', PASS_FAIL_DATA = 'X', PASS_FAIL_EUC = 'X' WHERE TRANS_ID = '{0}' AND TRANS_TYPE = 'D' AND POSNR = '{1}' AND PACKING_LIST = '{2}' ", v.Local.sOrderNo.Trim, V.Local.sRecordNo.Trim, V.Local.sPckNo.Trim, v.Local.sSQL)
+					F.ODBC.Connection!con.Execute(V.Local.sSQL)
+				F.Intrinsic.Control.Else
+					F.Intrinsic.String.Build("INSERT INTO GCG_6625_ORD_DELIV (TRANS_ID, TRANS_TYPE, POSNR,STATUS3,PASS_FAIL_DPL, PASS_FAIL_LIC, LIC_NUM, PASS_FAIL_DATA, PASS_FAIL_EUC,PARTID, PACKING_LIST) VALUES ('{0}', 'D','{1}', 'O', 'X', 'X', '', 'X', 'X', '{2}', '{3}') ", V.Local.sOrderNo.Trim, V.Local.sRecordNo.Trim, v.Local.sTCPN.Trim,V.Local.sPckNo.Trim, V.Local.sSQL)
+					F.ODBC.Connection!con.Execute(V.Local.sSQL)
+				F.Intrinsic.Control.EndIf
+				F.Intrinsic.Math.Add(V.Local.iCnt2,1,V.Local.iCnt2)	
+			
+
+				'send the part classification XML to PIPO to get the information
+				'build file path for sample datapacket
+				F.Intrinsic.String.Build("{0}\tempPartClass.xml", V.Caller.FilesDir,V.Local.sTempPartFQP)
+				
+				'Check to see if the datatable already exists. If it does, close it
+				F.Intrinsic.Control.If(V.DataTable.envelope1.Exists)
+					F.Data.DataTable.Close("envelope1")
+				F.Intrinsic.Control.EndIf
+				
+				'load sample packet into datatbale
+				F.Data.DataTable.CreateDatasetFromXML("envelope1", V.Local.sTempPartFQP, True)
+				
+				'send the part classification XML to PIPO to get the information
+				F.Data.DataTable.SetValue("envelope1$BUS_KEY", 0, "TCPN", V.Local.sTCPN.Trim)
+				
+				'build XML File name
+				F.Intrinsic.String.Build("{0}\{1}_{2}_PartSAPtoTA.xml", V.Caller.FilesDir, V.Caller.User.Trim, V.Ambient.Date.FormatMMDDYYYY, V.Local.sFQP)
+				F.Data.DataTable.SAVEDATASETTOXML("envelope1", 1, V.Local.sFQP)
+				
+				F.Intrinsic.Control.If(V.DataTable.envelope1.Exists)
+					F.Data.DataTable.Close("envelope1")
+				F.Intrinsic.Control.EndIf
+				
+				'get the part classification credentials and url 
+				'set the username and password - will need to have a maintenance program for them to setup Username and Password for TA
+				F.Communication.HTTPS.SetProperty("User", V.Global.sPartUsername)
+				F.Communication.HTTPS.SetProperty("Password", V.Global.sPartPassword)
+				
+				'logic for HTTP request
+				F.Intrinsic.String.Build("{0}\{1}_{2}_PartSAPtoTA.xml", V.Caller.FilesDir, V.Caller.User.Trim, V.Ambient.Date.FormatMMDDYYYY, V.Local.sXMLFileName)
+				F.Intrinsic.File.Exists(V.Local.sXMLFileName, V.Local.bFileExists)
+				F.Intrinsic.Control.If(V.Local.bFileExists,=,True)
+'					F.Intrinsic.File.File2String(V.Local.sXMLFileName, V.Local.sDataPacket)
+'					F.Intrinsic.String.Build("<?xml version="1.0" standalone="yes"?>{0}{1}", V.ASCII.13, V.ASCII.10, V.Local.sCRLF)
+'					F.Intrinsic.String.Replace(V.Local.sDataPacket, V.Local.sCRLF, "", V.Local.sDataPacket)
+'					F.Intrinsic.String.Replace(V.Local.sDataPacket, "MT_GSS_TA_Part_Classification_Request", "part:MT_GSS_TA_Part_Classification_Request", V.Local.sDataPacket)
+'					F.Intrinsic.String.Replace(V.Local.sDataPacket, "<soapenv:ENVELOPE1 xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">", "<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:part="urn:teconnect.com/Global_Trade/GSS/Part_Classification">", V.Local.sDataPacket)
+'					F.Intrinsic.String.Replace(V.Local.sDataPacket, "</soapenv:ENVELOPE1>", "</soapenv:Envelope>", V.Local.sDataPacket)
+'					F.Intrinsic.String.Replace(V.Local.sDataPacket, "BUS_KEY", "Record", V.Local.sDataPacket)
+'					F.Intrinsic.String.Build("{0}\{1}_{2}_PartSAPtoTA_Response.xml", V.Caller.FilesDir, V.Caller.User.Trim, V.Ambient.Date.FormatMMDDYYYY, V.Local.sXMLResponseFile)
+					
+					F.Intrinsic.File.File2String(V.Local.sXMLFileName, V.Local.sDataPacket)
+						F.Intrinsic.String.Build("<?xml version="1.0" standalone="yes"?>{0}{1}", V.ASCII.13, V.ASCII.10, V.Local.sCRLF)
+						F.Intrinsic.String.Replace(V.Local.sDataPacket, V.Local.sCRLF, "", V.Local.sDataPacket)
+						F.Intrinsic.String.Replace(V.Local.sDataPacket, "MT_GSS_TA_Part_Classification_Request", "part:MT_GSS_TA_Part_Classification_Request", V.Local.sDataPacket)
+						F.Intrinsic.String.Replace(V.Local.sDataPacket, "<soapenv:ENVELOPE1 xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">", "<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:part="urn:teconnect.com/Global_Trade/GSS/Part_Classification">", V.Local.sDataPacket)
+						F.Intrinsic.String.Replace(V.Local.sDataPacket, "</soapenv:ENVELOPE1>", "</soapenv:Envelope>", V.Local.sDataPacket)
+						F.Intrinsic.String.Replace(V.Local.sDataPacket, "BUS_KEY", "Record", V.Local.sDataPacket)
+						F.Intrinsic.String.Build("{0}\{1}_{2}_PartSAPtoTA_Response.xml", V.Caller.FilesDir, V.Caller.User.Trim, V.Ambient.Date.FormatMMDDYYYY, V.Local.sXMLResponseFile)
+					
+					Function.Communication.HTTPS.SetProperty("LOCALFILE", V.Local.sXMLResponseFile)
+					F.Communication.HTTPS.SetProperty("PostData",V.Local.sDataPacket)
+					Function.Communication.HTTPS.SetProperty("ContentType","application/xml")
+					'set up the URL for each post as well
+					'this will need to be the URL provided by TE
+					'send the part classification XML to PIPO to get the information
+					Function.Communication.HTTPS.Post(V.Global.sPartURL)
+					
+					'copy the XML File and response file to custom folder
+					F.Intrinsic.String.Build("{0}\TA_DATA_TRANSFER\{1}_{2}{3}_PartSAPtoTA.xml", V.Caller.FilesDir, V.Caller.User.Trim, V.Ambient.Date.FormatMMDDYYYY, V.Ambient.Time.FormatHhNnSs,V.Local.sCopyFQP)
+					F.Intrinsic.File.CopyFile(V.Local.sXMLFileName,V.Local.sCopyFQP)	
+					
+					
+					'delete the file that was just created
+					F.Intrinsic.File.DeleteFile(V.Local.sXMLFileName)
+				F.Intrinsic.Control.EndIf
+				
+				'check to see if the response file exists
+				F.Intrinsic.File.Exists(V.Local.sXMLResponseFile, V.Local.bFileExists)
+				F.Intrinsic.Control.If(V.Local.bFileExists,=,True)
+					'copy the XML File and response file to custom folder
+					F.Intrinsic.String.Build("{0}\TA_DATA_TRANSFER\{1}_{2}{3}_PartSAPtoTA_Response.xml", V.Caller.FilesDir, V.Caller.User.Trim, V.Ambient.Date.FormatMMDDYYYY, V.Ambient.Time.FormatHhNnSs,V.Local.sCopyFQP)
+					F.Intrinsic.File.CopyFile(V.Local.sXMLResponseFile,V.Local.sCopyFQP)	
+					
+					F.Intrinsic.File.File2String(V.Local.sXMLResponseFile, V.Local.sResponsePacket)
+					'remove the single quotes
+					F.Intrinsic.String.Replace(V.Local.sResponsePacket, "<?xml version=1.0 encoding=UTF-8?>", "", V.Local.sResponsePacket)
+					F.Intrinsic.String.Replace(V.Local.sResponsePacket, "<?xml version=1.0 encoding=UTF-8?>", "", V.Local.sResponsePacket)
+					F.Intrinsic.String.Replace(V.Local.sResponsePacket, "xmlns:ns0='urn:teconnect.com/Global_Trade/GSS/Part_Classification'", "", V.Local.sResponsePacket)
+					F.Intrinsic.String.Replace(V.Local.sResponsePacket, "<ns0:MT_TA_GSS_Part_Classification_Response >", "<MT_TA_GSS_Part_Classification_Response>",V.Local.sResponsePacket)
+					F.Intrinsic.String.Replace(V.Local.sResponsePacket, "</ns0:MT_TA_GSS_Part_Classification_Response>", "</MT_TA_GSS_Part_Classification_Response>",V.Local.sResponsePacket)
+							
+					F.Intrinsic.File.String2File(V.Local.sXMLResponseFile, V.Local.sResponsePacket)
+					
+					'check to see if the datatable exists
+					F.Intrinsic.Control.If(V.DataTable.dtTempPart.Exists,=,True)
+						F.Data.DataTable.Close("dtTempPart")
+					F.Intrinsic.Control.EndIf
+					
+					'create the response datatable
+					F.Data.DataTable.CreateDatasetFromXML("dtTempPart", V.Local.sXMLResponseFile, True)
+				F.Intrinsic.Control.EndIf
+				
+				'open Common Connection to DB
+				F.ODBC.Connection!ComCon.OpenCommonConnection
+				
+				'insert into custom table in common company code
+				F.Intrinsic.Control.For(V.Local.iCnt3,0, V.DataTable.dtTempPart.RowCount--,1)
+					V.Local.sTCPN.Set(V.DataTable.dtTempPart$PROD_CLASS(V.Local.iCnt3).PROD_ID!FieldValTrim)
+					V.Local.sCountryCode.Set(V.DataTable.dtTempPart$PROD_CLASS(V.Local.iCnt3).CTRY_CODE!FieldValTrim)
+					F.Intrinsic.Control.If(V.Local.sCountryCode.Trim,=,"")
+						V.Local.sCountryCode.Set("US")
+					F.Intrinsic.Control.EndIf
+					V.Local.sProdDesc.Set(V.DataTable.dtTempPart$PROD_CLASS(V.Local.iCnt3).PROD_DESCRIPTION_COMPLIANCE!FieldValTrim)
+					'V.Local.dImportDate.Set(V.DataTable.dtTempData(V.Local.iCnt).IM_CLASS_DATE!FieldVal)
+					V.Local.sImportHTS.Set(V.DataTable.dtTempPart$PROD_CLASS(V.Local.iCnt3).IM_HS1!FieldValTrim)
+					V.Local.sExportHTS.Set(V.DataTable.dtTempPart$PROD_CLASS(V.Local.iCnt3).EX_HS!FieldValTrim)
+					V.Local.sECN.Set(V.DataTable.dtTempPart$PROD_CLASS(V.Local.iCnt3).ECN!FieldValTrim)
+					
+					'query common table to see if a record exists. if it does, update it. if it doesn't, don't update it
+					F.Intrinsic.String.Build("SELECT * FROM GCG_6625_PART_CODE WHERE TCPN = '{0}'", V.Local.sTCPN.Trim, V.Local.sSQL)
+					F.ODBC.Connection!ComCon.ExecuteAndReturn(V.Local.sSQL, V.Local.sRet4)
+					F.Intrinsic.Control.If(V.Local.sRet4.Trim,<>,"")
+						'update the record
+						F.Intrinsic.String.Build("UPDATE GCG_6625_PART_CODE SET COUNTRY = '{0}', IMPORT_HTS = '{1}', EXPORT_HTS = '{2}', ECCN = '{3}', COMPLIANCE_DESC = '{4}', PROCESSED = 0 WHERE TCPN = '{5}'", V.Local.sCountryCode.Trim, V.Local.sImportHTS.Trim, V.Local.sExportHTS.Trim, V.Local.sECN.Trim, V.Local.sProdDesc.PSQLFriendly, V.Local.sTCPN.Trim, V.Local.sSQL)
+						F.ODBC.Connection!ComCon.Execute(V.Local.sSQL)
+					F.Intrinsic.Control.Else
+						'insert a record
+						F.Intrinsic.String.Build("INSERT INTO GCG_6625_PART_CODE (TCPN, COUNTRY, IMPORT_HTS, EXPORT_HTS, ECCN, COMPLIANCE_DESC, PROCESSED) VALUES ('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', 0)", v.Local.sTCPN.Trim, V.Local.sCountryCode.Trim, V.Local.sImportHTS.Trim, V.Local.sExportHTS.Trim, V.Local.sECN.Trim, V.Local.sProdDesc.PSQLFriendly, V.Local.sSQL)
+						F.ODBC.Connection!ComCon.Execute(V.Local.sSQL)
+					F.Intrinsic.Control.EndIf
+					
+					'delete the resposne file
+					F.Intrinsic.File.DeleteFile(V.Local.sXMLResponseFile)
+				F.Intrinsic.Control.Next(V.Local.iCnt3)
+	
+				F.ODBC.Connection!ComCon.Close
+				'close the datatable
+				F.Intrinsic.Control.If(V.DataTable.dtTempPart.Exists,=,True)
+					F.Data.DataTable.Close("dtTempPart")
+				F.Intrinsic.Control.EndIf
+			
+	'		F.Intrinsic.Control.ElseIf(V.Local.sDr)
+			F.Intrinsic.Control.EndIf	
+			
+		F.Intrinsic.Control.Next(V.Local.iCnt)
+		
+		F.Intrinsic.Control.If(V.Local.bProcessXML,=,True)
+			F.Intrinsic.Control.For(V.Local.iCnt,0, V.DataTable.envelope$MDI_TX_IMPL_TX_DEFAULT.RowCount--,1)
+				F.Data.DataTable.SetValue("envelope$MDI_TX_IMPL_TX_DEFAULT", V.Local.iCnt, "TEC_SO_NUMBER", V.Local.sOrderNo.Trim, "TEC_SALES_ORG", V.Local.sSalesOrg.Trim, "TEC_PLANT",V.Local.sPlant.Trim)
+			F.Intrinsic.Control.Next(V.Local.iCnt)
+		
+		
+			'query ord deliv table to see if a record exists. If it does, update it. Otherwise, delete it
+			F.Intrinsic.String.Build("SELECT TRANS_ID FROM GCG_6625_ORD_DELIV WHERE PACKING_LIST = '{1}' AND TRANS_TYPE = 'D' AND PARTID IS NULL", V.Local.sOrderNo.Trim, V.Local.sPckNo.Trim, V.Local.sSQL)
+			F.ODBC.Connection!con.ExecuteAndReturn(V.Local.sSQL, V.Local.sRet3)
+			F.Intrinsic.Control.If(V.Local.sRet3.Trim,<>,"")
+				F.Intrinsic.String.Build("UPDATE GCG_6625_ORD_DELIV SET STATUS3 = 'O', PASS_FAIL_DPL = 'X', PASS_FAIL_LIC = 'X', LIC_NUM = '', PASS_FAIL_DATA = 'X', PASS_FAIL_EUC = 'X' WHERE TRANS_ID = '{0}' AND PACKING_LIST = '{1}' AND TRANS_TYPE = 'D' AND PARTID IS NULL", v.Local.sOrderNo.Trim, V.Local.sPckNo.Trim, v.Local.sSQL)
+				F.ODBC.Connection!con.Execute(V.Local.sSQL)
+			F.Intrinsic.Control.Else
+				F.Intrinsic.String.Build("INSERT INTO GCG_6625_ORD_DELIV (TRANS_ID, TRANS_TYPE, STATUS3, PACKING_LIST,PASS_FAIL_DPL, PASS_FAIL_LIC, LIC_NUM, PASS_FAIL_DATA, PASS_FAIL_EUC) VALUES ('{0}', 'D', 'O', '{1}', 'X', 'X', '','X', 'X')", V.Local.sOrderNo.Trim, v.Local.sPckNo.Trim, V.Local.sSQL)
+				F.ODBC.Connection!con.Execute(V.Local.sSQL)
+			F.Intrinsic.Control.EndIf
+			
+			'build XML File name
+			F.Intrinsic.String.Build("{0}\{1}_{2}_DeliverySAPtoTA.xml", V.Caller.FilesDir, V.Caller.User.Trim, V.Ambient.Date.FormatMMDDYYYY, V.Local.sFQP)
+			
+			F.Data.DataTable.SaveDataSetToXML("envelope", 1, V.Local.sFQP)
+		'	F.Data.DataTable.SaveToXML("envelope", 1, True, V.Local.sFQP)
+			
+			'callsub to process the XML
+			F.Intrinsic.Control.CallSub(ProcessXML)
+			V.Local.bProcessXML.Set(False)
+		F.Intrinsic.Control.EndIf
+		
+	F.Intrinsic.Control.EndIf
+	
+	F.Intrinsic.Control.ExitSub
+F.Intrinsic.Control.ElseIf(V.Local.sRet.Trim,=,"")
+	F.Intrinsic.UI.Msgbox("The SAP Code has not been set up for this Company Code. You need to setup the associated SAP Code via System Support > Administration > TCS Maintenance (6625)", "Required Data")
+	V.Passed.777777.Set(1)
+	F.Intrinsic.Control.CallSub(f_Main_UnLoad)
+F.Intrinsic.Control.EndIf
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.Control.CallSub(ErrorMessage, "ErrorNumber", V.Ambient.ErrorNumber, "ErrorDescription", V.Ambient.ErrorDescription, "Subroutine", V.Ambient.CurrentSubroutine, "UNATTENDED", V.Global.bUnattended, "Project", "6625", "ProjectTitle", "TCS Shipment Process", "Callback", "f_Main_UnLoad")
+F.Intrinsic.Control.EndTry
+Program.Sub.BuildXML.End
+
+Program.Sub.ProcessXML.Start
+F.Intrinsic.Control.Try
+V.Local.sXMLFileName.Declare(String)
+V.Local.sEndUserFQP.Declare(String)
+V.Local.sCust.Declare(String)
+V.Local.bFileExists.Declare(Boolean)
+V.Local.sXMLResponseFile.Declare(String)
+V.Local.sResponseData.Declare(String)
+V.Local.sDataPacket.Declare(String)
+V.Local.sFQP.Declare(String)
+V.Local.sTADirectory.Declare(String)
+V.Local.bDirExists.Declare(Boolean)
+
+'check to see if the ta data transfer directory exists. If it doesn't create it
+F.Intrinsic.String.Build("{0}\TA_DATA_TRANSFER\", V.Caller.FilesDir, V.Local.sTADirectory)
+F.Intrinsic.File.DirExists(V.Local.sTADirectory, V.Local.bDirExists)
+F.Intrinsic.Control.If(V.Local.bDirExists,=,False)
+	F.Intrinsic.File.CreateDir(V.Local.sTADirectory)
+F.Intrinsic.Control.EndIf
+
+'set the username and password - will need to have a maintenance program for them to setup Username and Password for TA
+F.Communication.HTTPS.SetProperty("User", V.Global.sUsername)
+F.Communication.HTTPS.SetProperty("Password", V.Global.sPassword)
+
+'logic for HTTP request
+F.Intrinsic.String.Build("{0}\{1}_{2}_DeliverySAPtoTA.xml", V.Caller.FilesDir, V.Caller.User.Trim, V.Ambient.Date.FormatMMDDYYYY, V.Local.sXMLFileName)
+F.Intrinsic.File.Exists(V.Local.sXMLFileName, V.Local.bFileExists)
+F.Intrinsic.Control.If(V.Local.bFileExists,=,True)
+	F.Intrinsic.File.File2String(V.Local.sXMLFileName, V.Local.sDataPacket)
+	F.Intrinsic.String.Replace(V.Local.sDataPacket, "soapenv:ENVELOPE", "soapenv:Envelope", V.Local.sDataPacket)
+	F.Intrinsic.String.Build("{0}\{1}_{2}_DeliverySAPtoTA_Response.txt", V.Caller.FilesDir, V.Caller.User.Trim, V.Ambient.Date.FormatMMDDYYYY, V.Local.sXMLResponseFile)
+	
+	Function.Communication.HTTPS.SetProperty("LOCALFILE", V.Local.sXMLResponseFile)
+	F.Communication.HTTPS.SetProperty("PostData", V.Local.sDataPacket)
+	Function.Communication.HTTPS.SetProperty("ContentType","application/xml")
+	'set up the URL for each post as well
+	'this will need to be the URL provided by TE
+	Function.Communication.HTTPS.Post(v.Global.sURL)
+	
+	'copy the XML File and response file to custom folder
+	F.Intrinsic.String.Build("{0}\TA_DATA_TRANSFER\{1}_{2}{3}_DeliverySAPtoTA.xml", V.Caller.FilesDir, V.Caller.User.Trim, V.Ambient.Date.FormatMMDDYYYY,V.Ambient.Time.FormatHhNnSs, V.Local.sFQP)
+	F.Intrinsic.File.CopyFile(V.Local.sXMLFileName,V.Local.sFQP)	
+	'delete the file that was just created
+	F.Intrinsic.File.DeleteFile(V.Local.sXMLFileName)
+	
+	'copy the XML File and response file to custom folder
+	F.Intrinsic.String.Build("{0}\TA_DATA_TRANSFER\{1}_{2}{3}_DeliverySAPtoTA_Response.txt", V.Caller.FilesDir, V.Caller.User.Trim, V.Ambient.Date.FormatMMDDYYYY, V.Ambient.Time.FormatHhNnSs, V.Local.sFQP)
+	F.Intrinsic.File.CopyFile(V.Local.sXMLResponseFile,V.Local.sFQP)	
+	'delete the file that was just created
+	F.Intrinsic.File.DeleteFile(V.Local.sXMLResponseFile)
+F.Intrinsic.Control.EndIf
+
+'Ship Button
+'V.Passed.000015
+F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000015, "LOCK",1)
+'Packing Button
+'V.Passed.000016
+F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000016, "LOCK",1)
+'Print Button
+'V.Passed.000057
+F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000057, "LOCK",1)
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Catch
+	f.Communication.HTTPS.ReadProperty("TransferredData", V.Local.sResponseData)
+	F.Intrinsic.UI.Msgbox(V.Local.sResponseData, "HTTPS Error")
+	F.Intrinsic.Control.CallSub(ErrorMessage, "ErrorNumber", V.Ambient.ErrorNumber, "ErrorDescription", V.Ambient.ErrorDescription, "Subroutine", V.Ambient.CurrentSubroutine, "UNATTENDED", V.Global.bUnattended, "Project", "6625", "ProjectTitle", "TCS Sales Order Process", "Callback", "f_Main_UnLoad")
+F.Intrinsic.Control.EndTry
+Program.Sub.ProcessXML.End
+
+Program.Sub.PreShipCheck.Start
+F.Intrinsic.Control.Try
+V.Local.bAwaitingMatch.Declare(Boolean)
+V.Local.bNotScreenedMatch.Declare(Boolean)
+V.Local.bBlockMatch.Declare(Boolean)
+V.Local.bFailMatch.Declare(Boolean)
+V.Local.bAddressMatch.Declare(Boolean)
+V.Local.sTempAddr1.Declare(String)
+V.Local.sTempCity.Declare(String)
+V.Local.sTempCountry.Declare(String)
+V.Local.sTempZip.Declare(String)
+V.Local.sAddr1.Declare(String)
+V.Local.sCity.Declare(String)
+V.Local.sCountry.Declare(String)
+V.Local.sZip.Declare(String)
+V.Local.sPckNo.Declare(String)
+V.Local.sSQL.Declare(String)
+V.Local.sRet.Declare(String)
+V.Local.sTempName.Declare(String)
+V.Local.sName.Declare(String)
+V.Local.sTempAddress.Declare(String)
+V.Local.sAddress.Declare(String)
+V.Local.sStatus.Declare(String)
+
+
+'check to make sure the shipment lines don't include awaiting tcs status or block or not screened
+F.Intrinsic.String.IsInString(V.Screen.f_Status!txtShipLineStatus.Text,"Not Screened",True, V.Local.bNotScreenedMatch)
+F.Intrinsic.Control.If(V.Local.bNotScreenedMatch,=,True)
+	'if the shipment hasn't been screened, notify the user and force them to save
+	V.Local.sStatus.Set("Staged Shipment has not been Screened. You must send the Staged Shipment to Trade Automation before you can continue.")
+		
+	F.Intrinsic.UI.Msgbox(V.Local.sStatus.Trim, "Global Trade Block")
+	V.Passed.777777.Set(1)
+	'Ship Button
+	'V.Passed.000015
+	F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000015, "LOCK",1)
+	'Save Button
+	'V.Passed.000012
+'	F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000012, "LOCK",1)
+	'Packing Button
+	'V.Passed.000016
+	F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000016, "LOCK",1)
+	'Print Button
+	'V.Passed.000057
+	F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000057, "LOCK",1)
+	V.Passed.CANCEL.Set(1)
+	F.Intrinsic.Control.CallSub(f_Main_UnLoad)
+F.Intrinsic.Control.Else
+	'check to see if the shipment is awaiting TCS
+	F.Intrinsic.String.IsInString(V.Screen.f_Status!txtShipLineStatus.Text, "Awaiting", True, V.Local.bAwaitingMatch)
+	F.Intrinsic.Control.If(V.Local.bAwaitingMatch,=,True)
+		'if the shipment is awaiting TCS Status, notify the user and force them to save
+		V.Local.sStatus.Set("Staged Shipment is Awaiting TCS Status. The Staged Shipment cannot be shipped until it passes TA Screening.")
+			
+		F.Intrinsic.UI.Msgbox(V.Local.sStatus.Trim, "Global Trade Block")
+		V.Passed.777777.Set(1)
+		'Ship Button
+		'V.Passed.000015
+		F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000015, "LOCK",1)
+		'Save Button
+		'V.Passed.000012
+	'	F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000012, "LOCK",1)
+		'Packing Button
+		'V.Passed.000016
+		F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000016, "LOCK",1)
+		'Print Button
+		'V.Passed.000057
+		F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000057, "LOCK",1)
+		V.Passed.CANCEL.Set(1)
+		F.Intrinsic.Control.CallSub(f_Main_UnLoad)
+	F.Intrinsic.Control.Else
+		'check to see if there have been any fails. If there has been, don't allow the shipment to be created
+		F.Intrinsic.String.IsInString(V.Screen.f_Status!txtShipLineStatus.Text,"Fail", True, V.Local.bFailMatch)
+		F.Intrinsic.Control.If(V.Local.bFailMatch,=,True)
+			V.Local.sStatus.Set("Staged Shipment has failed TA screening. Staged Shipment cannot be shipped.")
+			
+			F.Intrinsic.UI.Msgbox(V.Local.sStatus.Trim, "Global Trade Block")
+			V.Passed.777777.Set(1)
+			'Ship Button
+			'V.Passed.000015
+			F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000015, "LOCK",1)
+			'Save Button
+			'V.Passed.000012
+		'	F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000012, "LOCK",1)
+			'Packing Button
+			'V.Passed.000016
+			F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000016, "LOCK",1)
+			'Print Button
+			'V.Passed.000057
+			F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000057, "LOCK",1)
+			V.Passed.CANCEL.Set(1)
+			F.Intrinsic.Control.CallSub(f_Main_UnLoad)
+		F.Intrinsic.Control.Else
+		
+			'compare the ship to addresses to see if anything has changed. If it has, don't allow them to ship 
+			'use the pck no to get the existing ship to information
+			'set the passed variables
+			V.Local.sPckNo.Set(V.Passed.000006)
+			F.Intrinsic.String.LPad(V.Local.sPckNo, "0", 7, V.Local.sPckNo)
+			
+			'query shipment ship to
+			F.Intrinsic.String.Build("SELECT NAME_CUSTOMER_SHIP, ADDRESS_1_SHIP, CITY_SHIP, CODE_ZIP_SHIP, COUNTRY_SHIP FROM V_SHIPMENT_SHIPTO WHERE PCK_NO = '{0}'", V.Local.sPckNo.Trim, V.Local.sSQL)
+			F.ODBC.Connection!con.ExecuteAndReturn(V.Local.sSQL, V.Local.sRet)
+			F.Intrinsic.Control.If(V.Local.sRet.Trim,<>,"")
+				F.Intrinsic.String.Split(V.Local.sRet,"*!*", V.Local.sRet)
+				V.Local.sTempName.Set(V.Local.sRet(0).Trim)
+				V.Local.sTempAddr1.Set(V.Local.sRet(1).Trim)
+				V.Local.sTempCity.Set(V.Local.sRet(2).Trim)
+				V.Local.sTempZip.Set(v.Local.sRet(3).Trim)
+				V.Local.sTempCountry.Set(V.Local.sRet(4).Trim)
+				
+				'build the full address
+				F.Intrinsic.String.Build("{0} {1} {2} {3} {4}", V.Local.sTempName.Trim, V.Local.sTempAddr1.Trim, V.Local.sTempCity.Trim, V.Local.sTempZip.Trim, V.Local.sTempCountry.Trim, V.Local.sTempAddress)
+				
+				'get the screen address
+				V.Local.sName.Set(V.Passed.SHP700S5_000022.Trim)
+				V.Local.sAddr1.Set(V.Passed.SHP700S5_000023.Trim)
+				V.Local.sCity.Set(V.Passed.SHP700S5_000039.Trim)
+				V.Local.sZip.Set(V.Passed.SHP700S5_000041.Trim)
+				V.Local.sCountry.Set(V.Passed.SHP700S5_000043.Trim)
+				'build the full address
+				F.Intrinsic.String.Build("{0} {1} {2} {3} {4}", V.Local.sName.Trim, V.Local.sAddr1.Trim, V.Local.sCity.Trim, V.Local.sZip.Trim, V.Local.sCountry.Trim, V.Local.sAddress)
+				
+				
+				F.Intrinsic.Control.If(V.Local.sTempAddress.Trim,<>,V.Local.sAddress.Trim)
+					V.Local.sStatus.Set("Staged Shipment ship to address has changed. The Staged Shipment must be sent to Trade Automation for rescreening.")
+			
+					F.Intrinsic.UI.Msgbox(V.Local.sStatus.Trim, "Global Trade Block")
+					V.Passed.777777.Set(1)
+					'Ship Button
+					'V.Passed.000015
+					F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000015, "LOCK",1)
+					'Save Button
+					'V.Passed.000012
+				'	F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000012, "LOCK",1)
+					'Packing Button
+					'V.Passed.000016
+					F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000016, "LOCK",1)
+					'Print Button
+					'V.Passed.000057
+					F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000057, "LOCK",1)
+					V.Passed.CANCEL.Set(1)
+					F.Intrinsic.Control.CallSub(f_Main_UnLoad)
+				
+				F.Intrinsic.Control.EndIf
+				
+			F.Intrinsic.Control.Else
+				V.Local.sStatus.Set("Staged Shipment has not been saved. Save the Staged Shipment and try again")
+			
+				F.Intrinsic.UI.Msgbox(V.Local.sStatus.Trim, "Global Trade Block")
+				V.Passed.777777.Set(1)
+				'Ship Button
+				'V.Passed.000015
+				F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000015, "LOCK",1)
+				'Save Button
+				'V.Passed.000012
+			'	F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000012, "LOCK",1)
+				'Packing Button
+				'V.Passed.000016
+				F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000016, "LOCK",1)
+				'Print Button
+				'V.Passed.000057
+				F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000057, "LOCK",1)
+				V.Passed.CANCEL.Set(1)
+				F.Intrinsic.Control.CallSub(f_Main_UnLoad)
+			F.Intrinsic.Control.EndIf
+		F.Intrinsic.Control.EndIf
+	F.Intrinsic.Control.EndIf
+F.Intrinsic.Control.EndIf
+
+F.Intrinsic.Control.ExitSub
+F.Intrinsic.Control.Catch
+	F.Intrinsic.Control.CallSub(ErrorMessage, "ErrorNumber", V.Ambient.ErrorNumber, "ErrorDescription", V.Ambient.ErrorDescription, "Subroutine", V.Ambient.CurrentSubroutine, "UNATTENDED", V.Global.bUnattended, "Project", "6625", "ProjectTitle", "TCS Shipment Process", "Callback", "f_Main_UnLoad")
+F.Intrinsic.Control.EndTry
+Program.Sub.PreShipCheck.End
+
+Program.Sub.DeleteStagedShipment.Start
+F.Intrinsic.Control.Try
+V.Local.sOrderNo.Declare(String)
+V.Local.sPckNo.Declare(String)
+V.Local.sSQL.Declare(String)
+
+'pck no - V.passed.000006 - needs padding
+V.Local.sPckNo.Set(V.Passed.000006)
+F.Intrinsic.String.LPad(V.Local.sPckNo,"0",7, V.Local.sPckNo)
+
+'build query
+F.Intrinsic.String.Build("DELETE FROM GCG_6625_ORD_DELIV WHERE PACKING_LIST = '{0}' AND TRANS_TYPE = 'D'", V.Local.sPckNo, V.Local.sSQL)
+F.ODBC.Connection!con.Execute(V.Local.sSQL)
+
+F.Intrinsic.Control.ExitSub
+F.Intrinsic.Control.Catch
+	F.Intrinsic.Control.CallSub(ErrorMessage, "ErrorNumber", V.Ambient.ErrorNumber, "ErrorDescription", V.Ambient.ErrorDescription, "Subroutine", V.Ambient.CurrentSubroutine, "UNATTENDED", V.Global.bUnattended, "Project", "6625", "ProjectTitle", "TCS Shipment Process", "Callback", "f_Main_UnLoad")
+F.Intrinsic.Control.EndTry
+Program.Sub.DeleteStagedShipment.End
+
+Program.Sub.f_Main_UnLoad.Start
+F.Intrinsic.Control.Try
+
+'close the connection
+F.ODBC.Connection!con.Close
+
+'end the program
+F.Intrinsic.Control.End
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.Control.CallSub(ErrorMessage, "ErrorNumber", V.Ambient.ErrorNumber, "ErrorDescription", V.Ambient.ErrorDescription, "Subroutine", V.Ambient.CurrentSubroutine, "UNATTENDED", V.Global.bUnattended, "Project", "6625", "ProjectTitle", "TCS Shipment Process", "Callback", "f_Main_UnLoad")
+F.Intrinsic.Control.EndTry
+Program.Sub.f_Main_UnLoad.End
+
+Program.Sub.ErrorMessage.Start
+'basic error message for replacing catch block
+'this is really just for when printing the message and ending program
+'pass error number, error description, current subroutine
+'optional callback sub, this will be called before ending
+'optional unattended parameters, those subs may not exist if not using them but won't be called
+F.Intrinsic.Control.Try
+
+V.Local.iError.Declare(Long)
+V.Local.sErrorDescription.Declare(String)
+V.Local.sSubroutine.Declare(String)
+V.Local.sError.Declare(String)
+V.Local.bExists.Declare(Boolean)
+V.Local.sCallback.Declare(String)
+
+V.Local.iError.Set(V.Args.ErrorNumber)
+V.Local.sErrorDescription.Set(V.Args.ErrorDescription)
+V.Local.sSubroutine.Set(V.Args.Subroutine)
+
+'make sure we aren't in an error loop
+F.Intrinsic.Control.If(V.Global.bError)
+	F.Intrinsic.Control.End
+
+F.Intrinsic.Control.EndIf
+V.Global.bError.Set(True)
+
+F.Intrinsic.String.Build("Project: {0}{1}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}{1}{1}GAB Version: {5}", V.Caller.ScriptFile, V.Ambient.Newline, V.Local.sSubroutine, V.Local.iError, V.Local.sErrorDescription, V.Ambient.GABVersion, V.Local.sError)
+
+F.Intrinsic.Variable.ArgExists("UNATTENDED", V.Local.bExists)
+F.Intrinsic.Control.If(V.Local.bExists)
+	F.Intrinsic.Control.If(V.Args.UNATTENDED)
+		F.Intrinsic.Control.CallSub(UnattendedErrorMessage, "MESSAGE", V.Local.sError, "PROJECT", V.Args.PROJECT, "PROJECTTITLE", V.Args.PROJECTTITLE)
+	F.Intrinsic.Control.Else
+		F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.EndIf
+F.Intrinsic.Control.Else
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+F.Intrinsic.Control.EndIf
+
+F.Intrinsic.Variable.ArgExists("Callback", V.Local.bExists)
+F.Intrinsic.Control.If(V.Local.bExists)
+	V.Local.sCallback.Set(V.Args.Callback.Trim)
+	F.Intrinsic.Control.CallSub(V.Local.sCallback)
+F.Intrinsic.Control.EndIf
+
+F.Intrinsic.Control.End
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.String.Build("Project: {0}{1}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}{1}{1}GAB Version: {5}",V.Caller.ScriptFile,V.Ambient.Newline,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Ambient.GABVersion,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.End
+
+F.Intrinsic.Control.EndTry
+Program.Sub.ErrorMessage.End
+
+Program.Sub.Comments.Start
+${$5$}$20.1.8746.21827$}$1
+${$6$}$acollins$}$20240108125408487$}$h98hERc2yV72q0GaUGlwSaoK/aefTdVkC8twM5WMoD+73cv3Rs5F3oeiPwsUo1QkUy01qZJpSaKh9rad5ZUu3Q==
+Program.Sub.Comments.End
