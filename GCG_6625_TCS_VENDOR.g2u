@@ -1,0 +1,1018 @@
+﻿Program.Sub.ScreenSU.Start
+Gui.f_Main..Create(BaseForm)
+Gui.f_Main..Caption("")
+Gui.f_Main..Size(184,312)
+Gui.f_Main..MinX(0)
+Gui.f_Main..MinY(0)
+Gui.f_Main..Position(0,0)
+Gui.f_Main..AlwaysOnTop(False)
+Gui.f_Main..FontName("Tahoma")
+Gui.f_Main..FontSize(8.25)
+Gui.f_Main..ControlBox(True)
+Gui.f_Main..MaxButton(False)
+Gui.f_Main..MinButton(False)
+Gui.f_Main..MousePointer(0)
+Gui.f_Main..Moveable(True)
+Gui.f_Main..Sizeable(False)
+Gui.f_Main..ShowInTaskBar(True)
+Gui.f_Main..TitleBar(True)
+Gui.f_Main..ShowCompanyCode(False)
+Gui.f_Main..Event(UnLoad,f_Main_UnLoad)
+Gui.f_Main.cmdOK.Create(Button)
+Gui.f_Main.cmdOK.Enabled(True)
+Gui.f_Main.cmdOK.Visible(True)
+Gui.f_Main.cmdOK.Zorder(0)
+Gui.f_Main.cmdOK.Size(75,23)
+Gui.f_Main.cmdOK.Position(50,254)
+Gui.f_Main.cmdOK.Caption("OK")
+Gui.f_Main.cmdOK.FontName("Tahoma")
+Gui.f_Main.cmdOK.FontSize(8.25)
+Gui.f_Main.cmdOK.Event(Click,cmdOK_Click)
+Gui.f_Main.lblCust.Create(Label,"Vendor:",True,50,13,0,8,12,True,0,"Tahoma",8.25,,0,0)
+Gui.f_Main.lblCust.BorderStyle(0)
+Gui.f_Main.lblShipTOID.Create(Label,"Ship-To ID:",True,54,13,0,8,46,True,0,"Tahoma",8.25,,0,0)
+Gui.f_Main.lblShipTOID.BorderStyle(0)
+Gui.f_Main.lblTCS.Create(Label,"Trade Compliance Status:",True,123,13,0,8,137,True,0,"Tahoma",8.25,,0,0)
+Gui.f_Main.lblTCS.BorderStyle(0)
+Gui.f_Main.txtCust.Create(TextBox,"",True,97,20,0,71,8,True,0,"Tahoma",8.25,,1)
+Gui.f_Main.txtCust.Locked(True)
+Gui.f_Main.txtShipTo.Create(TextBox,"",True,97,20,0,71,42,True,0,"Tahoma",8.25,,1)
+Gui.f_Main.txtShipTo.Locked(True)
+Gui.f_Main.txtTCS.Create(TextBoxR)
+Gui.f_Main.txtTCS.Enabled(False)
+Gui.f_Main.txtTCS.Visible(True)
+Gui.f_Main.txtTCS.Zorder(0)
+Gui.f_Main.txtTCS.Size(160,89)
+Gui.f_Main.txtTCS.Position(8,155)
+Gui.f_Main.txtTCS.FontName("Tahoma")
+Gui.f_Main.txtTCS.FontSize(8.25)
+Gui.f_Main.lblEndUser.Create(Label,"End User Designation:",True,106,13,0,8,80,True,0,"Tahoma",8.25,,0,0)
+Gui.f_Main.lblEndUser.BorderStyle(0)
+Gui.f_Main.txtEndUser.Create(TextBox,"",True,162,20,0,8,98,True,0,"Tahoma",8.25,,1)
+Gui.f_Main.txtEndUser.Locked(True)
+Program.Sub.ScreenSU.End
+
+Program.Sub.Preflight.Start
+V.Global.bError.Declare(Boolean)
+V.Global.bUnattended.Declare(Boolean)
+V.Global.sUsername.Declare(String)
+V.Global.sPassword.Declare(String)
+V.Global.sURL.Declare(String)
+V.Global.sFlag.Declare(String)
+V.Global.sMatchFlag.Declare(String, "Y")
+V.Global.sStatusFound.Declare(String, "N")
+V.Global.sSSLCert.Declare(String)
+V.Global.sContentType.Declare(String)
+Program.Sub.Preflight.End
+
+Program.Sub.Main.Start
+F.Intrinsic.Control.Try
+V.Local.bFileExists.Declare(Boolean)
+V.Local.sVendor.Declare(String)
+V.Local.sFQP.Declare(String)
+V.Local.sRet.Declare(String)
+Function.Intrinsic.UI.UsePixels ' Allows you to use Pixels instead of Twips throughout
+
+'open the connection to the database
+F.ODBC.Connection!con.OpenConnection(V.Ambient.PDSN, V.Ambient.PUser, V.Ambient.PPass)
+
+F.Intrinsic.Control.SelectCase(V.Caller.Hook)
+
+F.Intrinsic.Control.Case(14460)
+'Vendor header populate
+	'callsub to setup custom screen elements in vendor master
+	F.Intrinsic.Control.CallSub(SetScreen)
+	'callsub to end the process
+	F.Intrinsic.Control.CallSub(f_Main_Unload)
+
+F.Intrinsic.Control.Case(14461)
+'Vendor Header Select Hook
+	'callsub to query custom table for the trade compliance status of bill-to address
+	F.Intrinsic.Control.CallSub(BillToStatus)
+	'callsub to end the process
+	F.Intrinsic.Control.CallSub(f_Main_Unload)
+	
+F.Intrinsic.Control.Case(14469)
+'vendor pre-save hook
+	'callsub to check if the address entered is different than the address they have just entered
+	F.Intrinsic.Control.CallSub(AddressChangeCheck)
+	'callsub to end the process
+	F.Intrinsic.Control.CallSub(f_Main_Unload)
+	
+F.Intrinsic.Control.Case(14470)
+'vendor header post-save
+	'set the global flag so we know what's being processed
+	V.Global.sFlag.Set("VEND")
+	'callsub to retrieve HTTP credentials for custom table
+	F.Intrinsic.Control.CallSub(HTTPSettings)
+	'it will construct an XML payload
+	'callsub to process bill to and ship to addresses
+	F.Intrinsic.Control.CallSub(VendXML)
+	
+	V.Local.sVendor.Set(V.Passed.000002)
+	'check to see if the addresses match based on previous screen load
+	'F.Intrinsic.String.Build("{0}\{1}_TCS_Vendor_AddressMatchCheck.txt", V.Caller.FilesDir, V.Local.sVendor.Trim, V.Local.sFQP)
+'	F.Intrinsic.File.Exists(V.Local.sFQP, V.Local.bFileExists)
+'	F.Intrinsic.Control.If(V.Local.bFileExists,=,True)
+'		V.Global.sMatchFlag.Set("N")
+	'	F.Intrinsic.File.DeleteFile(V.Local.sFQP)
+'	F.Intrinsic.Control.ElseIf(V.Local.bFileExists,=,False)
+'		V.Global.sMatchFlag.Set("Y")
+'	F.Intrinsic.Control.EndIf
+	
+	'check to see if the ship to addresss was a match to the bill to address. If it wasn't, create an XML for it as well
+	'F.Intrinsic.Control.If(V.Global.sMatchFlag.Trim,=,"N")
+		'set the global flag to indicate it's the Ship To address
+	'	V.Global.sFlag.Set("VENDPAY")
+		'it will construct an XML payload
+		'callsub to process bill to and ship to addresses
+	'	F.Intrinsic.Control.CallSub(VendXML)
+	'F.Intrinsic.Control.EndIf
+
+	'callsub to query custom table for the trade compliance status of bill-to address
+	F.Intrinsic.Control.CallSub(BillToStatus)
+	
+	'callsub to end the process
+	F.Intrinsic.Control.CallSub(f_Main_Unload)
+	
+F.Intrinsic.Control.Case(14475)
+	'delete post hook
+	'callsub to delete vendors from custom table
+	F.Intrinsic.Control.CallSub(DeleteVendors)
+	F.Intrinsic.Control.CallSub(f_Main_Unload)
+F.Intrinsic.Control.EndSelect
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.Control.CallSub(ErrorMessage, "ErrorNumber", V.Ambient.ErrorNumber, "ErrorDescription", V.Ambient.ErrorDescription, "Subroutine", V.Ambient.CurrentSubroutine, "UNATTENDED", V.Global.bUnattended, "Project", "6625", "ProjectTitle", "TCS Vendor Process", "Callback", "f_Main_UnLoad")
+F.Intrinsic.Control.EndTry
+Program.Sub.Main.End
+
+Program.Sub.SetScreen.Start
+F.Intrinsic.Control.Try
+
+'CRM assigned group label width
+'F.Intrinsic.Variable.SetProperty("000158", "PW", 130)
+
+'GAB-LBL-1
+'BILL-TO ADDR TRADE STATUS
+'set horizontal position
+F.Intrinsic.Variable.SetProperty("GAB-LBL-1", "PL",40)
+'set verticial position
+F.Intrinsic.Variable.SetProperty("GAB-LBL-1", "PT", 444)
+'set width
+F.Intrinsic.Variable.SetProperty("GAB-LBL-1", "PW", 150)
+'screen caller properties
+F.Intrinsic.UI.ChangeCallerProperty(V.Passed.GAB-LBL-1, "HIDE",0)
+F.Intrinsic.UI.ChangeCallerProperty(V.Passed.GAB-LBL-1, "LOCK",0)
+'set label text
+V.Passed.GAB-LBL-1.Set("Buy From Addr Trade Status")
+
+'GAB-TEXT-1
+'set horizontal position
+F.Intrinsic.Variable.SetProperty("GAB-TEXT-1", "PL",40)
+'set verticial position
+F.Intrinsic.Variable.SetProperty("GAB-TEXT-1", "PT", 460)
+'set width
+'F.Intrinsic.Variable.SetProperty("GAB-TEXT-1", "PW", 2000)
+'screen caller properties
+F.Intrinsic.UI.ChangeCallerProperty(V.Passed.GAB-TEXT-1, "HIDE",0)
+F.Intrinsic.UI.ChangeCallerProperty(V.Passed.GAB-TEXT-1, "LOCK",1)
+
+'GAB-LBL-2
+'SHIP-TO ADDR TRADE STATUS
+'set horizontal position
+'F.Intrinsic.Variable.SetProperty("GAB-LBL-2", "PL",200)
+'set verticial position
+'F.Intrinsic.Variable.SetProperty("GAB-LBL-2", "PT", 444)
+'set width
+'F.Intrinsic.Variable.SetProperty("GAB-LBL-2", "PW", 150)
+'screen caller properties
+'F.Intrinsic.UI.ChangeCallerProperty(V.Passed.GAB-LBL-2, "HIDE",0)
+'F.Intrinsic.UI.ChangeCallerProperty(V.Passed.GAB-LBL-2, "LOCK",0)
+'set label text
+'V.Passed.GAB-LBL-2.Set("Ship-To Addr Trade Status")
+
+'GAB-TEXT-2
+'set horizontal position
+'F.Intrinsic.Variable.SetProperty("GAB-TEXT-2", "PL",200)
+'set verticial position
+'F.Intrinsic.Variable.SetProperty("GAB-TEXT-2", "PT", 460)
+'set width
+'F.Intrinsic.Variable.SetProperty("GAB-TEXT-1", "PW", 2000)
+'screen caller properties
+'F.Intrinsic.UI.ChangeCallerProperty(V.Passed.GAB-TEXT-2, "HIDE",0)
+'F.Intrinsic.UI.ChangeCallerProperty(V.Passed.GAB-TEXT-2, "LOCK",1)
+
+
+F.Intrinsic.Control.ExitSub
+F.Intrinsic.Control.Catch
+	F.Intrinsic.Control.CallSub(ErrorMessage, "ErrorNumber", V.Ambient.ErrorNumber, "ErrorDescription", V.Ambient.ErrorDescription, "Subroutine", V.Ambient.CurrentSubroutine, "UNATTENDED", V.Global.bUnattended, "Project", "6625", "ProjectTitle", "TCS Vendor Process", "Callback", "f_Main_UnLoad")
+F.Intrinsic.Control.EndTry
+Program.Sub.SetScreen.End
+
+Program.Sub.BillToStatus.Start
+F.Intrinsic.Control.Try
+V.Local.iCnt.Declare(String)
+V.Local.sCoCode.Declare(String)
+V.Local.sRet.Declare(String)
+V.Local.sSQL.Declare(String)
+V.Local.sB2Name.Declare(String)
+V.Local.sB2Addr1.Declare(String)
+V.Local.sB2Addr2.Declare(String)
+V.Local.sB2Addr3.Declare(String)
+V.Local.sB2Addr4.Declare(String)
+V.Local.sB2Addr5.Declare(String)
+V.Local.sB2City.Declare(String)
+V.Local.sB2State.Declare(String)
+V.Local.sB2Zip.Declare(String)
+V.Local.sB2County.Declare(String)
+V.Local.sB2Country.Declare(String)
+V.Local.sB2Address.Declare(String)
+V.Local.sS2Name.Declare(String)
+V.Local.sS2Addr1.Declare(String)
+V.Local.sS2Addr2.Declare(String)
+V.Local.sS2Addr3.Declare(String)
+V.Local.sS2Addr4.Declare(String)
+V.Local.sS2Addr5.Declare(String)
+V.Local.sS2City.Declare(String)
+V.Local.sS2State.Declare(String)
+V.Local.sS2Zip.Declare(String)
+V.Local.sS2County.Declare(String)
+V.Local.sS2Country.Declare(String)
+V.Local.sS2Address.Declare(String)
+V.Local.bAddressesMatch.Declare(Boolean, True)
+V.Local.sFQP.Declare(String)
+V.Local.sVendor.Declare(String)
+
+'set the company code
+V.Local.sCoCode.Set(V.Caller.CompanyCode)
+'set the vendor id
+V.Local.sVendor.Set(V.Passed.000002)
+
+'query trade compliance status for the bill-to address
+'look at the GCG_6625_PARTNER table querying on CoCode and Partner_id and Partner_type
+F.Intrinsic.String.Build("SELECT DECISION, END_USER_DESIG FROM GCG_6625_PARTNER WHERE CO_CODE = '{0}' AND PARTNER_ID = '{1}' AND PARTNER_TYPE = 'V'", V.Local.sCoCode.Trim, V.Local.sVendor.Trim, V.Local.sSQL)
+F.ODBC.Connection!con.ExecuteAndReturn(V.Local.sSQL, V.Local.sRet)
+F.Intrinsic.Control.If(V.Local.sRet.Trim,<>,"")
+	F.Intrinsic.String.Split(V.Local.sRet,"*!*", V.Local.sRet)
+'if record found, write the value to the gab-text-1 box
+	F.Intrinsic.Control.SelectCase(V.Local.sRet(0).Trim)
+		F.Intrinsic.Control.Case("N")
+			V.Passed.GAB-TEXT-1.Set("No Match, Approved")
+		F.Intrinsic.Control.Case("P")
+			V.Passed.GAB-TEXT-1.Set("Potential Match")
+		F.Intrinsic.Control.Case("M")
+			V.Passed.GAB-TEXT-1.Set("Match")
+		F.Intrinsic.Control.Case("X")
+			V.Passed.GAB-TEXT-1.Set("Awaiting TCS Status")
+	F.Intrinsic.Control.EndSelect
+
+F.Intrinsic.Control.ElseIf(V.Local.sRet.Trim,=,"")
+'if no record found, leave the gab-text-1 box blank
+	V.Passed.GAB-TEXT-1.Set("")
+
+F.Intrinsic.Control.EndIf
+
+'build buy from address 
+'V.Local.sB2Name.Set(V.Passed.000048)
+'V.Local.sB2Addr1.Set(V.Passed.000050)
+'V.Local.sB2Addr2.Set(V.Passed.000052)
+'V.Local.sB2Addr3.Set(V.Passed.000054)
+'V.Local.sB2Addr4.Set(V.Passed.000058)
+'V.Local.sB2Addr5.Set(V.Passed.000060)
+'V.Local.sB2City.Set(V.Passed.000062)
+'V.Local.sB2State.Set(V.Passed.000063)
+'V.Local.sB2Zip.Set(V.Passed.000064)
+'V.Local.sB2Country.Set(V.Passed.000068)
+'V.Local.sB2County.Set(V.Passed.000069)
+
+'F.Intrinsic.String.Build("{1}{0}{2}{0}{3}{0}{4}{0}{5}{0}{6}{0}{7}{0}{8}{0}{9}{0}{10}{0}{11}", V.Ambient.NewLine, V.Local.sB2Name.Trim, V.Local.sB2Addr1.Trim, V.Local.sB2Addr2.Trim, V.Local.sB2Addr3.Trim, V.Local.sB2Addr4.Trim, V.Local.sB2Addr5.Trim, V.Local.sB2City.Trim, V.Local.sB2State.Trim, V.Local.sB2Zip.Trim, V.Local.sB2Country.Trim, V.Local.sB2County.Trim, V.Local.sB2Address)
+
+'Build pay to address
+'V.Local.sS2Name.Set(V.Passed.000049)
+'V.Local.sS2Addr1.Set(V.Passed.000051)
+'V.Local.sS2Addr2.Set(V.Passed.000053)
+'V.Local.sS2Addr3.Set(V.Passed.000056)
+'V.Local.sS2Addr4.Set(V.Passed.000059)
+'V.Local.sS2Addr5.Set(V.Passed.000061)
+'V.Local.sS2City.Set(V.Passed.000065)
+'V.Local.sS2State.Set(V.Passed.000066)
+'V.Local.sS2Zip.Set(V.Passed.000067)
+'V.Local.sS2Country.Set(V.Passed.000070)
+'V.Local.sS2County.Set(V.Passed.000071)
+'F.Intrinsic.String.Build("{1}{0}{2}{0}{3}{0}{4}{0}{5}{0}{6}{0}{7}{0}{8}{0}{9}{0}{10}{0}{11}", V.Ambient.NewLine, V.Local.sS2Name.Trim,V.Local.sS2Addr1.Trim, V.Local.sS2Addr2.Trim, V.Local.sS2Addr3.Trim, V.Local.sS2Addr4.Trim, V.Local.sS2Addr5.Trim, V.Local.sS2City.Trim, V.Local.sS2State.Trim, V.Local.sS2Zip.Trim, V.Local.sS2Country.Trim, V.Local.sS2County.Trim, V.Local.sS2Address)
+
+'check to see if the ship-to address is different than the bill-to address. If it is different, look up the trade compliance status of the ship-to address
+'F.Intrinsic.Control.If(V.Local.sB2Address.Trim,=,V.Local.sS2Address.Trim)
+'	V.Local.bAddressesMatch.Set(True)
+'F.Intrinsic.Control.ElseIf(V.Local.sB2Address.Trim,<>,V.Local.sS2Address.Trim)
+'	V.Local.bAddressesMatch.Set(False)
+'F.Intrinsic.Control.EndIf
+
+'F.Intrinsic.Control.If(V.Local.bAddressesMatch,=,False)
+'	F.Intrinsic.String.Build("SELECT DECISION, END_USER_DESIG FROM GCG_6625_PARTNER WHERE CO_CODE = '{0}' AND PARTNER_ID = '{1}_000' AND PARTNER_TYPE = 'V'", V.Local.sCoCode.Trim, V.Local.sVendor.Trim, V.Local.sSQL)
+'	F.ODBC.Connection!con.ExecuteAndReturn(V.Local.sSQL, V.Local.sRet)
+'	F.Intrinsic.Control.If(V.Local.sRet.Trim,<>,"")
+'		F.Intrinsic.String.Split(V.Local.sRet,"*!*", V.Local.sRet)
+'		'if record found, write the value to the gab-text-1 box
+'		F.Intrinsic.Control.SelectCase(V.Local.sRet(0).Trim)
+'			F.Intrinsic.Control.Case("N")
+'				V.Passed.GAB-TEXT-2.Set("No Match, Approved")
+'			F.Intrinsic.Control.Case("P")
+'				V.Passed.GAB-TEXT-2.Set("Potential Match")
+'			F.Intrinsic.Control.Case("M")
+'				V.Passed.GAB-TEXT-2.Set("Match")
+'			F.Intrinsic.Control.Case("X")
+'				V.Passed.GAB-TEXT-2.Set("Awaiting TCS Status")
+'		F.Intrinsic.Control.EndSelect
+'	
+'	f.Intrinsic.Control.ElseIf(V.Local.sRet.Trim,=,"")
+'		'if no record found, leave the text box blank
+'		V.Passed.GAB-TEXT-2.Set("")
+'	F.Intrinsic.Control.EndIf
+'F.Intrinsic.Control.EndIf
+
+F.Intrinsic.Control.ExitSub
+F.Intrinsic.Control.Catch
+	F.Intrinsic.Control.CallSub(ErrorMessage, "ErrorNumber", V.Ambient.ErrorNumber, "ErrorDescription", V.Ambient.ErrorDescription, "Subroutine", V.Ambient.CurrentSubroutine, "UNATTENDED", V.Global.bUnattended, "Project", "6625", "ProjectTitle", "TCS Vendor Process", "Callback", "f_Main_UnLoad")
+F.Intrinsic.Control.EndTry
+Program.Sub.BillToStatus.End
+
+Program.Sub.AddressChangeCheck.Start
+F.Intrinsic.Control.Try
+V.Local.bFileExists.Declare(Boolean)
+V.Local.sCust.Declare(String)
+V.Local.sB2Name.Declare(String)
+V.Local.sB2Address1.Declare(String)
+V.Local.sB2Address2.Declare(String)
+V.Local.sB2Address3.Declare(String)
+V.Local.sB2Address4.Declare(String)
+V.Local.sB2Address5.Declare(String)
+V.Local.sB2City.Declare(String)
+V.Local.sB2State.Declare(String)
+V.Local.sB2ZipCode.Declare(String)
+V.Local.sB2Country.Declare(String)
+V.Local.sB2County.Declare(String)
+V.Local.sFullB2Address.Declare(String)
+V.Local.sS2Name.Declare(String)
+V.Local.sS2Address1.Declare(String)
+V.Local.sS2Address2.Declare(String)
+V.Local.sS2Address3.Declare(String)
+V.Local.sS2Address4.Declare(String)
+V.Local.sS2Address5.Declare(String)
+V.Local.sS2City.Declare(String)
+V.Local.sS2State.Declare(String)
+V.Local.sS2ZipCode.Declare(String)
+V.Local.sS2Country.Declare(String)
+V.Local.sS2County.Declare(String)
+V.Local.sFullS2Address.Declare(String)
+V.Local.sCurrB2Name.Declare(String)
+V.Local.sCurrB2Address1.Declare(String)
+V.Local.sCurrB2Address2.Declare(String)
+V.Local.sCurrB2Address3.Declare(String)
+V.Local.sCurrB2Address4.Declare(String)
+V.Local.sCurrB2Address5.Declare(String)
+V.Local.sCurrB2City.Declare(String)
+V.Local.sCurrB2State.Declare(String)
+V.Local.sCurrB2Zip.Declare(String)
+V.Local.sCurrB2Country.Declare(String)
+V.Local.sCurrB2County.Declare(String)
+V.Local.sFullCurrB2Address.Declare(String)
+V.Local.sCurrS2Name.Declare(String)
+V.Local.sCurrS2Address1.Declare(String)
+V.Local.sCurrS2Address2.Declare(String)
+V.Local.sCurrS2Address3.Declare(String)
+V.Local.sCurrS2Address4.Declare(String)
+V.Local.sCurrS2Address5.Declare(String)
+V.Local.sCurrS2City.Declare(String)
+V.Local.sCurrS2State.Declare(String)
+V.Local.sCurrS2Zip.Declare(String)
+V.Local.sCurrS2Country.Declare(String)
+V.Local.sCurrS2County.Declare(String)
+V.Local.sFullCurrS2Address.Declare(String)
+V.Local.sRet.Declare(String)
+V.Local.sSQL.Declare(String)
+V.Local.sB2FQP.Declare(String)
+V.Local.sS2FQP.Declare(String)
+V.Local.sFQP.Declare(String)
+V.Local.sVendor.Declare(String)
+
+'set the passed vairables to their corresponding variables
+V.Local.sVendor.Set(V.Passed.000002)
+
+'set the file location
+F.Intrinsic.String.Build("{0}\{1}_TCS_Vendor_B2AddressChange.txt", V.Caller.FilesDir, V.Local.sVendor.Trim, V.Local.sB2FQP)
+F.Intrinsic.String.Build("{0}\{1}_TCS_Vendor_S2AddressChange.txt", V.Caller.FilesDir, V.Local.sVendor.Trim, V.Local.sS2FQP)
+
+'F.Intrinsic.String.Build("{0}\{1}_TCS_Vendor_AddressMatchCheck.txt", V.Caller.FilesDir, V.Local.sVendor.Trim, V.Local.sFQP)
+
+'Buy from address
+V.Local.sB2Name.Set(V.Passed.000048.UCase)
+V.Local.sB2Address1.Set(V.Passed.000050.UCase)
+V.Local.sB2Address2.Set(V.Passed.000052.UCase)
+V.Local.sB2Address3.Set(V.Passed.000054.UCase)
+V.Local.sB2Address4.Set(V.Passed.000058.UCase)
+V.Local.sB2Address5.Set(V.Passed.000060.UCase)
+V.Local.sB2City.Set(V.Passed.000062.UCase)
+V.Local.sB2State.Set(V.Passed.000063.UCase)
+V.Local.sB2ZipCode.Set(V.Passed.000064.UCase)
+V.Local.sB2Country.Set(V.Passed.000068.UCase)
+V.Local.sB2County.Set(V.Passed.000069.UCase)
+F.Intrinsic.String.Build("{1}{0}{2}{0}{3}{0}{4}{0}{5}{0}{6}{0}{7},{8},{9},{10},{11}", V.Ambient.NewLine, V.Local.sB2Name.Trim, V.Local.sB2Address1.Trim,V.Local.sB2Address2.Trim, V.Local.sB2Address3.Trim, V.Local.sB2Address4.Trim, V.Local.sB2Address5.Trim, V.Local.sB2City.Trim, V.Local.sB2State.Trim, V.Local.sB2ZipCode.Trim, V.Local.sB2Country.Trim, V.Local.sB2County.Trim, V.Local.sFullB2Address)
+
+'Pay to address
+V.Local.sS2Name.Set(V.Passed.000049.UCase)
+V.Local.sS2Address1.Set(V.Passed.000051.UCase)
+V.Local.sS2Address2.Set(V.Passed.000053.UCase)
+V.Local.sS2Address3.Set(V.Passed.000056.UCase)
+V.Local.sS2Address4.Set(V.Passed.000059.UCase)
+V.Local.sS2Address5.Set(V.Passed.000061.UCase)
+V.Local.sS2City.Set(V.Passed.000065.UCase)
+V.Local.sS2State.Set(V.Passed.000066.UCase)
+V.Local.sS2ZipCode.Set(V.Passed.000067.UCase)
+V.Local.sS2Country.Set(V.Passed.000070.UCase)
+V.Local.sS2County.Set(V.Passed.000071.UCase)
+F.Intrinsic.String.Build("{1}{0}{2}{0}{3}{0}{4}{0}{5}{0}{6}{0}{7},{8},{9},{10},{11}", V.Ambient.NewLine, V.Local.sS2Name.Trim, V.Local.sS2Address1.Trim,V.Local.sS2Address2.Trim, V.Local.sS2Address3.Trim, V.Local.sS2Address4.Trim, V.Local.sS2Address5.Trim, V.Local.sS2City.Trim, V.Local.sS2State.Trim, V.Local.sS2ZipCode.Trim, V.Local.sS2Country.Trim, V.Local.sS2County.Trim,V.Local.sFullS2Address)
+
+'F.Intrinsic.Control.If(V.Local.sFullB2Address.Trim,<>,V.Local.sFullS2Address.Trim)
+'	F.Intrinsic.File.String2File(V.Local.sFQP, "Addresses do not match")
+'F.Intrinsic.Control.EndIf
+
+'query VENDOR master and VENDOR intl to get the address that was previously set for the VENDOR
+F.Intrinsic.String.Build("SELECT A.NAME_VENDOR, A.ADDRESS1, A.ADDRESS2, B.ADDRESS3, B.ADDRESS4, B.ADDRESS5, A.CITY, A.STATE, A.CODE_ZIP, A.COUNTRY, A.COUNTY, C.NAME_VENDOR_PAY, C.ADDRESS1_PAY, C.ADDRESS2_PAY, B.ADDRESS3_PAY, B.ADDRESS4_PAY, B.ADDRESS5_PAY, C.CITY_PAY, C.STATE_PAY, C.CODE_ZIP_PAY, C.COUNTRY_PAY, C.COUNTY_PAY FROM V_VENDOR_MASTER A LEFT JOIN V_VENDOR_INTL B ON A.VENDOR = B.VENDOR LEFT JOIN V_VENDOR_PAY_TO C ON A.VENDOR = C.VENDOR WHERE A.VENDOR = '{0}'", V.Local.sVendor.Trim, V.Local.sSQL)
+F.ODBC.Connection!con.ExecuteAndReturn(V.Local.sSQL, V.Local.sRet)
+F.Intrinsic.Control.If(V.Local.sRet.Trim,<>,"")
+	F.Intrinsic.String.Split(V.Local.sRet.Trim,"*!*", V.Local.sRet)
+	V.Local.sCurrB2Name.Set(V.Local.sRet(0).UCase)
+	V.Local.sCurrB2Address1.Set(V.Local.sRet(1).UCase)
+	V.Local.sCurrB2Address2.Set(V.Local.sRet(2).UCase)
+	V.Local.sCurrB2Address3.Set(V.Local.sRet(3).UCase)
+	V.Local.sCurrB2Address4.Set(V.Local.sRet(4).UCase)
+	V.Local.sCurrB2Address5.Set(V.Local.sRet(5).UCase)
+	V.Local.sCurrB2City.Set(V.Local.sRet(6).UCase)
+	V.Local.sCurrB2State.Set(V.Local.sRet(7).UCase)
+	V.Local.sCurrB2Zip.Set(V.Local.sRet(8).UCase)
+	V.Local.sCurrB2Country.Set(V.Local.sRet(9).UCase)
+	V.Local.sCurrB2County.Set(V.Local.sRet(10).Ucase)
+	F.Intrinsic.String.Build("{1}{0}{2}{0}{3}{0}{4}{0}{5}{0}{6}{0}{7},{8},{9},{10}, {11}", V.Ambient.NewLine, V.Local.sCurrB2Name.Trim, V.Local.sCurrB2Address1.Trim,V.Local.sCurrB2Address2.Trim, V.Local.sCurrB2Address3.Trim, V.Local.sCurrB2Address4.Trim, V.Local.sCurrB2Address5.Trim, V.Local.sCurrB2City.Trim,V.Local.sCurrB2State.Trim,V.Local.sCurrB2Zip.Trim, V.Local.sCurrB2Country.Trim, V.Local.sCurrB2County.Trim, V.Local.sFullCurrB2Address)
+	
+	'check to see if the b2 address has changed
+	F.Intrinsic.Control.If(V.Local.sFullB2Address.Trim,<>,V.Local.sFullCurrB2Address.Trim)
+		F.Intrinsic.File.Exists(V.Local.sB2FQP, V.Local.bFileExists)
+		F.Intrinsic.Control.If(V.Local.bFileExists,=,True)
+			F.Intrinsic.File.DeleteFile(V.Local.sB2FQP)
+		F.Intrinsic.Control.EndIf
+		F.Intrinsic.File.String2File(V.Local.sB2FQP, "Address Changed")
+	F.Intrinsic.Control.EndIf
+	
+	'V.Local.sCurrS2Name.Set(V.Local.sRet(11).UCase)
+	'V.Local.sCurrS2Address1.Set(V.Local.sRet(12).UCase)
+	'V.Local.sCurrS2Address2.Set(V.Local.sRet(13).UCase)
+	'V.Local.sCurrS2Address3.Set(V.Local.sRet(14).UCase)
+	'V.Local.sCurrS2Address4.Set(V.Local.sRet(15).UCase)
+	'V.Local.sCurrS2Address5.Set(V.Local.sRet(16).UCase)
+	'V.Local.sCurrS2City.Set(V.Local.sRet(17).UCase)
+	'V.Local.sCurrS2State.Set(V.Local.sRet(18).UCase)
+	'V.Local.sCurrS2Zip.Set(V.Local.sRet(19).UCase)
+	'V.Local.sCurrS2Country.Set(V.Local.sRet(20).UCase)
+	'V.Local.sCurrS2County.Set(V.Local.sRet(21).UCase)
+'	F.Intrinsic.String.Build("{1}{0}{2}{0}{3}{0}{4}{0}{5}{0}{6}{0}{7},{8},{9},{10}", V.Ambient.NewLine, V.Local.sCurrS2Name.Trim, V.Local.sCurrS2Address1.Trim,V.Local.sCurrS2Address2.Trim, V.Local.sCurrS2Address3.Trim, V.Local.sCurrS2Address4.Trim, V.Local.sCurrS2Address5.Trim, V.Local.sCurrS2City.Trim,V.Local.sCurrS2State.Trim,V.Local.sCurrS2Zip.Trim, V.Local.sCurrS2Country.Trim, V.Local.sCurrS2County.Trim, V.Local.sFullCurrS2Address)
+	
+	'check to see if the s2 address has changed
+	'F.Intrinsic.Control.If(V.Local.sFullS2Address.Trim,<>,V.Local.sFullCurrS2Address.Trim)
+		'check to see if a file exists, if it does, delete it and recreate a new one
+	'	F.Intrinsic.File.Exists(V.Local.sS2FQP, V.Local.bFileExists)
+	'	F.Intrinsic.Control.If(V.Local.bFileExists,=,True)
+	'		F.Intrinsic.File.DeleteFile(V.Local.sS2FQP)
+	'	F.Intrinsic.Control.EndIf
+	'	F.Intrinsic.File.String2File(V.Local.sS2FQP, "Address Changed")
+	'F.Intrinsic.Control.EndIf
+F.Intrinsic.Control.EndIf
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.Control.CallSub(ErrorMessage, "ErrorNumber", V.Ambient.ErrorNumber, "ErrorDescription", V.Ambient.ErrorDescription, "Subroutine", V.Ambient.CurrentSubroutine, "UNATTENDED", V.Global.bUnattended, "Project", "6625", "ProjectTitle", "TCS Vendor Process", "Callback", "f_Main_UnLoad")
+F.Intrinsic.Control.EndTry
+Program.Sub.AddressChangeCheck.End
+
+Program.Sub.HTTPSettings.Start
+F.Intrinsic.Control.Try
+V.Local.baValue.Declare(ByteArray)
+V.Local.sRet.Declare(String)
+V.Local.sSQL.Declare(String)
+V.Local.sTemp.Declare(String)
+
+'open Common Connection to DB
+F.ODBC.Connection!conCom.OpenCommonConnection
+'check to see if datatable exists
+F.Intrinsic.Control.If(V.DataTable.HTTPSettings.Exists)
+	F.Data.DataTable.Close("HTTPSettings")
+F.Intrinsic.Control.EndIf
+'build query to pull username, password and url from custom table
+F.Intrinsic.String.Build("SELECT HTTPUSER, HTTPPASSWORD, PARTNER_URL FROM GCG_6625_SETTINGS WHERE ACTIVEENV = 'Y' AND CO_CODE = '{0}'", v.Caller.CompanyCode.Trim, V.Local.sSQL)
+F.Data.DataTable.CreateFromSQL("HTTPSettings", "conCom", V.Local.sSQL)
+F.Intrinsic.Control.If(V.DataTable.HTTPSettings.RowCount--,<>,-1)
+	'decrypt and set the credentials to the corresponding global variables
+	V.Local.sTemp.Set(V.DataTable.HTTPSettings(0).HTTPUSER!FieldValTrim)
+	F.Intrinsic.String.ConvertString2BA(V.Local.sTemp, V.Local.baValue)
+	F.Global.Encryption.Decrypt(V.Local.baValue,v.Local.sTemp)
+	V.Global.sUsername.Set(V.Local.sTemp.Trim)
+	
+	V.Local.sTemp.Set(V.DataTable.HTTPSettings(0).HTTPPASSWORD!FieldValTrim)
+	F.Intrinsic.String.ConvertString2BA(V.Local.sTemp, V.Local.baValue)
+	F.Global.Encryption.Decrypt(V.Local.baValue,v.Local.sTemp)
+	V.Global.sPassword.Set(V.Local.sTemp.Trim)
+	
+	V.Local.sTemp.Set(V.DataTable.HTTPSettings(0).PARTNER_URL!FieldValTrim)
+	F.Intrinsic.String.ConvertString2BA(V.Local.sTemp, V.Local.baValue)
+	F.Global.Encryption.Decrypt(V.Local.baValue,v.Local.sTemp)
+	V.Global.sURL.Set(V.Local.sTemp.Trim)
+	
+F.Intrinsic.Control.Else
+	F.Intrinsic.UI.Msgbox("Configure HTTP Settings via System Support > Administration > HTTP Credentials (6625)", "Configure Settings")
+	F.ODBC.Connection!conCom.Close
+	F.Intrinsic.Control.CallSub(f_Main_Unload)
+F.Intrinsic.Control.EndIf
+
+F.ODBC.Connection!conCom.Close
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.Control.CallSub(ErrorMessage, "ErrorNumber", V.Ambient.ErrorNumber, "ErrorDescription", V.Ambient.ErrorDescription, "Subroutine", V.Ambient.CurrentSubroutine, "UNATTENDED", V.Global.bUnattended, "Project", "6625", "ProjectTitle", "TCS Vendor Process", "Callback", "f_Main_UnLoad")
+F.Intrinsic.Control.EndTry
+Program.Sub.HTTPSettings.End
+
+Program.Sub.VendXML.Start
+F.Intrinsic.Control.Try
+V.Local.dDate.Declare(Date)
+V.Local.iCnt.Declare(Long)
+V.Local.iCnt2.Declare(Long)
+V.Local.iCnt3.Declare(Long)
+V.Local.iCnt4.Declare(Long)
+V.Local.sTempFQP.Declare(String)
+V.Local.sFQP.Declare(String)
+V.Local.sSICCode.Declare(String)
+V.Local.sCust.Declare(String)
+V.Local.sB2Name.Declare(String)
+V.Local.sB2Addr1.Declare(String)
+V.Local.sB2Addr2.Declare(String)
+V.Local.sB2Addr3.Declare(String)
+V.Local.sB2Addr4.Declare(String)
+V.Local.sB2Addr5.Declare(String)
+V.Local.sB2City.Declare(String)
+V.Local.sB2State.Declare(String)
+V.Local.sB2Zip.Declare(String)
+V.Local.sB2County.Declare(String)
+V.Local.sB2Country.Declare(String)
+V.Local.sB2Address.Declare(String)
+V.Local.sS2Name.Declare(String)
+V.Local.sS2Addr1.Declare(String)
+V.Local.sS2Addr2.Declare(String)
+V.Local.sS2Addr3.Declare(String)
+V.Local.sS2Addr4.Declare(String)
+V.Local.sS2Addr5.Declare(String)
+V.Local.sS2City.Declare(String)
+V.Local.sS2State.Declare(String)
+V.Local.sS2Zip.Declare(String)
+V.Local.sS2County.Declare(String)
+V.Local.sS2Country.Declare(String)
+V.Local.sS2Address.Declare(String)
+V.Local.sSender.Declare(String)
+V.Local.sShipToID.Declare(String)
+V.Local.sSQL.Declare(String)
+V.Local.sRet.Declare(String)
+V.Local.sSAPCode.Declare(String)
+V.Local.sPartnerID.Declare(String)
+V.Local.sDateTime.Declare(String)
+V.Local.sDate.Declare(String)
+V.Local.sTime.Declare(String)
+v.Local.sRet3.Declare(String)
+V.Local.sRet2.Declare(String)
+V.Local.sRet4.Declare(String)
+V.Local.sFullAddress.Declare(String)
+V.Local.sFullSavedAddress.Declare(String)
+V.Local.bAddressMatch.Declare(Boolean)
+V.Local.sB2FQP.Declare(String)
+V.Local.sS2FQP.Declare(String)
+V.Local.bB2FileExists.Declare(Boolean)
+V.Local.bS2FileExists.Declare(Boolean)
+V.Local.sEndUserDesig.Declare(String)
+V.Local.sVendor.Declare(String)
+V.Local.sOrgCode.Declare(String)
+V.Local.sSalesOrg.Declare(String)
+V.Local.sPlant.Declare(String)
+V.Local.sTempVendID.Declare(String)
+
+'set the sender value
+F.Intrinsic.String.Build("GSS_{0}", V.Caller.CompanyCode, V.Local.sSender)
+
+'build file path for sample datapacket
+F.Intrinsic.String.Build("{0}\tempVendor.xml", V.Caller.FilesDir, V.Local.sTempFQP)
+
+'Check to see if the datatable already exists. If it does, close it
+F.Intrinsic.Control.If(V.DataTable.envelope.Exists)
+	F.Data.DataTable.Close("envelope")
+F.Intrinsic.Control.EndIf
+'load sample packet into datatbale
+F.Data.DataTable.CreateDatasetFromXML("envelope", V.Local.sTempFQP, True)
+
+'query custom cocode maint to get the SAP code for the company code
+F.Intrinsic.String.Build("SELECT SAP_CODE FROM GCG_6625_CCODE_MAINT WHERE GSS_CODE = '{0}'", V.Caller.CompanyCode, V.Local.sSQL)
+F.ODBC.Connection!con.ExecuteAndReturn(V.Local.sSQL, V.Local.sRet)
+F.Intrinsic.Control.If(V.Local.sRet.Trim,<>,"")
+	V.Local.sSAPCode.Set(V.Local.sRet.Trim)
+	F.Intrinsic.String.Build("SELECT ORG_CODE, SALES_ORG, TEC_PLANT FROM GCG_6625_CCODE_MAINT WHERE GSS_CODE = '{0}' AND SAP_CODE = '{1}'", V.Caller.CompanyCode, V.Local.sSAPCode.Trim, V.Local.sSQL)
+	F.ODBC.Connection!con.ExecuteAndReturn(V.Local.sSQL, V.Local.sRet4)
+	F.Intrinsic.Control.If(V.Local.sRet4.Trim,<>,"")
+		F.Intrinsic.String.Split(V.Local.sRet4,"*!*",V.Local.sRet4)
+	'	v.Local.sOrgCode.Set(V.Local.sRet4(0).Trim)
+		V.Local.sOrgCode.Set("TEC_MASTER")
+		V.Local.sSalesOrg.Set(V.Local.sRet4(1).Trim)
+		V.Local.sPlant.Set(V.Local.sRet4(2).Trim)
+	F.Intrinsic.Control.EndIf
+	
+	F.Intrinsic.Control.SelectCase(V.Global.sFlag.Trim)
+		F.Intrinsic.Control.Case("VEND")
+			V.Local.sVendor.Set(V.Passed.000002)
+			F.Intrinsic.String.Build("{0}\{1}_TCS_Vendor_B2AddressChange.txt", V.Caller.FilesDir, V.Local.sVendor.Trim, V.Local.sB2FQP)
+			V.Local.sPartnerID.Set(V.Local.sVendor.Trim)
+			F.Intrinsic.String.LPad(V.Local.sVendor, " ", 10, V.Local.sVendor)
+			F.Intrinsic.String.Build("{0}_1_V", V.Local.sVendor, V.Local.sVendor)
+		'	F.Intrinsic.String.Build("{0}_{1}", V.Local.sSAPCode.Trim, V.Local.sVendor.Trim, V.Local.sVendor)
+			V.Local.sB2Name.Set(V.Passed.000048)
+			V.Local.sB2Addr1.Set(V.Passed.000050)
+			V.Local.sB2Addr2.Set(V.Passed.000052)
+			V.Local.sB2Addr3.Set(V.Passed.000054)
+			V.Local.sB2Addr4.Set(V.Passed.000058)
+			V.Local.sB2Addr5.Set(V.Passed.000060)
+			V.Local.sB2City.Set(V.Passed.000062)
+			V.Local.sB2State.Set(V.Passed.000063)
+			V.Local.sB2Zip.Set(V.Passed.000064)
+			V.Local.sB2Country.Set(V.Passed.000068)
+			V.Local.sB2County.Set(V.Passed.000069)
+	'		V.Local.sSICCode.Set(V.Passed.000032)
+	
+			F.Intrinsic.Control.If(V.Local.sB2Addr5.Trim,<>,"")
+				F.Intrinsic.Control.If(v.Local.sB2Addr4.Trim,<>,"")
+					F.Intrinsic.String.Build("{0} {1}", V.Local.sB2Addr4.Trim, V.Local.sB2Addr5.Trim, V.Local.sB2Addr4)
+				F.Intrinsic.Control.Else
+					V.Local.sB2Addr4.Set(V.Local.sB2Addr5.Trim)
+				F.Intrinsic.Control.EndIf
+			F.Intrinsic.Control.EndIf
+			
+			'set the file location for the check to see if the b2 or s2 addresses have changed
+			F.Intrinsic.File.Exists(V.Local.sB2FQP, V.Local.bB2FileExists)
+			
+			
+			'loop through dtXML to set the corresponding data needed
+			'columns for dtXML
+			'ACTION, COMPANY_CODE, ORG_CODE, PRIORITY, MESSAGE_TYPE, USERID, RECEIVER, SENDER, BATCH_ID
+			F.Intrinsic.Control.For(V.Local.iCnt, 0, V.DataTable.envelope$INTEGRATION_MESSAGE_CONTROL.RowCount--,1)
+				'need to update sender and batch id
+				F.Data.DataTable.SetValue("envelope$Integration_message_control", V.Local.iCnt, "SENDER", V.Local.sSender.Trim, "BATCH_ID", "", "ORG_CODE", V.Local.sOrgCode.Trim)
+			F.Intrinsic.Control.Next(V.Local.iCnt)
+	
+			'loop through dtXML$BusKey to set the corresponding data needed
+			'columns for dtXML$BusKey
+			'PTNR_ID, ORG_CODE
+			F.Intrinsic.Control.For(V.Local.iCnt2, 0, V.DataTable.envelope$Bus_Key.RowCount--,1)
+				'need to update the partner id
+				F.Data.DataTable.SetValue("envelope$Bus_Key", V.Local.iCnt2, "PTNR_ID", V.Local.sVendor, "ORG_CODE", V.Local.sOrgCode.Trim)
+			F.Intrinsic.Control.Next(V.Local.iCnt2)
+			
+			'loop through dtXML$Partner to set the corresponding data needed
+			'columns for dtXML$Partner
+			'ADDRESS_LINE1, ADDRESS_LINE2, CITY, COUNTRY_CODE, END_USER_DESIGNATION, NAME, ORG_CODE, POSTAL_CODE, PTNR_ID, SOURCE_SYSTEM, SOURCE_SYSTEM_PARTNER_ID, WWIC, IBC, EPCI_FLAG
+			F.Intrinsic.Control.For(V.Local.iCnt3, 0, V.DataTable.envelope$Partner.RowCount--,1)
+				'need to update the address line 1, address line 2, city, country code, name, postal code, partner id, sender, partner id, system partner id WWIC = SIC code stored in GSS, IBC
+				F.Data.DataTable.SetValue("envelope$Partner", V.Local.iCnt3, "ADDRESS_LINE1", V.Local.sB2Addr1.Trim, "ADDRESS_LINE2", V.Local.sB2Addr2.Trim, "ADDRESS_LINE3", V.Local.sB2Addr3.Trim,"ADDRESS_LINE4", V.Local.sB2Addr4.Trim, "CITY", V.Local.sB2City.Trim, "COUNTRY_CODE", V.Local.sB2Country.Trim, "NAME", V.Local.sB2Name.Trim,"POSTAL_CODE", V.Local.sB2Zip.Trim, "PTNR_ID", V.Local.sVendor,"SOURCE_SYSTEM", V.Local.sSender.Trim,  "SOURCE_SYSTEM_PARTNER_ID",V.Local.sVendor, "STATE_CODE", "", "ORG_CODE", V.Local.sOrgCode.Trim)
+			F.Intrinsic.Control.Next(V.Local.iCnt3)
+			
+			'loop through dtXML$Partner_Type to set the corresponding data needed
+			'columns for dtXML$Partner_Type
+			'PTNR_TYPE
+			'F.Intrinsic.Control.For(V.Local.iCnt4,0, V.DataTable.dtXML$Partner_Type.RowCount--,1)
+			
+			'F.Intrinsic.Control.Next(V.Local.iCnt4)
+			'build date time
+			V.Local.dDate.Set(V.Ambient.Date)
+			F.Intrinsic.String.Format(V.Local.dDate, "YYYY-MM-DD", V.Local.sDate)
+			F.Intrinsic.String.Format(V.Ambient.Time,"Hh:Nn:Ss.000", V.Local.sTime)
+			F.Intrinsic.String.Build("{0} {1}", v.Local.sDate.Trim, V.Local.sTime.Trim, V.Local.sDateTime)
+
+			'query custom partner table to see if a record exists. If it does, update it. If it doesnt, insert a record
+			F.Intrinsic.String.Build("SELECT * FROM GCG_6625_PARTNER WHERE CO_CODE = '{0}' AND PARTNER_ID = '{1}' AND PARTNER_TYPE = 'V'", V.Caller.CompanyCode, V.Local.sPartnerID.Trim, V.Local.sSQL)
+			F.ODBC.Connection!con.ExecuteAndReturn(V.Local.sSQL, V.Local.sRet2)
+			F.Intrinsic.Control.If(V.Local.sRet2.Trim,<>,"")
+				'check to see if anything in the address has changed. If anything has changed, update the custom table and build the XML
+				'check for custom file that indicates the address changed. If the file exists for the vendor, build the xml and update the record. If nothing has changed, do nothing
+				F.Intrinsic.Control.If(V.Local.bB2FileExists,=,True)
+					'if it has, save to XML and then update the record in the custom table
+					F.Intrinsic.String.Build("{0}\{1}_{2}_SupplierSAPtoTA.xml", V.Caller.FilesDir, V.Caller.User.Trim, V.Ambient.Date.FormatMMDDYYYY, V.Local.sFQP)
+
+				'	F.Data.DataTable.SaveDataSetToXML("envelope", 1, V.Local.sFQP)
+			
+				
+					F.Data.DataTable.SaveToXML("envelope",1,True, V.Local.sFQP)
+					F.Intrinsic.String.Build("UPDATE GCG_6625_PARTNER SET DECISION = 'X', DATE_TIME = '{0}' WHERE CO_CODE = '{1}' AND PARTNER_ID = '{2}' AND PARTNER_TYPE = 'V'", V.Local.sDateTime, V.Caller.CompanyCode, V.Local.sPartnerID.Trim, V.Local.sSQL)
+					F.ODBC.Connection!con.Execute(V.Local.sSQL)
+					F.Intrinsic.File.DeleteFile(V.Local.sB2FQP)
+					
+					
+					
+					'set HTTP request
+					F.Intrinsic.Control.CallSub(ProcessVendorXML)
+				F.Intrinsic.Control.EndIf
+			F.Intrinsic.Control.ElseIf(V.Local.sRet2.Trim,=,"")
+				F.Intrinsic.String.Build("{0}\{1}_{2}_SupplierSAPtoTA.xml", V.Caller.FilesDir, V.Caller.User.Trim, V.Ambient.Date.FormatMMDDYYYY, V.Local.sFQP)
+			'	F.Data.DataTable.SaveDataSetToXML("envelope", 1, V.Local.sFQP)
+			
+				F.Data.DataTable.SaveToXML("envelope",1,True, V.Local.sFQP)
+				'add record to custom partner table
+				F.Intrinsic.String.Build("INSERT INTO GCG_6625_PARTNER (CO_CODE, PARTNER_ID, PARTNER_TYPE, DECISION, CRIMEA_HOLD, DATE_TIME) VALUES ('{0}', '{1}', 'V','X', 0,'{2}')", V.Caller.CompanyCode, V.Local.sPartnerID.Trim, V.Local.sDateTime, V.Local.sSQL)
+				F.ODBC.Connection!con.Execute(V.Local.sSQL)
+				
+				F.Intrinsic.Control.If(V.Local.bB2FileExists,=,True)
+					F.Intrinsic.File.DeleteFile(V.Local.sB2FQP)
+				F.Intrinsic.Control.EndIf
+				
+				'set HTTP request
+				F.Intrinsic.Control.CallSub(ProcessVendorXML)
+			F.Intrinsic.Control.EndIf		
+			
+			F.Intrinsic.Control.ExitSub
+			
+'		F.Intrinsic.Control.Case("VENDPAY")
+'			V.Local.sVendor.Set(V.Passed.000002)
+'			F.Intrinsic.String.Build("{0}\{1}_TCS_Vendor_S2AddressChange.txt", V.Caller.FilesDir, V.Local.sVendor.Trim, V.Local.sS2FQP)
+'			'setting the partner ID for adding to the custom partner table
+'			F.Intrinsic.String.Build("{0}_000", V.Local.sVendor.Trim, V.Local.sPartnerID)
+'			F.Intrinsic.String.Build("{0}_{1}_000", V.Local.sSAPCode.Trim, V.Local.sVendor.Trim, V.Local.sVendor)
+'			V.Local.sS2Name.Set(V.Passed.000049)
+'			V.Local.sS2Addr1.Set(V.Passed.000050)
+'			V.Local.sS2Addr2.Set(V.Passed.000053)
+'			V.Local.sS2Addr3.Set(V.Passed.000056)
+'			V.Local.sS2Addr4.Set(V.Passed.000059)
+'			V.Local.sS2Addr5.Set(V.Passed.000061)
+'			V.Local.sS2City.Set(V.Passed.000065)
+'			V.Local.sS2State.Set(V.Passed.000066)
+'			V.Local.sS2Zip.Set(V.Passed.000067)
+'			V.Local.sS2Country.Set(V.Passed.000070)
+'			V.Local.sS2County.Set(V.Passed.000071)
+'			
+'			F.Intrinsic.File.Exists(V.Local.sS2FQP, V.Local.bS2FileExists)
+'			
+'			'loop through dtXML to set the corresponding data needed
+'			'columns for dtXML
+'			'ACTION, COMPANY_CODE, ORG_CODE, PRIORITY, MESSAGE_TYPE, USERID, RECEIVER, SENDER, BATCH_ID
+'			F.Intrinsic.Control.For(V.Local.iCnt, 0, V.DataTable.envelope$integration_message_control.RowCount--,1)
+'				'need to update sender and batch id
+'				F.Data.DataTable.SetValue("envelope$integration_message_control", V.Local.iCnt, "SENDER", V.Local.sSender.Trim, "BATCH_ID", "", "ORG_CODE", V.Local.sOrgCode.Trim)
+'			F.Intrinsic.Control.Next(V.Local.iCnt)
+'	
+'			'loop through dtXML$BusKey to set the corresponding data needed
+'			'columns for dtXML$BusKey
+'			'PTNR_ID, ORG_CODE
+'			F.Intrinsic.Control.For(V.Local.iCnt2, 0, V.DataTable.envelope$Bus_Key.RowCount--,1)
+'				'need to update the partner id
+'				F.Data.DataTable.SetValue("envelope$Bus_Key", V.Local.iCnt2, "PTNR_ID", V.Local.sVendor.Trim, "ORG_CODE", V.Local.sOrgCode.Trim)
+'			F.Intrinsic.Control.Next(V.Local.iCnt2)
+'			
+'			'loop through dtXML$Partner to set the corresponding data needed
+'			'columns for dtXML$Partner
+'			'ADDRESS_LINE1, ADDRESS_LINE2, CITY, COUNTRY_CODE, END_USER_DESIGNATION, NAME, ORG_CODE, POSTAL_CODE, PTNR_ID, SOURCE_SYSTEM, SOURCE_SYSTEM_PARTNER_ID, WWIC, IBC, EPCI_FLAG
+'			F.Intrinsic.Control.For(V.Local.iCnt3, 0, V.DataTable.envelope$Partner.RowCount--,1)
+'				'need to update the address line 1, address line 2, city, country code, name, postal code, partner id, sender, partner id, system partner id WWIC = SIC code stored in GSS, IBC
+'				F.Data.DataTable.SetValue("envelope$Partner", V.Local.iCnt3, "ADDRESS_LINE1", V.Local.sS2Addr1.Trim, "ADDRESS_LINE2", V.Local.sS2Addr2.Trim, "ADDRESS_LINE3", V.Local.sS2Addr3.Trim, "CITY", V.Local.sS2City.Trim, "COUNTRY_CODE", V.Local.sS2Country.Trim, "NAME", V.Local.sS2Name.Trim,"POSTAL_CODE", V.Local.sS2Zip.Trim, "PTNR_ID", V.Local.sVendor.Trim,"SOURCE_SYSTEM", V.Local.sSender.Trim, "SOURCE_SYSTEM_PARTNER_ID", V.Local.sVendor.Trim, "ORG_CODE", V.Local.sOrgCode.Trim)
+'			F.Intrinsic.Control.Next(V.Local.iCnt3)
+'			
+'			'loop through dtXML$Partner_Type to set the corresponding data needed
+'			'columns for dtXML$Partner_Type
+'			'PTNR_TYPE
+'			'F.Intrinsic.Control.For(V.Local.iCnt4,0, V.DataTable.envelope$Partner_Type.RowCount--,1)
+'			
+'			'F.Intrinsic.Control.Next(V.Local.iCnt4)
+
+'			'build date time
+'			V.Local.dDate.Set(V.Ambient.Date)
+'			F.Intrinsic.String.Format(V.Local.dDate, "YYYY-MM-DD", V.Local.sDate)
+'			F.Intrinsic.String.Format(V.Ambient.Time,"Hh:Nn:Ss.000", V.Local.sTime)
+'			F.Intrinsic.String.Build("{0} {1}", v.Local.sDate.Trim, V.Local.sTime.Trim, V.Local.sDateTime)
+'			
+'			'query custom partner table to see if a record exists. If it does, update it. If it doesnt, insert a record
+'			F.Intrinsic.String.Build("SELECT * FROM GCG_6625_PARTNER WHERE CO_CODE = '{0}' AND PARTNER_ID = '{1}' AND PARTNER_TYPE = 'V'", V.Caller.CompanyCode, V.Local.sPartnerID.Trim, V.Local.sSQL)
+'			F.ODBC.Connection!con.ExecuteAndReturn(V.Local.sSQL, V.Local.sRet2)
+'			F.Intrinsic.Control.If(V.Local.sRet2.Trim,<>,"")
+'				'check to see if anything in the address has changed. If anything has changed, update the custom table and build the XML
+'				'check for custom file that indicates the address changed. If the file exists for the vendor, build the xml and update the record. If nothing has changed, do nothing
+'				
+'				F.Intrinsic.Control.If(V.Local.bS2FileExists,=,True)
+'					'if it has, save to XML and then update the record in the custom table
+'					F.Intrinsic.String.Build("{0}\{1}_{2}_SupplierSAPtoTA.xml", V.Caller.FilesDir, V.Caller.User.Trim, V.Ambient.Date.FormatMMDDYYYY, V.Local.sFQP)
+'					F.Data.DataTable.SaveDataSetToXML("envelope", 1, V.Local.sFQP)
+'				
+'				'	F.Data.DataTable.SaveToXML("envelope",1,True, V.Local.sFQP)
+'					F.Intrinsic.String.Build("UPDATE GCG_6625_PARTNER SET DECISION = '', DATE_TIME = '{0}' WHERE CO_CODE = '{1}' AND PARTNER_ID = '{2}' AND PARTNER_TYPE = 'V'", V.Local.sDateTime, V.Caller.CompanyCode, V.Local.sPartnerID.Trim, V.Local.sSQL)
+'					F.ODBC.Connection!con.Execute(V.Local.sSQL)
+'					F.Intrinsic.File.DeleteFile(V.Local.sS2FQP)
+'					
+'					'set HTTP request
+'					F.Intrinsic.Control.CallSub(ProcessVendorXML)
+'				F.Intrinsic.Control.EndIf
+'			F.Intrinsic.Control.ElseIf(V.Local.sRet2.Trim,=,"")
+'				F.Intrinsic.String.Build("{0}\{1}_{2}_SupplierSAPtoTA.xml", V.Caller.FilesDir, V.Caller.User.Trim, V.Ambient.Date.FormatMMDDYYYY, V.Local.sFQP)
+'				F.Data.DataTable.SaveDataSetToXML("envelope", 1, V.Local.sFQP)
+'			
+'			'	F.Data.DataTable.SaveToXML("envelope",1,True, V.Local.sFQP)
+'				'add record to custom partner table
+'				F.Intrinsic.String.Build("INSERT INTO GCG_6625_PARTNER  (CO_CODE, PARTNER_ID, PARTNER_TYPE, DECISION, CRIMEA_HOLD, DATE_TIME) VALUES ('{0}', '{1}', 'V','', 0,'{2}')", V.Caller.CompanyCode, V.Local.sPartnerID.Trim, V.Local.sDateTime, V.Local.sSQL)
+'				F.ODBC.Connection!con.Execute(V.Local.sSQL)
+'				
+'				F.Intrinsic.Control.If(V.Local.bS2FileExists,=,True)
+'					F.Intrinsic.File.DeleteFile(V.Local.sS2FQP)
+'				F.Intrinsic.Control.EndIf
+'				
+'				'set HTTP request
+'				F.Intrinsic.Control.CallSub(ProcessVendorXML)
+'			F.Intrinsic.Control.EndIf
+	F.Intrinsic.Control.EndSelect
+
+F.Intrinsic.Control.Else
+	F.Intrinsic.UI.Msgbox("The SAP Code has not been set up for this Company Code. You need to setup the associated SAP Code via System Support > Administration > TCS Maintenance (6625)", "Required Data")
+	V.Passed.777777.Set(1)
+	F.Intrinsic.Control.CallSub(f_Main_UnLoad)
+F.Intrinsic.Control.EndIf
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.Control.CallSub(ErrorMessage, "ErrorNumber", V.Ambient.ErrorNumber, "ErrorDescription", V.Ambient.ErrorDescription, "Subroutine", V.Ambient.CurrentSubroutine, "UNATTENDED", V.Global.bUnattended, "Project", "6625", "ProjectTitle", "TCS Vendor Process", "Callback", "f_Main_UnLoad")
+F.Intrinsic.Control.EndTry
+Program.Sub.VendXML.End
+
+Program.Sub.ProcessVendorXML.Start
+F.Intrinsic.Control.Try
+V.Local.sXMLFileName.Declare(String)
+V.Local.sEndUserFQP.Declare(String)
+V.Local.sCust.Declare(String)
+V.Local.bFileExists.Declare(Boolean)
+V.Local.sXMLResponseFile.Declare(String)
+V.Local.sResponseData.Declare(String)
+V.Local.sDataPacket.Declare(String)
+V.Local.sFQP.Declare(String)
+V.Local.sTADirectory.Declare(String)
+V.Local.bDirExists.Declare(Boolean)
+
+'check to see if the ta data transfer directory exists. If it doesn't create it
+F.Intrinsic.String.Build("{0}\TA_DATA_TRANSFER\", V.Caller.FilesDir, V.Local.sTADirectory)
+F.Intrinsic.File.DirExists(V.Local.sTADirectory, V.Local.bDirExists)
+F.Intrinsic.Control.If(V.Local.bDirExists,=,False)
+	F.Intrinsic.File.CreateDir(V.Local.sTADirectory)
+F.Intrinsic.Control.EndIf
+
+'set the username and password - will need to have a maintenance program for them to setup Username and Password for TA
+F.Communication.HTTPS.SetProperty("User", V.Global.sUsername)
+F.Communication.HTTPS.SetProperty("Password", V.Global.sPassword)
+
+'logic for HTTP request
+F.Intrinsic.String.Build("{0}\{1}_{2}_SupplierSAPtoTA.xml", V.Caller.FilesDir, V.Caller.User.Trim, V.Ambient.Date.FormatMMDDYYYY, V.Local.sXMLFileName)
+F.Intrinsic.File.Exists(V.Local.sXMLFileName, V.Local.bFileExists)
+F.Intrinsic.Control.If(V.Local.bFileExists,=,True)
+	F.Intrinsic.File.File2String(V.Local.sXMLFileName, V.Local.sDataPacket)
+	F.Intrinsic.String.Replace(V.Local.sDataPacket, "soapenv:ENVELOPE", "soapenv:Envelope", V.Local.sDataPacket)
+	F.Intrinsic.String.Build("{0}\{1}_{2}_SupplierSAPtoTA_Response.txt", V.Caller.FilesDir, V.Caller.User.Trim, V.Ambient.Date.FormatMMDDYYYY, V.Local.sXMLResponseFile)
+	
+	Function.Communication.HTTPS.SetProperty("LOCALFILE", V.Local.sXMLResponseFile)
+	F.Communication.HTTPS.SetProperty("PostData", V.Local.sDataPacket)
+	Function.Communication.HTTPS.SetProperty("ContentType","application/xml")
+	'set up the URL for each post as well
+	'this will need to be the URL provided by TE
+	Function.Communication.HTTPS.Post(v.Global.sURL)
+	
+	'copy the XML File and response file to custom folder
+	F.Intrinsic.String.Build("{0}\TA_DATA_TRANSFER\{1}_{2}{3}_SupplierSAPtoTA.xml", V.Caller.FilesDir, V.Caller.User.Trim, V.Ambient.Date.FormatMMDDYYYY, V.Ambient.Time.FormatHhNnSs,V.Local.sFQP)
+	F.Intrinsic.File.CopyFile(V.Local.sXMLFileName,V.Local.sFQP)	
+	'delete the file that was just created
+	F.Intrinsic.File.DeleteFile(V.Local.sXMLFileName)
+	
+	'copy the XML File and response file to custom folder
+	F.Intrinsic.String.Build("{0}\TA_DATA_TRANSFER\{1}_{2}{3}_SupplierSAPtoTA_Response.txt", V.Caller.FilesDir, V.Caller.User.Trim, V.Ambient.Date.FormatMMDDYYYY, V.Ambient.Time.FormatHhNnSs,V.Local.sFQP)
+	F.Intrinsic.File.CopyFile(V.Local.sXMLResponseFile,V.Local.sFQP)	
+	'delete the file that was just created
+	F.Intrinsic.File.DeleteFile(V.Local.sXMLResponseFile)
+	
+	V.Passed.GAB-TEXT-1.Set("Awaiting TCS Status")
+F.Intrinsic.Control.EndIf
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Catch
+	f.Communication.HTTPS.ReadProperty("TransferredData", V.Local.sResponseData)
+	F.Intrinsic.UI.Msgbox(V.Local.sResponseData, "HTTPS Error")
+	'add logic to move file to errors folder
+	F.Intrinsic.Control.CallSub(ErrorMessage, "ErrorNumber", V.Ambient.ErrorNumber, "ErrorDescription", V.Ambient.ErrorDescription, "Subroutine", V.Ambient.CurrentSubroutine, "UNATTENDED", V.Global.bUnattended, "Project", "6625", "ProjectTitle", "TCS Vendor Process", "Callback", "f_Main_UnLoad")
+F.Intrinsic.Control.EndTry
+Program.Sub.ProcessVendorXML.End
+
+Program.Sub.cmdOK_Click.Start
+F.Intrinsic.Control.Try
+
+'callsub to end the process
+F.Intrinsic.Control.CallSub(f_Main_Unload)
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.Control.CallSub(ErrorMessage, "ErrorNumber", V.Ambient.ErrorNumber, "ErrorDescription", V.Ambient.ErrorDescription, "Subroutine", V.Ambient.CurrentSubroutine, "UNATTENDED", V.Global.bUnattended, "Project", "6625", "ProjectTitle", "TCS Vendor Process", "Callback", "f_Main_UnLoad")
+F.Intrinsic.Control.EndTry
+Program.Sub.cmdOK_Click.End
+
+Program.Sub.DeleteVendors.Start
+F.Intrinsic.Control.Try
+V.Local.sSQL.Declare(String)
+V.Local.sVendor.Declare(String)
+
+'set the vendor number 
+V.Local.sVendor.Set(V.Passed.000002)
+
+'build the query to delete the vendor from the custom table
+F.Intrinsic.String.Build("DELETE FROM GCG_6625_PARTNER WHERE CO_CODE = '{0}' AND PARTNER_ID = '{1}' AND PARTNER_TYPE = 'V'", V.Caller.CompanyCode, V.Local.sVendor.Trim, V.Local.sSQL)
+F.ODBC.Connection!con.Execute(V.Local.sSQL)
+
+
+F.Intrinsic.Control.ExitSub
+F.Intrinsic.Control.Catch
+	F.Intrinsic.Control.CallSub(ErrorMessage, "ErrorNumber", V.Ambient.ErrorNumber, "ErrorDescription", V.Ambient.ErrorDescription, "Subroutine", V.Ambient.CurrentSubroutine, "UNATTENDED", V.Global.bUnattended, "Project", "6625", "ProjectTitle", "TCS Vendor Process", "Callback", "f_Main_UnLoad")
+F.Intrinsic.Control.EndTry
+Program.Sub.DeleteVendors.End
+
+Program.Sub.f_Main_UnLoad.Start
+F.Intrinsic.Control.Try
+
+'close the connection
+F.ODBC.Connection!con.Close
+
+'end the program
+F.Intrinsic.Control.End
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.Control.CallSub(ErrorMessage, "ErrorNumber", V.Ambient.ErrorNumber, "ErrorDescription", V.Ambient.ErrorDescription, "Subroutine", V.Ambient.CurrentSubroutine, "UNATTENDED", V.Global.bUnattended, "Project", "6625", "ProjectTitle", "TCS Vendor Process", "Callback", "f_Main_UnLoad")
+F.Intrinsic.Control.EndTry
+Program.Sub.f_Main_UnLoad.End
+
+Program.Sub.ErrorMessage.Start
+'basic error message for replacing catch block
+'this is really just for when printing the message and ending program
+'pass error number, error description, current subroutine
+'optional callback sub, this will be called before ending
+'optional unattended parameters, those subs may not exist if not using them but won't be called
+F.Intrinsic.Control.Try
+
+V.Local.iError.Declare(Long)
+V.Local.sErrorDescription.Declare(String)
+V.Local.sSubroutine.Declare(String)
+V.Local.sError.Declare(String)
+V.Local.bExists.Declare(Boolean)
+V.Local.sCallback.Declare(String)
+
+V.Local.iError.Set(V.Args.ErrorNumber)
+V.Local.sErrorDescription.Set(V.Args.ErrorDescription)
+V.Local.sSubroutine.Set(V.Args.Subroutine)
+
+'make sure we aren't in an error loop
+F.Intrinsic.Control.If(V.Global.bError)
+	F.Intrinsic.Control.End
+
+F.Intrinsic.Control.EndIf
+V.Global.bError.Set(True)
+
+F.Intrinsic.String.Build("Project: {0}{1}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}{1}{1}GAB Version: {5}", V.Caller.ScriptFile, V.Ambient.Newline, V.Local.sSubroutine, V.Local.iError, V.Local.sErrorDescription, V.Ambient.GABVersion, V.Local.sError)
+
+F.Intrinsic.Variable.ArgExists("UNATTENDED", V.Local.bExists)
+F.Intrinsic.Control.If(V.Local.bExists)
+	F.Intrinsic.Control.If(V.Args.UNATTENDED)
+		F.Intrinsic.Control.CallSub(UnattendedErrorMessage, "MESSAGE", V.Local.sError, "PROJECT", V.Args.PROJECT, "PROJECTTITLE", V.Args.PROJECTTITLE)
+	F.Intrinsic.Control.Else
+		F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.EndIf
+F.Intrinsic.Control.Else
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+F.Intrinsic.Control.EndIf
+
+F.Intrinsic.Variable.ArgExists("Callback", V.Local.bExists)
+F.Intrinsic.Control.If(V.Local.bExists)
+	V.Local.sCallback.Set(V.Args.Callback.Trim)
+	F.Intrinsic.Control.CallSub(V.Local.sCallback)
+F.Intrinsic.Control.EndIf
+
+F.Intrinsic.Control.End
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.String.Build("Project: {0}{1}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}{1}{1}GAB Version: {5}",V.Caller.ScriptFile,V.Ambient.Newline,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Ambient.GABVersion,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.End
+
+F.Intrinsic.Control.EndTry
+Program.Sub.ErrorMessage.End
+
+Program.Sub.Comments.Start
+${$5$}$20.1.8746.21827$}$1
+${$6$}$acollins$}$20240108130621989$}$h98hERc2yV72q0GaUGlwSaoK/aefTdVkC8twM5WMoD+73cv3Rs5F3u3qFUQtI/K6kaVzWRIMUe0d9n81rBje9g==
+Program.Sub.Comments.End
