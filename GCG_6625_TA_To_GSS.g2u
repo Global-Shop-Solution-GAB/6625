@@ -1,0 +1,797 @@
+﻿Program.Sub.Preflight.Start
+V.Global.bError.Declare(Boolean)
+V.Global.bUnattended.Declare(Boolean)
+v.Global.bCrimeaFlag.Declare(Boolean)
+V.Global.iCnt.Declare(Long)
+Program.Sub.Preflight.End
+
+Program.Sub.Main.Start
+F.Intrinsic.Control.Try
+Function.Intrinsic.UI.UsePixels ' Allows you to use Pixels instead of Twips throughout
+
+F.Intrinsic.Control.If(V.Caller.Hook,<>,38130)
+	F.Intrinsic.UI.InvokeWaitDialog("Processing Trade Automation XML Responses...", "Please Wait")
+	f.Intrinsic.UI.Sleep(5)
+	V.Global.bUnattended.Set(False)
+f.Intrinsic.Control.Else
+	V.Global.bUnattended.Set(True)
+F.Intrinsic.Control.EndIf
+'open a connection to the common database
+F.ODBC.Connection!ComCon.OpenCommonConnection
+
+'callsub to query GCG_6625_TA_XML for any records that have been added to the table
+F.Intrinsic.Control.CallSub(GetXMLRecords)
+
+'callsub to clean up GCG_6625_TA_XML records
+F.Intrinsic.Control.CallSub(CleanTable)
+
+'callsub to clean up the files in the TA_DATA_TRANSFER folder if they are older than a day
+F.Intrinsic.Control.CallSub(FileCleanup)
+
+
+F.Intrinsic.Control.If(V.Caller.Hook,<>,38130)
+	f.Intrinsic.UI.Sleep(5)
+	F.Intrinsic.UI.CloseWaitDialog
+	V.Global.bUnattended.Set(False)
+F.Intrinsic.Control.Else
+	V.Global.bUnattended.Set(True)
+F.Intrinsic.Control.EndIf
+
+F.Intrinsic.Control.CallSub(f_Main_Unload)
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.Control.CallSub(ErrorMessage, "ErrorNumber", V.Ambient.ErrorNumber, "ErrorDescription", V.Ambient.ErrorDescription, "Subroutine", V.Ambient.CurrentSubroutine, "UNATTENDED", V.Global.bUnattended, "Project", "6625", "ProjectTitle", "TA to GSS Data Process", "Callback", "f_Main_UnLoad")
+F.Intrinsic.Control.EndTry
+Program.Sub.Main.End
+
+Program.Sub.GetXMLRecords.Start
+F.Intrinsic.Control.Try
+V.Local.bIsCustomer.Declare(Boolean, False)
+v.Local.bIsVendor.Declare(Boolean, False)
+V.Local.bIsOrder.Declare(Boolean, False)
+V.Local.bIsShipment.Declare(Boolean, False)
+V.Local.bIsPartner.Declare(Boolean, False)
+V.Local.bIsPart.Declare(Boolean,False)
+V.Local.dTodayDate.Declare(Date)
+V.Local.dRecordDate.Declare(Date)
+V.Local.iCnt.Declare(Long)
+V.Local.sSQL.Declare(String)
+V.Local.sRecordDate.Declare(String)
+V.Local.sTodayDate.Declare(String)
+V.Local.sXMLData.Declare(String)
+V.Local.sXMLFile.Declare(String)
+V.Local.sDateTime.Declare(String)
+V.Local.sTime.Declare(String)
+V.Local.sSelectedRows.Declare(String)
+V.Local.iCnt2.Declare(Long)
+V.Local.sRecordXML.Declare(String)
+V.Local.sRet.Declare(String)
+V.Local.iTotalRows.Declare(Long)
+V.Local.bIsTest.Declare(Boolean, False)
+V.Local.bisTest2.Declare(Boolean, False)
+
+'V.Local.dTodayDate.Set(V.Ambient.Date)
+F.Intrinsic.Date.DateAdd("D", 1, V.Ambient.Date, v.Local.dTodayDate)
+F.Intrinsic.Date.DateAdd("H", 12, V.Ambient.Time, V.Local.sTime)
+
+'set the date time 
+F.Intrinsic.String.Format(V.Local.dTodayDate, "YYYY-MM-DD", V.Local.sTodayDate)
+F.Intrinsic.String.Format(V.Local.sTime, "Hh:Nn:Ss.000", V.Local.sTime)
+F.Intrinsic.String.Build("{0} {1}", V.Local.sTodayDate, V.Local.sTime, V.Local.sDateTime)
+
+'create temp XML filename
+F.Intrinsic.String.Build("{0}\6625_TempXML_{1}.xml", V.Caller.FilesDir, V.Local.sTodayDate, V.Local.sXMLFile)
+
+'check to see if the datatable exists. If it does, close it
+F.Intrinsic.Control.If(v.DataTable.dtXML.Exists,=,True)
+	F.Data.DataTable.Close("dtXML")
+F.Intrinsic.Control.EndIf
+
+
+F.Intrinsic.String.Build("SELECT * FROM GCG_6625_TA_XML WHERE  DATE_RECEIVED <= '{0}' ORDER BY DATE_RECEIVED ASC", v.Local.sDateTime, v.Local.sSQL)
+F.Data.DataTable.CreateFromSQL("dtXML", "ComCon", V.Local.sSQL, True)
+F.Intrinsic.Control.If(V.DataTable.dtXML.RowCount--,>,-1)
+	F.Data.DataTable.AddColumn("dtXML", "DELETE_RECORD", "BOOLEAN", False)
+	F.Data.DataTable.AddColumn("dtXML", "TRANS_TYPE", "STRING")
+	F.Data.DataTable.AcceptChanges("dtXML")
+	
+	'loop through the records to get the XML
+	F.Intrinsic.Control.For(v.Local.iCnt,0, V.DataTable.dtXML.RowCount--,1)
+		'get the XML data from the column
+		V.Local.sXMLData.Set(V.DataTable.dtXML(V.Local.iCnt).XML_RECEIVED!FieldValtrim)
+		
+		'F.Intrinsic.String.IsInString(V.Local.sXMLData, "TEST", True, V.Local.bIsTest)
+		'F.Intrinsic.Control.If(V.Local.bIsTest,=,True)
+		'	F.Data.DataTable.SetValue("dtXML", V.Local.iCnt, "DELETE_RECORD", True)
+		'	F.Intrinsic.Control.ExitSub
+		'F.Intrinsic.Control.Else
+		'	F.Intrinsic.String.IsInString(V.Local.sXMLData, "Test", True, V.Local.bisTest2)
+		'	F.Intrinsic.Control.If(V.Local.bisTest2,=,True)
+		'		F.Data.DataTable.SetValue("dtXML", V.Local.iCnt, "DELETE_RECORD", True)
+		'		F.Intrinsic.Control.ExitSub
+		'	F.Intrinsic.Control.EndIf
+		'F.Intrinsic.Control.EndIf
+		
+		'remove the single quotes
+		F.Intrinsic.String.Replace(V.Local.sXMLData, "'", "", V.Local.sXMLData)
+		F.Intrinsic.String.Replace(V.Local.sXMLData, "<?xml version=1.0 encoding=UTF-8?>", "", V.Local.sXMLData)
+		F.Intrinsic.String.Replace(V.Local.sXMLData, "<?xml version=1.0 encoding=UTF-8?>", "", V.Local.sXMLData)
+		F.Intrinsic.String.Replace(V.Local.sXMLData, "</ns0:MT_SAP_SalesOrder_Inq_Inbound>", "",V.Local.sXMLData)
+		F.Intrinsic.String.Replace(V.Local.sXMLData, "</ns0:MT_GlobalTrade_Receiver>", "", V.Local.sXMLData)
+		F.Intrinsic.String.Replace(V.Local.sXMLData, "</ns0:MT_SAP_Delivery>","", V.Local.sXMLData)
+		
+		F.Intrinsic.String.IsInString(V.Local.sXMLData, "EX_REVIEW_FLAG", True, V.Global.bCrimeaFlag)
+		'check the XML for the transaction type
+		'check for if it's a customer
+		F.Intrinsic.String.IsInString(V.Local.sXMLData, "PARTNER", True, V.Local.bIsPartner)
+		F.Intrinsic.Control.If(V.Local.bIsPartner,=,True)
+			'check for if it's a vendor
+			F.Intrinsic.String.IsInString(V.Local.sXMLData, "_1_V", True, v.Local.bIsVendor)
+			F.Intrinsic.Control.If(V.Local.bIsVendor,=,False)
+				v.Local.bIsCustomer.Set(True)
+				F.Data.DataTable.SetValue("dtXML", v.Local.iCnt, "TRANS_TYPE", "C")
+			F.Intrinsic.Control.ElseIf(V.Local.bIsVendor,=,True)
+				F.Data.DataTable.SetValue("dtXML", v.Local.iCnt, "TRANS_TYPE", "V")
+			F.Intrinsic.Control.EndIf
+		F.Intrinsic.Control.ElseIf(V.Local.bIsPartner,=,False)
+			'check if it's the part XML
+			F.Intrinsic.String.IsInString(V.Local.sXMLData, "<PRODUCT>", True, V.Local.bIsPart)
+			F.Intrinsic.Control.If(V.Local.bIsPart,=,True)
+				F.Data.DataTable.SetValue("dtXML", v.Local.iCnt, "TRANS_TYPE", "P")
+			F.Intrinsic.Control.ElseIf(V.Local.bIsPart,=,False)
+				'check for if it's an order
+				F.Intrinsic.String.IsInString(V.Local.sXMLData, "<SalesOrderNumber>", True, V.Local.bIsCustomer)
+				F.Intrinsic.Control.If(V.Local.bIsCustomer,=,False)
+					'check for if it's a delivery
+					F.Data.DataTable.SetValue("dtXML", v.Local.iCnt, "TRANS_TYPE", "D")
+				F.Intrinsic.Control.ElseIf(v.Local.bIsCustomer,=,True)
+					
+					F.Data.DataTable.SetValue("dtXML", v.Local.iCnt, "TRANS_TYPE", "O")
+				F.Intrinsic.Control.EndIf
+			F.Intrinsic.Control.EndIf
+		F.Intrinsic.Control.EndIf
+		
+
+
+		'check for the records that are type O (for order) and type D (for delivery)
+		F.Intrinsic.Control.If(V.DataTable.dtXML(V.Local.iCnt).TRANS_TYPE!FieldValTrim,=,"O")
+			V.Local.sRecordXML.Set(V.Local.sXMLData.Trim)
+			F.Intrinsic.String.Split(V.Local.sRecordXML,"<Record>", V.Local.sRet)
+			F.Intrinsic.Control.For(V.Local.iCnt2,1, V.Local.sRet.UBound)
+
+'				F.Intrinsic.Control.If(V.Local.iCnt2,=,1)
+'					'update the main records XML
+'					F.Data.DataTable.SetValue("dtXML", V.Local.iCnt, "XML_RECEIVED", V.Local.sRet(V.Local.iCnt2).Trim)
+'				F.Intrinsic.Control.Else
+'					'if it's not the first loop, add a row for every line 
+'					F.Data.DataTable.AddRow("dtXML", "XML_RECEIVED", V.Local.sRet(V.Local.iCnt2).Trim,"DATE_RECEIVED", v.Local.sDateTime, "TRANS_TYPE", "O")
+'					F.Data.DataTable.AcceptChanges("dtXML")
+'				F.Intrinsic.Control.EndIf
+				
+				F.Intrinsic.String.Build("<Record>{0}", v.Local.sRet(v.Local.iCnt2).Trim, V.Local.sXMLData)
+				'save the string to a file
+				F.Intrinsic.File.String2File(V.Local.sXMLFile, V.Local.sXMLData)
+				
+				'check to see if the temp datatable exists. If it does, close it
+				F.Intrinsic.Control.If(V.DataTable.dtTempData.Exists)
+					F.Data.DataTable.Close("dtTempData")
+				F.Intrinsic.Control.EndIf
+
+
+				V.Global.iCnt.Set(V.Local.iCnt)
+				'create the datatable XML from the file
+				F.Data.DataTable.CreateDatasetFromXML("dtTempData", V.Local.sXMLFile, True)
+				
+				'callsub to process Order XML for TA Status
+			
+				F.Intrinsic.Control.CallSub(OrderXML)
+				
+				'delete the XML file after it's done processing
+				F.Intrinsic.File.DeleteFile(V.Local.sXMLFile)
+		
+				F.Data.DataTable.SetValue("dtXML", V.Local.iCnt, "DELETE_RECORD", 1)
+			F.Intrinsic.Control.Next(V.Local.iCnt2)
+		F.Intrinsic.Control.EndIf
+		
+		F.Intrinsic.Control.If(V.DataTable.dtXML(V.Local.iCnt).TRANS_TYPE!FieldValTrim,=,"D")
+			
+			F.Intrinsic.String.Build("<Record>{0}</Record>", V.Local.sXMLData, v.Local.sXMLData)
+			'save the string to a file
+			F.Intrinsic.File.String2File(V.Local.sXMLFile, V.Local.sXMLData)
+				
+			'check to see if the temp datatable exists. If it does, close it
+			F.Intrinsic.Control.If(V.DataTable.dtTempData.Exists)
+				F.Data.DataTable.Close("dtTempData")
+			F.Intrinsic.Control.EndIf
+			
+			'create the datatable XML from the file
+			F.Data.DataTable.CreateDatasetFromXML("dtTempData", V.Local.sXMLFile, True)
+			
+			'callsub to Process Delivery XML for TA status
+			F.Intrinsic.Control.CallSub(DeliveryXML)
+			
+			'delete the XML file after it's done processing
+			F.Intrinsic.File.DeleteFile(V.Local.sXMLFile)
+		
+			F.Data.DataTable.SetValue("dtXML", V.Local.iCnt, "DELETE_RECORD", 1)
+		
+		F.Intrinsic.Control.EndIf
+	
+		'check to see what the trans type is
+		F.Intrinsic.Control.If(V.DataTable.dtXML(V.Local.iCnt).TRANS_TYPE!FieldValTrim,=,"C")
+			'save the string to a file
+			F.Intrinsic.File.String2File(V.Local.sXMLFile, V.Local.sXMLData)
+				
+			'check to see if the temp datatable exists. If it does, close it
+			F.Intrinsic.Control.If(V.DataTable.dtTempData.Exists)
+				F.Data.DataTable.Close("dtTempData")
+			F.Intrinsic.Control.EndIf
+		
+			'create the datatable XML from the file
+			F.Data.DataTable.CreateDatasetFromXML("dtTempData", V.Local.sXMLFile, True)
+			'callsub to process Customer XML for TA status
+			F.Intrinsic.Control.CallSub(CustomerXML)
+			
+			'delete the XML file after it's done processing00
+			F.Intrinsic.File.DeleteFile(V.Local.sXMLFile)
+		
+			F.Data.DataTable.SetValue("dtXML", V.Local.iCnt, "DELETE_RECORD", 1)
+		
+		F.Intrinsic.Control.ElseIf(V.DataTable.dtXML(V.Local.iCnt).TRANS_TYPE!FieldValTrim,=,"V")
+		
+			'callsub to process Vendor XML for TA Status
+			F.Intrinsic.File.String2File(V.Local.sXMLFile, V.Local.sXMLData)
+			'check to see if the temp datatable exists. If it does, close it
+			F.Intrinsic.Control.If(V.DataTable.dtTempData.Exists)
+				F.Data.DataTable.Close("dtTempData")
+			F.Intrinsic.Control.EndIf
+		
+			'create the datatable XML from the file
+			F.Data.DataTable.CreateDatasetFromXML("dtTempData", V.Local.sXMLFile, True)
+			'callsub to process Customer XML for TA status
+			F.Intrinsic.Control.CallSub(VendorXML)
+			
+				'delete the XML file after it's done processing
+			F.Intrinsic.File.DeleteFile(V.Local.sXMLFile)
+		
+			F.Data.DataTable.SetValue("dtXML", V.Local.iCnt, "DELETE_RECORD", 1)
+'		F.Intrinsic.Control.ElseIf(V.DataTable.dtXML(V.Local.iCnt).TRANS_TYPE!FieldValTrim,=,"O")
+			'callsub to process Order XML for TA Status
+			
+	'		F.Intrinsic.Control.CallSub(OrderXML)
+'		F.Intrinsic.Control.ElseIf(V.DataTable.dtXML(V.Local.iCnt).TRANS_TYPE!FieldValTrim,=,"D")
+			'callsub to Process Delivery XML for TA status
+'			F.Intrinsic.Control.CallSub(DeliveryXML)
+		F.Intrinsic.Control.ElseIf(V.DataTable.dtXML(V.Local.iCnt).TRANS_TYPE!FieldValTrim,=,"P")
+			'callsub to process Part XML for TA part classification
+			F.Intrinsic.File.String2File(V.Local.sXMLFile, V.Local.sXMLData)
+			'check to see if the temp datatable exists. If it does, close it
+			F.Intrinsic.Control.If(V.DataTable.dtTempData.Exists)
+				F.Data.DataTable.Close("dtTempData")
+			F.Intrinsic.Control.EndIf
+		
+			'create the datatable XML from the file
+			F.Data.DataTable.CreateDatasetFromXML("dtTempData", V.Local.sXMLFile, True)
+			'callsub to process Customer XML for TA status
+			F.Intrinsic.Control.CallSub(PartXML)
+			
+			'delete the XML file after it's done processing
+			F.Intrinsic.File.DeleteFile(V.Local.sXMLFile)
+		
+			F.Data.DataTable.SetValue("dtXML", V.Local.iCnt, "DELETE_RECORD", 1)
+		F.Intrinsic.Control.EndIf
+	
+
+	'	V.Local.iTotalRows.Set(V.DataTable.dtXML.RowCount--)
+	F.Intrinsic.Control.Next(v.Local.iCnt)
+F.Intrinsic.Control.EndIf
+
+F.Intrinsic.Control.ExitSub
+F.Intrinsic.Control.Catch
+	F.Intrinsic.Control.CallSub(ErrorMessage, "ErrorNumber", V.Ambient.ErrorNumber, "ErrorDescription", V.Ambient.ErrorDescription, "Subroutine", V.Ambient.CurrentSubroutine, "UNATTENDED", V.Global.bUnattended, "Project", "6625", "ProjectTitle", "TA to GSS Data Process", "Callback", "f_Main_UnLoad")
+F.Intrinsic.Control.EndTry
+Program.Sub.GetXMLRecords.End
+
+Program.Sub.CustomerXML.Start
+F.Intrinsic.Control.Try
+V.Local.iCnt.Declare(Long)
+V.Local.iSelect.Declare(Long)
+V.Local.sPartnerType.Declare(String)
+V.Local.sCompanyCode.Declare(String)
+V.Local.sPartnerID.Declare(String)
+V.Local.sFilter.Declare(String)
+V.Local.sRet.Declare(String)
+V.Local.sCoCodeCon.Declare(String)
+V.Local.sDecision.Declare(String)
+V.Local.sSQL.Declare(String)
+V.Local.sCrimeaHold.Declare(String)
+V.Local.sRet2.Declare(String)
+
+V.Local.sPartnerType.Set("C")
+
+F.Intrinsic.Control.For(V.Local.iCnt,0,V.DataTable.dtTempData$PARTNER.RowCount--,1)
+	'set the company code that the transaction is for
+	V.Local.sCompanyCode.Set(V.DataTable.dtTempData$PARTNER(V.Local.iCnt).SOURCE_SYSTEM!FieldValTrim)
+	
+	F.Intrinsic.String.Right(V.Local.sCompanyCode.Trim,3, V.Local.sCompanyCode)
+F.Intrinsic.Control.Next(V.Local.iCnt)
+
+F.Intrinsic.Control.For(V.Local.iCnt,0,V.DataTable.dtTempData$BUS_KEY.RowCount--,1)
+	'set the partner ID for the transaction
+	v.Local.sPartnerID.Set(V.DataTable.dtTempData$BUS_KEY(V.Local.iCnt).PTNR_ID!FieldValTrim)
+	F.Intrinsic.String.Split(V.Local.sPartnerID, "QB", V.Local.sRet2)
+	V.Local.sPartnerID.Set(v.Local.sRet2(1).Trim)
+F.Intrinsic.Control.Next(V.Local.iCnt)
+
+'build the dataset name
+F.Intrinsic.String.Build("GLOBAL_{0}", v.Local.sCompanyCode.Trim, v.Local.sCoCodeCon)
+'V.Local.sCoCodeCon.Set("GLOBAL_TST")
+'V.Local.sCompanyCode.Set("TST")
+
+'open a database connection for the company code 
+F.ODBC.Connection!con.OpenConnection(V.Local.sCoCodeCon, Master, master)
+
+'Get the left 12 to remove the 'QB'
+'F.Intrinsic.String.Right(V.Local.sPartnerID, 12, V.Local.sPartnerID)
+'find the record in the $partner datatable that matches the Partner ID above
+F.Intrinsic.String.Build("[PTNR_ID] LIKE '*{0}*'", V.Local.sPartnerID.Trim, V.Local.sFilter)
+F.Data.DataTable.Select("dtTempData$PARTNER", V.Local.sFilter, V.Local.sRet)
+F.Intrinsic.Control.If(V.Local.sRet.Trim,<>,"")
+	'split the values to find out all the rows where there was a match
+	F.Intrinsic.String.Split(V.Local.sRet,"*!*", V.Local.sRet)
+	
+	F.Intrinsic.Control.If(V.Local.sRet.UBound,>,0)
+		'loop through to get the data for the records
+	'	F.Intrinsic.Control.For(V.Local.iCnt, 0 V.Local.sRet.UBound, 1)
+	'		V.Local.sDecision.Set()
+		
+	'	F.Intrinsic.Control.Next(V.Local.iCnt)
+'	F.Intrinsic.Control.ElseIf(V.Local.sRet.UBound.Long,=,0)
+	F.Intrinsic.Control.Else
+		V.Local.sDecision.Set(V.DataTable.dtTempData$RPL_RESULTS(V.Local.sRet.Long).DECISION!FieldValTrim)
+		F.Intrinsic.Control.If(V.Global.bCrimeaFlag,=,True)
+			V.Local.sCrimeaHold.Set(V.DataTable.dtTempData$PARTNER(V.Local.sRet.Long).EX_REVIEW_REASON_CODE!FieldValTrim)
+			F.Intrinsic.Control.If(V.Local.sCrimeaHold.Trim,=,"Crimea Hold", "OR", V.Local.sCrimeaHold.Trim,=,"Y")
+				V.Local.sCrimeaHold.Set(1)
+			f.Intrinsic.Control.Else
+				V.Local.sCrimeaHold.Set(0)
+			F.Intrinsic.Control.EndIf
+		F.Intrinsic.Control.EndIf
+	'	
+		'update partner record in custom table
+		F.Intrinsic.String.Build("UPDATE GCG_6625_PARTNER SET DECISION = '{0}', CRIMEA_HOLD = '{3}' WHERE CO_CODE = '{1}' AND PARTNER_ID = '{2}' AND PARTNER_TYPE = 'C'", V.Local.sDecision.Trim, V.Local.sCompanyCode.Trim, V.Local.sPartnerID.Trim, v.Local.sCrimeaHold.Long, V.Local.sSQL)
+		F.ODBC.Connection!con.Execute(V.Local.sSQL)
+	F.Intrinsic.Control.EndIf
+	
+F.Intrinsic.Control.EndIf
+
+'close the connection for the company code
+F.ODBC.Connection!con.Close
+
+F.Intrinsic.Control.ExitSub
+F.Intrinsic.Control.Catch
+	F.Intrinsic.Control.CallSub(ErrorMessage, "ErrorNumber", V.Ambient.ErrorNumber, "ErrorDescription", V.Ambient.ErrorDescription, "Subroutine", V.Ambient.CurrentSubroutine, "UNATTENDED", V.Global.bUnattended, "Project", "6625", "ProjectTitle", "TA to GSS Data Process", "Callback", "f_Main_UnLoad")
+F.Intrinsic.Control.EndTry
+Program.Sub.CustomerXML.End
+
+Program.Sub.VendorXML.Start
+F.Intrinsic.Control.Try
+V.Local.iCnt.Declare(Long)
+V.Local.iSelect.Declare(Long)
+V.Local.sPartnerType.Declare(String)
+V.Local.sCompanyCode.Declare(String)
+V.Local.sPartnerID.Declare(String)
+V.Local.sFilter.Declare(String)
+V.Local.sRet.Declare(String)
+V.Local.sCoCodeCon.Declare(String)
+V.Local.sDecision.Declare(String)
+V.Local.sSQL.Declare(String)
+V.Local.sCrimeaHold.Declare(String)
+V.Local.sVendor.Declare(String)
+
+V.Local.sPartnerType.Set("V")
+
+
+F.Intrinsic.Control.For(V.Local.iCnt,0,V.DataTable.dtTempData$PARTNER.RowCount--,1)
+	'set the company code that the transaction is for
+	V.Local.sCompanyCode.Set(V.DataTable.dtTempData$PARTNER(V.Local.iCnt).SOURCE_SYSTEM!FieldValTrim)
+	
+	F.Intrinsic.String.Right(V.Local.sCompanyCode.Trim,3, V.Local.sCompanyCode)
+F.Intrinsic.Control.Next(V.Local.iCnt)
+
+F.Intrinsic.Control.For(V.Local.iCnt,0,V.DataTable.dtTempData$BUS_KEY.RowCount--,1)
+	'set the partner ID for the transaction
+	v.Local.sPartnerID.Set(V.DataTable.dtTempData$BUS_KEY(V.Local.iCnt).PTNR_ID!FieldValTrim)
+F.Intrinsic.Control.Next(V.Local.iCnt)
+
+
+'build the dataset name
+F.Intrinsic.String.Build("GLOBAL_{0}", v.Local.sCompanyCode.Trim, v.Local.sCoCodeCon)
+'V.Local.sCoCodeCon.Set("GLOBAL_TST")
+'V.Local.sCompanyCode.Set("TST")
+
+'open a database connection for the company code 
+F.ODBC.Connection!con.OpenConnection(V.Local.sCoCodeCon, Master, master)
+
+'find the record in the $partner datatable that matches the Partner ID above
+F.Intrinsic.String.Build("[PTNR_ID] LIKE '*{0}*'", V.Local.sPartnerID.Trim, V.Local.sFilter)
+F.Data.DataTable.Select("dtTempData$PARTNER", V.Local.sFilter, V.Local.sRet)
+F.Intrinsic.Control.If(V.Local.sRet.Trim,<>,"")
+	'split the values to find out all the rows where there was a match
+	F.Intrinsic.String.Split(V.Local.sRet,"*!*", V.Local.sRet)
+	
+	F.Intrinsic.Control.If(V.Local.sRet.UBound,>,0)
+		'loop through to get the data for the records
+		F.Intrinsic.Control.For(V.Local.iCnt, 0 V.Local.sRet.UBound, 1)
+		
+		
+		F.Intrinsic.Control.Next(V.Local.iCnt)
+	F.Intrinsic.Control.ElseIf(V.Local.sRet.UBound,=,0)
+
+	
+		V.Local.sDecision.Set(V.DataTable.dtTempData$RPL_RESULTS(V.Local.sRet.Long).DECISION!FieldValTrim)
+		F.Intrinsic.Control.If(V.Global.bCrimeaFlag,=,True)
+			V.Local.sCrimeaHold.Set(V.DataTable.dtTempData$PARTNER(V.Local.sRet.Long).EX_REVIEW_REASON_CODE!FieldValTrim)
+			F.Intrinsic.Control.If(V.Local.sCrimeaHold.Trim,=,"Crimea Hold", "OR", V.Local.sCrimeaHold.Trim,=,"Y")
+				V.Local.sCrimeaHold.Set(1)
+			f.Intrinsic.Control.Else
+				V.Local.sCrimeaHold.Set(0)
+			F.Intrinsic.Control.EndIf
+		F.Intrinsic.Control.EndIf	
+		
+		
+		F.Intrinsic.String.LPad(V.Local.sPartnerID, " ", 10, V.Local.sPartnerID)
+		F.Intrinsic.String.Right(V.Local.sPartnerID, 10, V.Local.sPartnerID)
+		F.Intrinsic.String.Left(V.Local.sPartnerID, 6, V.Local.sPartnerID)
+	
+
+		
+		'update partner record in custom table
+		F.Intrinsic.String.Build("UPDATE GCG_6625_PARTNER SET DECISION = '{0}', CRIMEA_HOLD = '{3}' WHERE CO_CODE = '{1}' AND PARTNER_ID = '{2}' AND PARTNER_TYPE = 'V'", V.Local.sDecision.Trim, V.Local.sCompanyCode.Trim, V.Local.sPartnerID.Trim, v.Local.sCrimeaHold.Long, V.Local.sSQL)
+		F.ODBC.Connection!con.Execute(V.Local.sSQL)
+	F.Intrinsic.Control.EndIf
+	
+F.Intrinsic.Control.EndIf
+
+'close the connection for the company code
+F.ODBC.Connection!con.Close
+
+F.Intrinsic.Control.ExitSub
+F.Intrinsic.Control.Catch
+	F.Intrinsic.Control.CallSub(ErrorMessage, "ErrorNumber", V.Ambient.ErrorNumber, "ErrorDescription", V.Ambient.ErrorDescription, "Subroutine", V.Ambient.CurrentSubroutine, "UNATTENDED", V.Global.bUnattended, "Project", "6625", "ProjectTitle", "TA to GSS Data Process", "Callback", "f_Main_UnLoad")
+F.Intrinsic.Control.EndTry
+Program.Sub.VendorXML.End
+
+Program.Sub.OrderXML.Start
+F.Intrinsic.Control.Try
+V.Local.iCnt.Declare(Long)
+V.Local.sTransType.Declare(String)
+V.Local.sOrderNo.Declare(String)
+V.Local.sPosnr.Declare(String)
+V.Local.sPassFailDPL.Declare(String)
+V.Local.sPassFailLIC.Declare(String)
+V.Local.sPassFailData.Declare(String)
+V.Local.sPassFailEUC.Declare(String)
+V.Local.sLicNum.Declare(String)
+V.Local.sOrderStatus.Declare(String)
+V.Local.sSQL.Declare(String)
+V.Local.sCol1.Declare(String)
+V.Local.sCol2.Declare(String)
+V.Local.dExpDate.Declare(String)
+V.Local.sExpDate.Declare(String)
+V.Local.sCompanyCode.Declare(String)
+V.Local.sCoCodeCon.Declare(String)
+
+V.Local.sTransType.Set("O")
+
+
+'open company code connection
+'F.ODBC.Connection!con.OpenConnection(v.Ambient.PDSN, V.Ambient.PUser, V.Ambient.PPass)
+
+'F.Intrinsic.Control.For(V.Local.iCnt, 0, V.DataTable.dtTempData.RowCount--,1)
+'	'set the company code that the transaction is for
+'	V.Local.sCompanyCode.Set(V.DataTable.dtTempData(V.Local.iCnt).COMPANY_CODE!FieldValTrim)
+'F.Intrinsic.Control.Next(V.Local.iCnt)
+
+''build the dataset name
+'F.Intrinsic.String.Build("GLOBAL_{0}", v.Local.sCompanyCode.Trim, v.Local.sCoCodeCon)
+
+V.Local.sCol1.Set("SalesOrderNumber")
+V.Local.sCol2.Set("ItemNumber")
+
+
+F.Intrinsic.Control.For(V.Local.iCnt, 0, V.DataTable.dtTempData.RowCount--,1)
+'	V.Local.sOrderNo.Set(V.DataTable.dtTempData(V.Local.iCnt).[Sales Order Number]!FieldValTrim)
+'	V.Local.sPosnr.Set(V.DataTable.dtTempData(V.Local.iCnt).[Item Number]!FieldValTrim)
+		'set the company code that the transaction is for
+	V.Local.sCompanyCode.Set(V.DataTable.dtTempData(V.Local.iCnt).SOURCE_SYSTEM!FieldValTrim)
+	F.Intrinsic.String.Right(V.Local.sCompanyCode.Trim,3, V.Local.sCompanyCode)
+	V.Local.sOrderNo.Set(V.DataTable.dtTempData(V.Local.iCnt).[V.Local.sCol1]!FieldValTrim)
+	F.Intrinsic.String.Right(V.Local.sOrderNo, 7, V.Local.sOrderNo)
+	V.Local.sPosnr.Set(V.DataTable.dtTempData(V.Local.iCnt).[V.Local.sCol2]!FieldValTrim)
+'	V.Local.sOrderStatus.Set(V.DataTable.dtTempData(V.Local.iCnt).TC_Order_Status!FieldValTrim)
+	V.Local.sPassFailDPL.Set(V.DataTable.dtTempData(V.Local.iCnt).PASS_FAIL_DPL!FieldValTrim)
+	V.Local.sPassFailLIC.Set(V.DataTable.dtTempData(V.Local.iCnt).PASS_FAIL_LICENCE!FieldValTrim)
+	V.Local.sPassFailData.Set(V.DataTable.dtTempData(V.Local.iCnt).PASS_FAIL_DATA!FieldValTrim)
+	V.Local.sPassFailEUC.Set(V.DataTable.dtTempData(V.Local.iCnt).PASS_FAIL_EUC!FieldValTrim)
+	V.Local.sLicNum.Set(V.DataTable.dtTempData(V.Local.iCnt).LICENSE_NUMBER!FieldValTrim)
+	V.Local.sExpDate.Set(V.DataTable.dtTempData(V.Local.iCnt).LICENSE_EXPIRATION_DATE!FieldVal)
+	F.Intrinsic.Control.If(V.Local.sExpDate.Trim,=,"")
+		V.Local.dExpDate.Set("01/01/1900")
+	F.Intrinsic.Control.Else		
+		F.Intrinsic.Date.ConvertDString(V.Local.sExpDate, "YYYY/MM/DD", V.Local.dExpDate)
+	F.Intrinsic.Control.EndIf
+	F.Intrinsic.String.Format(V.Local.dExpDate, "YYYY-MM-DD", V.Local.sExpDate)
+	
+	'update record in ord delviery table
+'	F.Intrinsic.String.Build("UPDATE GCG_6625_ORD_DELIV SET PASS_FAIL_DPL = '{0}', PASS_FAIL_LIC = '{1}', PASS_FAIL_DATA = '{2}', PASS_FAIL_EUC = '{3}', STATUS3 = '{4}', LIC_NUM = '{5}' WHERE TRANS_ID = '{6}' AND TRANS_TYPE = 'O' AND POSNR = '{7}'", V.Local.sPassFailDPL.Trim, V.Local.sPassFailLIC.Trim, V.Local.sPassFailData.Trim, V.Local.sPassFailEUC.Trim, V.Local.sOrderStatus.Trim, V.Local.sLicNum.Trim, V.Local.sOrderNo.Trim, V.Local.sPosnr.Trim, v.Local.sSQL)
+	
+	F.Intrinsic.String.Build("GLOBAL_{0}", v.Local.sCompanyCode.Trim, v.Local.sCoCodeCon)
+	
+	'open a database connection for the company code 
+	F.ODBC.Connection!con.OpenConnection(V.Local.sCoCodeCon, Master, master)
+	
+	F.Intrinsic.String.Build("UPDATE GCG_6625_ORD_DELIV SET PASS_FAIL_DPL = '{0}', PASS_FAIL_LIC = '{1}', PASS_FAIL_DATA = '{2}', PASS_FAIL_EUC = '{3}', LIC_NUM = '{4}', EXP_DAT = '{7}' WHERE TRANS_ID = '{5}' AND TRANS_TYPE = 'O' AND POSNR = '{6}'", V.Local.sPassFailDPL.Trim, V.Local.sPassFailLIC.Trim, V.Local.sPassFailData.Trim, V.Local.sPassFailEUC.Trim, V.Local.sLicNum.Trim, V.Local.sOrderNo.Trim, V.Local.sPosnr.Trim,V.Local.sExpDate.PervasiveDate,  v.Local.sSQL)
+	F.ODBC.Connection!con.Execute(V.Local.sSQL)
+	F.ODBC.Connection!con.Close
+F.Intrinsic.Control.Next(V.Local.iCnt)
+
+
+F.Intrinsic.Control.ExitSub
+F.Intrinsic.Control.Catch
+	F.Intrinsic.Control.CallSub(ErrorMessage, "ErrorNumber", V.Ambient.ErrorNumber, "ErrorDescription", V.Ambient.ErrorDescription, "Subroutine", V.Ambient.CurrentSubroutine, "UNATTENDED", V.Global.bUnattended, "Project", "6625", "ProjectTitle", "TA to GSS Data Process", "Callback", "f_Main_UnLoad")
+F.Intrinsic.Control.EndTry
+Program.Sub.OrderXML.End
+
+Program.Sub.DeliveryXML.Start
+F.Intrinsic.Control.Try
+V.Local.iCnt.Declare(Long)
+V.Local.sTransType.Declare(String)
+V.Local.sOrderNo.Declare(String)
+V.Local.sPosnr.Declare(String)
+V.Local.sPassFailDPL.Declare(String)
+V.Local.sPassFailLIC.Declare(String)
+V.Local.sPassFailData.Declare(String)
+V.Local.sPassFailEUC.Declare(String)
+V.Local.sLicNum.Declare(String)
+V.Local.sStatus.Declare(String)
+V.Local.sSQL.Declare(String)
+V.Local.sPckNo.Declare(String)
+V.Local.sCompanyCode.Declare(String)
+V.Local.sCoCodeCon.Declare(String)
+v.Local.sPart.Declare(String)
+
+V.Local.sTransType.Set("D")
+
+
+F.Intrinsic.Control.For(V.Local.iCnt, 0, V.DataTable.dtTempData.RowCount--,1)
+	'set the company code that the transaction is for
+	V.Local.sCompanyCode.Set(V.DataTable.dtTempData(V.Local.iCnt).SOURCE_SYSTEM!FieldValTrim)
+	F.Intrinsic.String.Right(V.Local.sCompanyCode.Trim,3, V.Local.sCompanyCode)
+	V.Local.sPckNo.Set(V.DataTable.dtTempData(V.Local.iCnt).VBELN!FieldValTrim)
+	F.Intrinsic.String.Right(V.Local.sPckNo, 7, V.Local.sPckNo)
+	V.Local.sPosnr.Set(V.DataTable.dtTempData(V.Local.iCnt).POSNR!FieldValTrim)
+	F.Intrinsic.String.LPad(V.Local.sPosnr, "0",3,v.Local.sPosnr)
+	F.Intrinsic.String.RPad(V.Local.sPosnr, "0",4, V.Local.sPosnr)
+	V.Local.sStatus.Set(V.DataTable.dtTempData(V.Local.iCnt).STATUS3!FieldValTrim)
+	V.Local.sPassFailLIC.Set(V.DataTable.dtTempData(V.Local.iCnt).PASS_FAIL_LIC!FieldValTrim)
+	V.Local.sPassFailData.Set(V.DataTable.dtTempData(V.Local.iCnt).PASS_FAIL_DATA!FieldValTrim)
+	V.Local.sPassFailEUC.Set(V.DataTable.dtTempData(V.Local.iCnt).PASS_FAIL_EUC!FieldValTrim)
+	V.Local.sPassFailDPL.Set(V.DataTable.dtTempData(V.Local.iCnt).PASS_FAIL!FieldValTrim)
+	V.Local.sPart.Set(V.DataTable.dtTempData(V.Local.iCnt).PARTID!FieldValTrim)
+	
+	F.Intrinsic.String.Build("GLOBAL_{0}", v.Local.sCompanyCode.Trim, v.Local.sCoCodeCon)
+
+	'open a database connection for the company code 
+	F.ODBC.Connection!con.OpenConnection(V.Local.sCoCodeCon, Master, master)
+	'update record in ord delviery table
+
+	F.Intrinsic.String.Build("UPDATE GCG_6625_ORD_DELIV SET PASS_FAIL_LIC = '{0}', PASS_FAIL_DATA = '{1}', PASS_FAIL_EUC = '{2}', STATUS3 = '{3}' , PASS_FAIL_DPL = '{5}' WHERE PACKING_LIST = '{4}' AND TRANS_TYPE = 'D' ", V.Local.sPassFailLIC.Trim, V.Local.sPassFailData.Trim, V.Local.sPassFailEUC.Trim, V.Local.sStatus.Trim, V.Local.sPckNo.Trim,v.Local.sPassFailDPL.Trim, v.Local.sSQL)
+'	F.Intrinsic.String.Build("UPDATE GCG_6625_ORD_DELIV SET PASS_FAIL_LIC = '{0}', PASS_FAIL_DATA = '{1}', PASS_FAIL_EUC = '{2}', STATUS3 = '{3}' , PASS_FAIL_DPL = '{5}' WHERE PACKING_LIST = '{4}' AND TRANS_TYPE = 'D' AND PARTID = '{6}' AND POSNR = '{7}'", V.Local.sPassFailLIC.Trim, V.Local.sPassFailData.Trim, V.Local.sPassFailEUC.Trim, V.Local.sStatus.Trim, V.Local.sPckNo.Trim,v.Local.sPassFailDPL.Trim, v.Local.sPart, v.Local.sPosnr.Trim, v.Local.sSQL)
+	F.ODBC.Connection!con.Execute(V.Local.sSQL)
+	F.ODBC.Connection!con.Close
+F.Intrinsic.Control.Next(V.Local.iCnt)
+
+F.Intrinsic.Control.ExitSub
+F.Intrinsic.Control.Catch
+	F.Intrinsic.Control.CallSub(ErrorMessage, "ErrorNumber", V.Ambient.ErrorNumber, "ErrorDescription", V.Ambient.ErrorDescription, "Subroutine", V.Ambient.CurrentSubroutine, "UNATTENDED", V.Global.bUnattended, "Project", "6625", "ProjectTitle", "TA to GSS Data Process", "Callback", "f_Main_UnLoad")
+F.Intrinsic.Control.EndTry
+Program.Sub.DeliveryXML.end
+
+Program.Sub.PartXML.Start
+F.Intrinsic.Control.Try
+V.Local.iCnt.Declare(Long)
+V.Local.sTCPN.Declare(String)
+V.Local.sSQL.Declare(String)
+V.Local.sRet.Declare(String)
+V.Local.sCountryCode.Declare(String)
+V.Local.sProdDesc.Declare(String)
+V.Local.dImportDate.Declare(Date)
+V.Local.sImportDate.Declare(String)
+V.Local.sImportHTS.Declare(String)
+V.Local.dExportDate.Declare(Date)
+V.Local.sExportDate.Declare(String)
+V.Local.sExportHTS.Declare(String)
+V.Local.sECN.Declare(String)
+
+F.Intrinsic.Control.For(V.Local.iCnt,0, V.DataTable.dtTempData.RowCount--,1)
+	V.Local.sTCPN.Set(V.DataTable.dtTempData$PRODUCT(V.Local.iCnt).PROD_ID!FieldValTrim)
+	V.Local.sCountryCode.Set(V.DataTable.dtTempData$PRODUCT_CTRY(V.Local.iCnt).CTRY_CODE!FieldValTrim)
+	V.Local.sProdDesc.Set(V.DataTable.dtTempData$PRODUCT_CTRY(V.Local.iCnt).PROD_DESCRIPTION_COMPLIANCE!FieldValTrim)
+	'V.Local.dImportDate.Set(V.DataTable.dtTempData(V.Local.iCnt).IM_CLASS_DATE!FieldVal)
+	V.Local.sImportHTS.Set(V.DataTable.dtTempData$PRODUCT_CTRY(V.Local.iCnt).IM_HS1!FieldValTrim)
+	V.Local.sExportHTS.Set(V.DataTable.dtTempData$PRODUCT_CTRY(V.Local.iCnt).EX_HS!FieldValTrim)
+	V.Local.sECN.Set(V.DataTable.dtTempData$PRODUCT_CTRY(V.Local.iCnt).ECN!FieldValTrim)
+	
+	'query common table to see if a record exists. if it does, update it. if it doesn't, don't update it
+	F.Intrinsic.String.Build("SELECT * FROM GCG_6625_PART_CODE WHERE TCPN = '{0}'", V.Local.sTCPN.Trim, V.Local.sSQL)
+	F.ODBC.Connection!ComCon.ExecuteAndReturn(V.Local.sSQL, V.Local.sRet)
+	F.Intrinsic.Control.If(V.Local.sRet.Trim,<>,"")
+		'update the record
+		F.Intrinsic.String.Build("UPDATE GCG_6625_PART_CODE SET COUNTRY = '{0}', IMPORT_HTS = '{1}', EXPORT_HTS = '{2}', ECCN = '{3}', COMPLIANCE_DESC = '{4}', PROCESSED = 0 WHERE TCPN = '{5}'", V.Local.sCountryCode.Trim, V.Local.sImportHTS.Trim, V.Local.sExportHTS.Trim, V.Local.sECN.Trim, V.Local.sProdDesc.PSQLFriendly, V.Local.sTCPN.Trim, V.Local.sSQL)
+		F.ODBC.Connection!ComCon.Execute(V.Local.sSQL)
+	F.Intrinsic.Control.Else
+		'insert a record
+		F.Intrinsic.String.Build("INSERT INTO GCG_6625_PART_CODE (TCPN, COUNTRY, IMPORT_HTS, EXPORT_HTS, ECCN, COMPLIANCE_DESC, PROCESSED) VALUES ('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', 0)", v.Local.sTCPN.Trim, V.Local.sCountryCode.Trim, V.Local.sImportHTS.Trim, V.Local.sExportHTS.Trim, V.Local.sECN.Trim, V.Local.sProdDesc.PSQLFriendly, V.Local.sSQL)
+		F.ODBC.Connection!ComCon.Execute(V.Local.sSQL)
+	F.Intrinsic.Control.EndIf
+F.Intrinsic.Control.Next(V.Local.iCnt)
+
+F.Intrinsic.Control.ExitSub
+F.Intrinsic.Control.Catch
+	F.Intrinsic.Control.CallSub(ErrorMessage, "ErrorNumber", V.Ambient.ErrorNumber, "ErrorDescription", V.Ambient.ErrorDescription, "Subroutine", V.Ambient.CurrentSubroutine, "UNATTENDED", V.Global.bUnattended, "Project", "6625", "ProjectTitle", "TA to GSS Data Process", "Callback", "f_Main_UnLoad")
+F.Intrinsic.Control.EndTry
+Program.Sub.PartXML.End
+
+Program.Sub.CleanTable.Start
+F.Intrinsic.Control.Try
+V.Local.iCnt.Declare(Long)
+V.Local.sSQL.Declare(String)
+V.Local.dDate.Declare(Date)
+V.Local.sDate.Declare(String)
+V.Local.sDateTime.Declare(String)
+V.Local.sTime.Declare(String)
+
+F.Intrinsic.Control.For(V.Local.iCnt, 0, V.DataTable.dtXML.RowCount--,1)
+	F.Intrinsic.Control.If(V.DataTable.dtXML(V.Local.iCnt).DELETE_RECORD!FieldVal,=,True)
+		V.Local.sDateTime.Set(V.DataTable.dtXML(V.Local.iCnt).DATE_RECEIVED!FieldVal)
+		F.Intrinsic.String.Left(V.Local.sDateTime, 10, V.Local.sDate)
+		V.Local.dDate.Set(V.Local.sDate.PervasiveDate)
+		F.Intrinsic.String.Format(V.Local.dDate, "YYYY-MM-DD", V.Local.sDate)
+		F.Intrinsic.String.Right(V.Local.sDateTime, 8, V.Local.sTime)
+		F.Intrinsic.String.Format(V.Local.sTime, "Hh:Nn:Ss", V.Local.sTime)
+		F.Intrinsic.String.Build("{0} {1}.000", V.Local.sDate, V.Local.sTime, V.Local.sDateTime)
+		F.Intrinsic.String.Build("DELETE FROM GCG_6625_TA_XML WHERE DATE_RECEIVED = '{0}'", V.Local.sDateTime.PSQLFriendly, V.Local.sSQL)
+		F.ODBC.Connection!ComCon.Execute(V.Local.sSQL)
+	F.Intrinsic.Control.EndIf
+F.Intrinsic.Control.Next(V.Local.iCnt)
+
+F.Intrinsic.Control.ExitSub
+F.Intrinsic.Control.Catch
+	F.Intrinsic.Control.CallSub(ErrorMessage, "ErrorNumber", V.Ambient.ErrorNumber, "ErrorDescription", V.Ambient.ErrorDescription, "Subroutine", V.Ambient.CurrentSubroutine, "UNATTENDED", V.Global.bUnattended, "Project", "6625", "ProjectTitle", "TA to GSS Data Process", "Callback", "f_Main_UnLoad")
+F.Intrinsic.Control.EndTry
+Program.Sub.CleanTable.End
+
+Program.Sub.FileCleanup.Start
+F.Intrinsic.Control.Try
+V.Local.iCnt.Declare(Long)
+V.Local.sFileListFQP.Declare(String)
+V.Local.sFileList.Declare(String)
+V.Local.sFileName.Declare(String)
+V.Local.dFileDate.Declare(String)
+V.Local.dPrevDate.Declare(String)
+V.Local.sPrevDate.Declare(String)
+V.Local.sFileDate.Declare(String)
+
+F.Intrinsic.Date.DateAdd("D", -1, V.Ambient.Date, V.Local.dPrevDate)
+F.Intrinsic.String.Format(V.Local.dPrevDate, "YYYY-MM-DD", V.Local.sPrevDate)
+
+'callsub to clean up the files in the TA_DATA_TRANSFER folder if they are older than a day
+F.Intrinsic.String.Build("{0}\TA_DATA_TRANSFER\", V.Caller.FilesDir, V.Local.sFileListFQP)
+F.Intrinsic.File.GetFileList(V.Local.sFileListFQP,,V.Local.sFileList)
+F.Intrinsic.Control.If(V.Local.sFileList.Trim,<>,"")
+	F.Intrinsic.String.Split(V.Local.sFileList, ":", V.Local.sFileList)
+	'loop through the file list to check their date time
+	F.Intrinsic.Control.For(V.Local.iCnt,V.Local.sFileList.UBound,0,-1)
+		F.Intrinsic.String.Build("{0}{1}", V.Local.sFileListFQP, V.Local.sFileList(V.Local.iCnt).Trim, V.Local.sFileName)
+		F.Intrinsic.File.GetFileDateTimeExtended(V.Local.sFileName.Trim,1,True, V.Local.dFileDate)
+		F.Intrinsic.String.Format(V.Local.dFileDate, "YYYY-MM-DD", V.Local.sFileDate)
+		F.Intrinsic.Control.If(V.Local.sFileDate,<,V.Local.sPrevDate)
+			'delete the file
+			F.Intrinsic.File.DeleteFile(V.Local.sFileName)
+		F.Intrinsic.Control.EndIf
+	F.Intrinsic.Control.Next(V.Local.iCnt)
+F.Intrinsic.Control.EndIf
+
+F.Intrinsic.Control.ExitSub
+F.Intrinsic.Control.Catch
+	F.Intrinsic.Control.CallSub(ErrorMessage, "ErrorNumber", V.Ambient.ErrorNumber, "ErrorDescription", V.Ambient.ErrorDescription, "Subroutine", V.Ambient.CurrentSubroutine, "UNATTENDED", V.Global.bUnattended, "Project", "6625", "ProjectTitle", "TA to GSS Data Process", "Callback", "f_Main_UnLoad")
+F.Intrinsic.Control.EndTry
+Program.Sub.FileCleanup.End
+
+Program.Sub.f_Main_UnLoad.Start
+F.Intrinsic.Control.Try
+
+'close the connection to the DB
+F.ODBC.Connection!ComCon.Close
+
+'end the script
+F.Intrinsic.Control.End
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.Control.CallSub(ErrorMessage, "ErrorNumber", V.Ambient.ErrorNumber, "ErrorDescription", V.Ambient.ErrorDescription, "Subroutine", V.Ambient.CurrentSubroutine, "UNATTENDED", V.Global.bUnattended, "Project", "6625", "ProjectTitle", "TA to GSS Data Process", "Callback", "f_Main_UnLoad")
+F.Intrinsic.Control.EndTry
+Program.Sub.f_Main_UnLoad.End
+
+Program.Sub.ErrorMessage.Start
+'basic error message for replacing catch block
+'this is really just for when printing the message and ending program
+'pass error number, error description, current subroutine
+'optional callback sub, this will be called before ending
+'optional unattended parameters, those subs may not exist if not using them but won't be called
+F.Intrinsic.Control.Try
+
+V.Local.iError.Declare(Long)
+V.Local.sErrorDescription.Declare(String)
+V.Local.sSubroutine.Declare(String)
+V.Local.sError.Declare(String)
+V.Local.bExists.Declare(Boolean)
+V.Local.sCallback.Declare(String)
+V.Local.sErrorFile.Declare(String)
+V.Local.sErrorString.Declare(String)
+
+V.Local.iError.Set(V.Args.ErrorNumber)
+V.Local.sErrorDescription.Set(V.Args.ErrorDescription)
+V.Local.sSubroutine.Set(V.Args.Subroutine)
+
+'make sure we aren't in an error loop
+F.Intrinsic.Control.If(V.Global.bError)
+	F.Intrinsic.Control.End
+
+F.Intrinsic.Control.EndIf
+V.Global.bError.Set(True)
+
+
+F.Intrinsic.String.Build("Project: {0}{1}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}{1}{1}GAB Version: {5}", V.Caller.ScriptFile, V.Ambient.Newline, V.Local.sSubroutine, V.Local.iError, V.Local.sErrorDescription, V.Ambient.GABVersion, V.Local.sError)
+
+F.Intrinsic.Variable.ArgExists("UNATTENDED", V.Local.bExists)
+F.Intrinsic.Control.If(V.Local.bExists)
+	F.Intrinsic.Control.If(V.Args.UNATTENDED,=,True)
+		'string to file an error
+		F.Intrinsic.String.Build("{0}\TA_DATA_TRANSFER\ERRORS\{1}_{2}_TA_to_GSS_ERROR.txt", V.Caller.FilesDir,V.Ambient.Date.FormatMMDDYYYY,V.Ambient.Time.FormatHhNnSs, V.Local.sErrorFile)
+		F.Intrinsic.String.Build("TA to GSS XML Process failed on {0} at {1}.{2}{3}{2}Row Number: {4}", V.Ambient.Date, V.Ambient.Time, V.Ambient.NewLine, V.Local.sError.Trim, V.Global.iCnt,V.Local.sErrorString)
+		F.Intrinsic.File.String2File(V.Local.sErrorFile, V.Local.sErrorString)
+		F.Intrinsic.Variable.ArgExists("Callback", V.Local.bExists)
+		F.Intrinsic.Control.If(V.Local.bExists)
+			V.Local.sCallback.Set(V.Args.Callback.Trim)
+			F.Intrinsic.Control.CallSub(V.Local.sCallback)
+		F.Intrinsic.Control.EndIf
+		'don't show a message box if it's on online update
+	'	F.Intrinsic.Control.CallSub(UnattendedErrorMessage, "MESSAGE", V.Local.sError, "PROJECT", V.Args.PROJECT, "PROJECTTITLE", V.Args.PROJECTTITLE)
+	F.Intrinsic.Control.Else
+		F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.EndIf
+F.Intrinsic.Control.Else
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+F.Intrinsic.Control.EndIf
+
+F.Intrinsic.Variable.ArgExists("Callback", V.Local.bExists)
+F.Intrinsic.Control.If(V.Local.bExists)
+	V.Local.sCallback.Set(V.Args.Callback.Trim)
+	F.Intrinsic.Control.CallSub(V.Local.sCallback)
+F.Intrinsic.Control.EndIf
+
+F.Intrinsic.Control.End
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.String.Build("Project: {0}{1}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}{1}{1}GAB Version: {5}",V.Caller.ScriptFile,V.Ambient.Newline,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Ambient.GABVersion,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.End
+
+F.Intrinsic.Control.EndTry
+Program.Sub.ErrorMessage.End
+
+Program.Sub.Comments.Start
+${$5$}$20.1.8693.27812$}$1
+${$6$}$acollins$}$20231122135057956$}$h98hERc2yV72q0GaUGlwSaoK/aefTdVkjusxYiJF5MA3ZIwtbqmvUO4PnYf9RlAqtJCAWPyRTJ0BW7GY0eWuWw==
+Program.Sub.Comments.End
