@@ -1,0 +1,1028 @@
+﻿Program.Sub.ScreenSU.Start
+Gui.f_Main..Create(BaseForm)
+Gui.f_Main..Caption("Trade Compliance Software Settings (6625)")
+Gui.f_Main..Size(628,761)
+Gui.f_Main..MinX(0)
+Gui.f_Main..MinY(0)
+Gui.f_Main..Position(0,0)
+Gui.f_Main..AlwaysOnTop(False)
+Gui.f_Main..FontName("Tahoma")
+Gui.f_Main..FontSize(8.25)
+Gui.f_Main..ControlBox(True)
+Gui.f_Main..MaxButton(False)
+Gui.f_Main..MinButton(True)
+Gui.f_Main..MousePointer(0)
+Gui.f_Main..Moveable(True)
+Gui.f_Main..Sizeable(False)
+Gui.f_Main..ShowInTaskBar(True)
+Gui.f_Main..TitleBar(True)
+Gui.f_Main..Event(UnLoad,f_Main_UnLoad)
+Gui.f_Main.cmdSave.Create(Button)
+Gui.f_Main.cmdSave.Enabled(True)
+Gui.f_Main.cmdSave.Visible(True)
+Gui.f_Main.cmdSave.Zorder(0)
+Gui.f_Main.cmdSave.Size(75,23)
+Gui.f_Main.cmdSave.Position(543,17)
+Gui.f_Main.cmdSave.Caption("Save")
+Gui.f_Main.cmdSave.FontName("Tahoma")
+Gui.f_Main.cmdSave.FontSize(8.25)
+Gui.f_Main.cmdSave.Event(Click,cmdSave_Click)
+Gui.f_Main.cmdSave.TabStop(True)
+Gui.f_Main.cmdSave.TabIndex(11)
+Gui.f_Main.cmdCoCode.Create(Button)
+Gui.f_Main.cmdCoCode.Enabled(True)
+Gui.f_Main.cmdCoCode.Visible(True)
+Gui.f_Main.cmdCoCode.Zorder(0)
+Gui.f_Main.cmdCoCode.Size(99,23)
+Gui.f_Main.cmdCoCode.Position(436,17)
+Gui.f_Main.cmdCoCode.Caption("SAP Code Setup")
+Gui.f_Main.cmdCoCode.FontName("Tahoma")
+Gui.f_Main.cmdCoCode.FontSize(8.25)
+Gui.f_Main.cmdCoCode.Event(Click,cmdCoCode_Click)
+Gui.f_Main.cmdCoCode.TabStop(True)
+Gui.f_Main.cmdCoCode.TabIndex(10)
+Gui.f_Main.frameEnv.Create(Frame)
+Gui.f_Main.frameEnv.Enabled(True)
+Gui.f_Main.frameEnv.Visible(True)
+Gui.f_Main.frameEnv.Zorder(0)
+Gui.f_Main.frameEnv.Size(155,43)
+Gui.f_Main.frameEnv.Position(11,7)
+Gui.f_Main.frameEnv.Caption("Active TCS Environment")
+Gui.f_Main.frameEnv.FontName("Tahoma")
+Gui.f_Main.frameEnv.FontSize(8.25)
+Gui.f_Main.frameEnv.BorderStyle(3)
+Gui.f_Main.frameEnv.TabStop(True)
+Gui.f_Main.frameEnv.TabIndex(1)
+Gui.f_Main.optPROD.Create(Option)
+Gui.f_Main.optPROD.Enabled(True)
+Gui.f_Main.optPROD.Visible(True)
+Gui.f_Main.optPROD.Zorder(0)
+Gui.f_Main.optPROD.Size(57,22)
+Gui.f_Main.optPROD.Position(82,19)
+Gui.f_Main.optPROD.Caption("PROD")
+Gui.f_Main.optPROD.FontName("Tahoma")
+Gui.f_Main.optPROD.FontSize(8.25)
+Gui.f_Main.optPROD.TabStop(True)
+Gui.f_Main.optPROD.TabIndex(3)
+Gui.f_Main.optPROD.Parent("frameEnv")
+Gui.f_Main.optQA.Create(Option)
+Gui.f_Main.optQA.Enabled(True)
+Gui.f_Main.optQA.Visible(True)
+Gui.f_Main.optQA.Zorder(0)
+Gui.f_Main.optQA.Size(57,22)
+Gui.f_Main.optQA.Position(16,19)
+Gui.f_Main.optQA.Caption("QA")
+Gui.f_Main.optQA.FontName("Tahoma")
+Gui.f_Main.optQA.FontSize(8.25)
+Gui.f_Main.optQA.TabStop(True)
+Gui.f_Main.optQA.TabIndex(2)
+Gui.f_Main.optQA.Parent("frameEnv")
+Gui.f_Main.frameQA.Create(Frame)
+Gui.f_Main.frameQA.Enabled(True)
+Gui.f_Main.frameQA.Visible(True)
+Gui.f_Main.frameQA.Zorder(0)
+Gui.f_Main.frameQA.Size(605,328)
+Gui.f_Main.frameQA.Position(11,57)
+Gui.f_Main.frameQA.Caption("QA TCS Settings")
+Gui.f_Main.frameQA.FontName("Tahoma")
+Gui.f_Main.frameQA.FontSize(8.25)
+Gui.f_Main.frameQA.BorderStyle(1)
+Gui.f_Main.frameQA.TabStop(True)
+Gui.f_Main.frameQA.TabIndex(4)
+Gui.f_Main.lblPartClassPOST.Create(Label,"Part Classficiation POST URL:",True,140,13,0,7,265,True,0,"Tahoma",8.25,,0,0)
+Gui.f_Main.lblPartClassPOST.BorderStyle(0)
+Gui.f_Main.lblPartClassPOST.Parent("frameQA")
+Gui.f_Main.txtPartClassURL.Create(TextBoxR)
+Gui.f_Main.txtPartClassURL.Enabled(True)
+Gui.f_Main.txtPartClassURL.Visible(True)
+Gui.f_Main.txtPartClassURL.Zorder(0)
+Gui.f_Main.txtPartClassURL.Size(592,39)
+Gui.f_Main.txtPartClassURL.Position(7,280)
+Gui.f_Main.txtPartClassURL.FontName("Tahoma")
+Gui.f_Main.txtPartClassURL.FontSize(8.25)
+Gui.f_Main.txtPartClassURL.Parent("frameQA")
+Gui.f_Main.txtDelivURL.Create(TextBoxR)
+Gui.f_Main.txtDelivURL.Enabled(True)
+Gui.f_Main.txtDelivURL.Visible(True)
+Gui.f_Main.txtDelivURL.Zorder(0)
+Gui.f_Main.txtDelivURL.Size(592,39)
+Gui.f_Main.txtDelivURL.Position(7,216)
+Gui.f_Main.txtDelivURL.FontName("Tahoma")
+Gui.f_Main.txtDelivURL.FontSize(8.25)
+Gui.f_Main.txtDelivURL.Parent("frameQA")
+Gui.f_Main.lblDelivPOST.Create(Label,"Delivery POST URL:",True,94,13,0,7,201,True,0,"Tahoma",8.25,,0,0)
+Gui.f_Main.lblDelivPOST.BorderStyle(0)
+Gui.f_Main.lblDelivPOST.Parent("frameQA")
+Gui.f_Main.txtOrderURL.Create(TextBoxR)
+Gui.f_Main.txtOrderURL.Enabled(True)
+Gui.f_Main.txtOrderURL.Visible(True)
+Gui.f_Main.txtOrderURL.Zorder(0)
+Gui.f_Main.txtOrderURL.Size(592,39)
+Gui.f_Main.txtOrderURL.Position(7,154)
+Gui.f_Main.txtOrderURL.FontName("Tahoma")
+Gui.f_Main.txtOrderURL.FontSize(8.25)
+Gui.f_Main.txtOrderURL.Parent("frameQA")
+Gui.f_Main.lblSOPost.Create(Label,"Order POST URL:",True,83,13,0,7,138,True,0,"Tahoma",8.25,,0,0)
+Gui.f_Main.lblSOPost.BorderStyle(0)
+Gui.f_Main.lblSOPost.Parent("frameQA")
+Gui.f_Main.lblPostPart.Create(Label,"Partner POST URL:",True,91,13,0,7,76,True,0,"Tahoma",8.25,,0,0)
+Gui.f_Main.lblPostPart.BorderStyle(0)
+Gui.f_Main.lblPostPart.Parent("frameQA")
+Gui.f_Main.txtPartnerURL.Create(TextBoxR)
+Gui.f_Main.txtPartnerURL.Enabled(True)
+Gui.f_Main.txtPartnerURL.Visible(True)
+Gui.f_Main.txtPartnerURL.Zorder(0)
+Gui.f_Main.txtPartnerURL.Size(592,39)
+Gui.f_Main.txtPartnerURL.Position(7,92)
+Gui.f_Main.txtPartnerURL.FontName("Tahoma")
+Gui.f_Main.txtPartnerURL.FontSize(8.25)
+Gui.f_Main.txtPartnerURL.Parent("frameQA")
+Gui.f_Main.lblQAUsername.Create(Label,"HTTPS Username:",True,86,13,0,7,38,True,0,"Tahoma",8.25,,0,0)
+Gui.f_Main.lblQAUsername.BorderStyle(0)
+Gui.f_Main.lblQAUsername.Parent("frameQA")
+Gui.f_Main.txtQAUsername.Create(TextBox,"",True,175,20,0,106,34,True,0,"Tahoma",8.25,,1)
+Gui.f_Main.txtQAUsername.TabStop(True)
+Gui.f_Main.txtQAUsername.TabIndex(5)
+Gui.f_Main.txtQAUsername.Parent("frameQA")
+Gui.f_Main.txtQAUsername.PasswordChar("*")
+Gui.f_Main.lblQAPass.Create(Label,"HTTPS Password:",True,84,13,0,304,38,True,0,"Tahoma",8.25,,0,0)
+Gui.f_Main.lblQAPass.BorderStyle(0)
+Gui.f_Main.lblQAPass.Parent("frameQA")
+Gui.f_Main.txtQAHTTPPass.Create(TextBox,"",True,194,20,0,403,34,True,0,"Tahoma",8.25,,1)
+Gui.f_Main.txtQAHTTPPass.TabStop(True)
+Gui.f_Main.txtQAHTTPPass.TabIndex(6)
+Gui.f_Main.txtQAHTTPPass.Parent("frameQA")
+Gui.f_Main.txtQAHTTPPass.PasswordChar("*")
+Gui.f_Main.frameProd.Create(Frame)
+Gui.f_Main.frameProd.Enabled(True)
+Gui.f_Main.frameProd.Visible(True)
+Gui.f_Main.frameProd.Zorder(0)
+Gui.f_Main.frameProd.Size(605,330)
+Gui.f_Main.frameProd.Position(11,394)
+Gui.f_Main.frameProd.Caption("PROD TCS Settings")
+Gui.f_Main.frameProd.FontName("Tahoma")
+Gui.f_Main.frameProd.FontSize(8.25)
+Gui.f_Main.frameProd.BorderStyle(1)
+Gui.f_Main.frameProd.TabStop(True)
+Gui.f_Main.frameProd.TabIndex(7)
+Gui.f_Main.lblPRODPartClass.Create(Label,"Part Classification POST URL:",True,140,13,0,6,267,True,0,"Tahoma",8.25,,0,0)
+Gui.f_Main.lblPRODPartClass.BorderStyle(0)
+Gui.f_Main.lblPRODPartClass.Parent("frameProd")
+Gui.f_Main.txtProdPartClassURL.Create(TextBoxR)
+Gui.f_Main.txtProdPartClassURL.Enabled(True)
+Gui.f_Main.txtProdPartClassURL.Visible(True)
+Gui.f_Main.txtProdPartClassURL.Zorder(0)
+Gui.f_Main.txtProdPartClassURL.Size(592,39)
+Gui.f_Main.txtProdPartClassURL.Position(6,283)
+Gui.f_Main.txtProdPartClassURL.FontName("Tahoma")
+Gui.f_Main.txtProdPartClassURL.FontSize(8.25)
+Gui.f_Main.txtProdPartClassURL.Parent("frameProd")
+Gui.f_Main.txtProdDelivURL.Create(TextBoxR)
+Gui.f_Main.txtProdDelivURL.Enabled(True)
+Gui.f_Main.txtProdDelivURL.Visible(True)
+Gui.f_Main.txtProdDelivURL.Zorder(0)
+Gui.f_Main.txtProdDelivURL.Size(592,39)
+Gui.f_Main.txtProdDelivURL.Position(7,216)
+Gui.f_Main.txtProdDelivURL.FontName("Tahoma")
+Gui.f_Main.txtProdDelivURL.FontSize(8.25)
+Gui.f_Main.txtProdDelivURL.Parent("frameProd")
+Gui.f_Main.lblPRODDelivPOST.Create(Label,"Delivery POST URL:",True,94,13,0,7,200,True,0,"Tahoma",8.25,,0,0)
+Gui.f_Main.lblPRODDelivPOST.BorderStyle(0)
+Gui.f_Main.lblPRODDelivPOST.Parent("frameProd")
+Gui.f_Main.txtProdOrderURL.Create(TextBoxR)
+Gui.f_Main.txtProdOrderURL.Enabled(True)
+Gui.f_Main.txtProdOrderURL.Visible(True)
+Gui.f_Main.txtProdOrderURL.Zorder(0)
+Gui.f_Main.txtProdOrderURL.Size(592,39)
+Gui.f_Main.txtProdOrderURL.Position(7,152)
+Gui.f_Main.txtProdOrderURL.FontName("Tahoma")
+Gui.f_Main.txtProdOrderURL.FontSize(8.25)
+Gui.f_Main.txtProdOrderURL.Parent("frameProd")
+Gui.f_Main.lblProdOrderPOST.Create(Label,"Order POST URL:",True,83,13,0,7,136,True,0,"Tahoma",8.25,,0,0)
+Gui.f_Main.lblProdOrderPOST.BorderStyle(0)
+Gui.f_Main.lblProdOrderPOST.Parent("frameProd")
+Gui.f_Main.txtProdPartnerURL.Create(TextBoxR)
+Gui.f_Main.txtProdPartnerURL.Enabled(True)
+Gui.f_Main.txtProdPartnerURL.Visible(True)
+Gui.f_Main.txtProdPartnerURL.Zorder(0)
+Gui.f_Main.txtProdPartnerURL.Size(592,39)
+Gui.f_Main.txtProdPartnerURL.Position(7,88)
+Gui.f_Main.txtProdPartnerURL.FontName("Tahoma")
+Gui.f_Main.txtProdPartnerURL.FontSize(8.25)
+Gui.f_Main.txtProdPartnerURL.Parent("frameProd")
+Gui.f_Main.lblProdPartPost.Create(Label,"Partner POST URL:",True,91,13,0,7,72,True,0,"Tahoma",8.25,,0,0)
+Gui.f_Main.lblProdPartPost.BorderStyle(0)
+Gui.f_Main.lblProdPartPost.Parent("frameProd")
+Gui.f_Main.lblPass.Create(Label,"HTTPS Password:",True,84,13,0,304,38,True,0,"Tahoma",8.25,,0,0)
+Gui.f_Main.lblPass.BorderStyle(0)
+Gui.f_Main.lblPass.Parent("frameProd")
+Gui.f_Main.txtUsername.Create(TextBox,"",True,175,20,0,106,34,True,0,"Tahoma",8.25,,1)
+Gui.f_Main.txtUsername.TabStop(True)
+Gui.f_Main.txtUsername.TabIndex(8)
+Gui.f_Main.txtUsername.Parent("frameProd")
+Gui.f_Main.txtUsername.PasswordChar("*")
+Gui.f_Main.lblUsername.Create(Label,"HTTPS Username:",True,86,13,0,7,38,True,0,"Tahoma",8.25,,0,0)
+Gui.f_Main.lblUsername.BorderStyle(0)
+Gui.f_Main.lblUsername.Parent("frameProd")
+Gui.f_Main.txtHTTPPass.Create(TextBox,"",True,194,20,0,403,34,True,0,"Tahoma",8.25,,1)
+Gui.f_Main.txtHTTPPass.TabStop(True)
+Gui.f_Main.txtHTTPPass.TabIndex(9)
+Gui.f_Main.txtHTTPPass.Parent("frameProd")
+Gui.f_Main.txtHTTPPass.PasswordChar("*")
+Gui.f_CoCode..Create(BaseForm)
+Gui.f_CoCode..Caption("SAP Company Codes (6625)")
+Gui.f_CoCode..Size(420,392)
+Gui.f_CoCode..MinX(0)
+Gui.f_CoCode..MinY(0)
+Gui.f_CoCode..Position(0,0)
+Gui.f_CoCode..AlwaysOnTop(False)
+Gui.f_CoCode..FontName("Tahoma")
+Gui.f_CoCode..FontSize(8.25)
+Gui.f_CoCode..ControlBox(True)
+Gui.f_CoCode..MaxButton(False)
+Gui.f_CoCode..MinButton(True)
+Gui.f_CoCode..MousePointer(0)
+Gui.f_CoCode..Moveable(True)
+Gui.f_CoCode..Sizeable(False)
+Gui.f_CoCode..ShowInTaskBar(True)
+Gui.f_CoCode..TitleBar(True)
+Gui.f_CoCode..Event(UnLoad,cmdCoCodeCancel_Click)
+Gui.f_CoCode.lblCOCode.Create(Label,"SAP Company Code Cross Reference:",True,182,13,0,8,114,True,0,"Tahoma",8.25,,0,0)
+Gui.f_CoCode.lblCOCode.BorderStyle(0)
+Gui.f_CoCode.GsGcCodes.Create(GsGridControl)
+Gui.f_CoCode.GsGcCodes.Enabled(True)
+Gui.f_CoCode.GsGcCodes.Visible(True)
+Gui.f_CoCode.GsGcCodes.Zorder(0)
+Gui.f_CoCode.GsGcCodes.Size(405,181)
+Gui.f_CoCode.GsGcCodes.Position(8,133)
+Gui.f_CoCode.GsGcCodes.TabStop(True)
+Gui.f_CoCode.GsGcCodes.TabIndex(6)
+Gui.f_CoCode.cmdUpdate.Create(Button)
+Gui.f_CoCode.cmdUpdate.Enabled(True)
+Gui.f_CoCode.cmdUpdate.Visible(True)
+Gui.f_CoCode.cmdUpdate.Zorder(0)
+Gui.f_CoCode.cmdUpdate.Size(75,23)
+Gui.f_CoCode.cmdUpdate.Position(339,326)
+Gui.f_CoCode.cmdUpdate.Caption("Update")
+Gui.f_CoCode.cmdUpdate.FontName("Tahoma")
+Gui.f_CoCode.cmdUpdate.FontSize(8.25)
+Gui.f_CoCode.cmdUpdate.Event(Click,cmdUpdate_Click)
+Gui.f_CoCode.cmdUpdate.TabStop(True)
+Gui.f_CoCode.cmdUpdate.TabIndex(7)
+Gui.f_CoCode.cmdCancel.Create(Button)
+Gui.f_CoCode.cmdCancel.Enabled(True)
+Gui.f_CoCode.cmdCancel.Visible(True)
+Gui.f_CoCode.cmdCancel.Zorder(0)
+Gui.f_CoCode.cmdCancel.Size(75,23)
+Gui.f_CoCode.cmdCancel.Position(8,326)
+Gui.f_CoCode.cmdCancel.Caption("Cancel")
+Gui.f_CoCode.cmdCancel.FontName("Tahoma")
+Gui.f_CoCode.cmdCancel.FontSize(8.25)
+Gui.f_CoCode.cmdCancel.Event(Click,cmdCoCodeCancel_Click)
+Gui.f_CoCode.cmdCancel.TabStop(True)
+Gui.f_CoCode.cmdCancel.TabIndex(8)
+Gui.f_CoCode.lblSAP.Create(Label,"SAP Code:",True,51,13,0,116,6,True,0,"Tahoma",8.25,,0,0)
+Gui.f_CoCode.lblSAP.BorderStyle(0)
+Gui.f_CoCode.txtSAP.Create(TextBox,"",True,101,20,0,116,24,True,0,"Tahoma",8.25,,1)
+Gui.f_CoCode.txtSAP.TabStop(True)
+Gui.f_CoCode.txtSAP.TabIndex(2)
+Gui.f_CoCode.lblGSS.Create(Label,"GSS Code:",True,51,13,0,8,6,True,0,"Tahoma",8.25,,0,0)
+Gui.f_CoCode.lblGSS.BorderStyle(0)
+Gui.f_CoCode.txtGSS.Create(TextBox,"",True,101,20,0,8,24,True,0,"Tahoma",8.25,,1)
+Gui.f_CoCode.txtGSS.TabStop(True)
+Gui.f_CoCode.txtGSS.TabIndex(1)
+Gui.f_CoCode.cmdAdd.Create(Button)
+Gui.f_CoCode.cmdAdd.Enabled(True)
+Gui.f_CoCode.cmdAdd.Visible(True)
+Gui.f_CoCode.cmdAdd.Zorder(0)
+Gui.f_CoCode.cmdAdd.Size(73,23)
+Gui.f_CoCode.cmdAdd.Position(341,72)
+Gui.f_CoCode.cmdAdd.Caption("Add")
+Gui.f_CoCode.cmdAdd.FontName("Tahoma")
+Gui.f_CoCode.cmdAdd.FontSize(8.25)
+Gui.f_CoCode.cmdAdd.Event(Click,cmdAdd_Click)
+Gui.f_CoCode.cmdAdd.TabStop(True)
+Gui.f_CoCode.cmdAdd.TabIndex(6)
+Gui.f_CoCode.lblOrgCode.Create(Label,"Org Code:",True,50,13,0,8,57,True,0,"Tahoma",8.25,,0,0)
+Gui.f_CoCode.lblOrgCode.BorderStyle(0)
+Gui.f_CoCode.lblOrgCode.DefaultValue("")
+Gui.f_CoCode.txtOrgCode.Create(TextBox,"",True,101,20,0,8,74,True,0,"Tahoma",8.25,,1)
+Gui.f_CoCode.txtOrgCode.TabStop(True)
+Gui.f_CoCode.txtOrgCode.TabIndex(3)
+Gui.f_CoCode.txtSalesOrg.Create(TextBox,"",True,101,20,0,116,74,True,0,"Tahoma",8.25,,1)
+Gui.f_CoCode.txtSalesOrg.TabStop(True)
+Gui.f_CoCode.txtSalesOrg.TabIndex(4)
+Gui.f_CoCode.lblSalesOrg.Create(Label,"Sales Org:",True,50,13,0,116,57,True,0,"Tahoma",8.25,,0,0)
+Gui.f_CoCode.lblSalesOrg.BorderStyle(0)
+Gui.f_CoCode.txtPlant.Create(TextBox,"",True,101,20,0,224,74,True,0,"Tahoma",8.25,,1)
+Gui.f_CoCode.txtPlant.TabStop(True)
+Gui.f_CoCode.txtPlant.TabIndex(5)
+Gui.f_CoCode.lblPlant.Create(Label,"Plant Code:",True,56,13,0,224,57,True,0,"Tahoma",8.25,,0,0)
+Gui.f_CoCode.lblPlant.BorderStyle(0)
+Program.Sub.ScreenSU.End
+
+Program.Sub.Preflight.Start
+V.Global.bError.Declare(Boolean)
+V.Global.bUnattended.Declare(Boolean)
+Program.Sub.Preflight.End
+
+Program.Sub.Main.Start
+F.Intrinsic.Control.Try
+Function.Intrinsic.UI.UsePixels ' Allows you to use Pixels instead of Twips throughout
+
+'open connection to common database
+F.ODBC.Connection!con.OpenCommonConnection
+
+'callsub to pull settings if they already exist
+F.Intrinsic.Control.CallSub(LoadSettings)
+
+Gui.f_Main..ApplyTheme()
+
+Gui.f_Main..Show
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.Control.CallSub(ErrorMessage, "ErrorNumber", V.Ambient.ErrorNumber, "ErrorDescription", V.Ambient.ErrorDescription, "Subroutine", V.Ambient.CurrentSubroutine, "UNATTENDED", V.Global.bUnattended, "Project", "6625", "ProjectTitle", "TCS Settings", "Callback", "f_Main_UnLoad")
+F.Intrinsic.Control.EndTry
+Program.Sub.Main.End
+
+Program.Sub.LoadSettings.Start
+F.Intrinsic.Control.Try
+V.Local.sSQL.Declare(String)
+V.Local.sRet.Declare(String)
+
+'callsub to load QA settings
+F.Intrinsic.Control.CallSub(LoadQASettings)
+
+'callsub to load PROD Setting
+F.Intrinsic.Control.CallSub(LoadProdSettings)
+
+'query custom table to see which setting is active
+F.Intrinsic.String.Build("SELECT PRODENV, QAENV FROM GCG_6625_SETTINGS WHERE ACTIVEENV = 'Y' AND CO_CODE = '{0}'", V.Caller.CompanyCode.Trim, V.Local.sSQL)
+F.ODBC.Connection!con.ExecuteAndReturn(V.Local.sSQL, V.Local.sRet)
+F.Intrinsic.Control.If(V.Local.sRet.Trim,<>,"")
+	F.Intrinsic.String.Split(V.Local.sRet,"*!*", V.Local.sRet)
+	F.Intrinsic.Control.If(V.Local.sRet(0).Trim,=,"Y")
+		Gui.f_Main.optPROD.Value(1)
+		Gui.f_Main.optQA.Value(0)
+	F.Intrinsic.Control.ElseIf(V.Local.sRet(1).Trim,=,"Y")
+		Gui.f_Main.optPROD.Value(0)
+		Gui.f_Main.optQA.Value(1)
+	F.Intrinsic.Control.EndIf
+F.Intrinsic.Control.EndIf
+
+F.Intrinsic.Control.ExitSub
+F.Intrinsic.Control.Catch
+	F.Intrinsic.Control.CallSub(ErrorMessage, "ErrorNumber", V.Ambient.ErrorNumber, "ErrorDescription", V.Ambient.ErrorDescription, "Subroutine", V.Ambient.CurrentSubroutine, "UNATTENDED", V.Global.bUnattended, "Project", "6625", "ProjectTitle", "TCS Settings", "Callback", "f_Main_UnLoad")
+F.Intrinsic.Control.EndTry
+Program.Sub.LoadSettings.End
+
+Program.Sub.LoadQASettings.Start
+F.Intrinsic.Control.Try
+V.Local.baValue.Declare(ByteArray)
+V.Local.sTemp.Declare(String)
+V.Local.bSecGroup.Declare(Boolean)
+V.Local.sSecGroup.Declare(String)
+V.Local.sSQL.Declare(String)
+
+'check to see if datatable exists
+F.Intrinsic.Control.If(V.DataTable.HTTPSettings.Exists)
+	F.Data.DataTable.Close("HTTPSettings")
+F.Intrinsic.Control.EndIf
+
+F.Intrinsic.String.Build("SELECT * FROM GCG_6625_SETTINGS WHERE QAENV = 'Y' AND CO_CODE = '{0}'", V.Caller.CompanyCode.Trim, V.Local.sSQL)
+F.Data.DataTable.CreateFromSQL("HTTPSettings", "con", V.Local.sSQL, True)
+F.Intrinsic.Control.If(V.DataTable.HTTPSettings.RowCount--,<>,-1)
+	'decrypt and set the credentials to the corresponding global variables
+	V.Local.sTemp.Set(V.DataTable.HTTPSettings(0).HTTPUSER!FieldValTrim)
+	F.Intrinsic.String.ConvertString2BA(V.Local.sTemp, V.Local.baValue)
+	F.Global.Encryption.Decrypt(V.Local.baValue,v.Local.sTemp)
+	gui.f_Main.txtQAUsername.Text(V.Local.sTemp.Trim)
+	
+	V.Local.sTemp.Set(V.DataTable.HTTPSettings(0).HTTPPASSWORD!FieldValTrim)
+	F.Intrinsic.String.ConvertString2BA(V.Local.sTemp, V.Local.baValue)
+	F.Global.Encryption.Decrypt(V.Local.baValue,v.Local.sTemp)
+	gui.f_Main.txtQAHTTPPass.Text(V.Local.sTemp.Trim)
+	
+	V.Local.sTemp.Set(V.DataTable.HTTPSettings(0).PARTNER_URL!FieldValTrim)
+	F.Intrinsic.String.ConvertString2BA(V.Local.sTemp, V.Local.baValue)
+	F.Global.Encryption.Decrypt(V.Local.baValue,v.Local.sTemp)
+	gui.f_Main.txtPartnerURL.Text(V.Local.sTemp.Trim)
+	
+	V.Local.sTemp.Set(V.DataTable.HTTPSettings(0).ORDER_URL!FieldValTrim)
+	F.Intrinsic.String.ConvertString2BA(V.Local.sTemp, V.Local.baValue)
+	F.Global.Encryption.Decrypt(V.Local.baValue,v.Local.sTemp)
+	gui.f_Main.txtOrderURL.Text(V.Local.sTemp.Trim)
+	
+	V.Local.sTemp.Set(V.DataTable.HTTPSettings(0).DELIV_URL!FieldValTrim)
+	F.Intrinsic.String.ConvertString2BA(V.Local.sTemp, V.Local.baValue)
+	F.Global.Encryption.Decrypt(V.Local.baValue,v.Local.sTemp)
+	gui.f_Main.txtDelivURL.Text(V.Local.sTemp.Trim)
+	
+	V.Local.sTemp.Set(V.DataTable.HTTPSettings(0).PARTCLASS_URL!FieldValTrim)
+	F.Intrinsic.String.ConvertString2BA(V.Local.sTemp, V.Local.baValue)
+	F.Global.Encryption.Decrypt(V.Local.baValue,v.Local.sTemp)
+	gui.f_Main.txtPartClassURL.Text(V.Local.sTemp.Trim)
+	
+F.Intrinsic.Control.EndIf
+
+'Check security group
+F.Global.Security.IsInGroup(V.Caller.User, "TASEC", V.Caller.CompanyCode, v.Local.bSecGroup)
+F.Intrinsic.Control.If(V.Local.bSecGroup,=,True)
+	Gui.f_Main.txtQAUsername.PasswordChar("")
+	Gui.f_Main.txtQAHTTPPass.PasswordChar("")
+F.Intrinsic.Control.Else
+	Gui.f_Main.txtQAUsername.PasswordChar("*")
+	Gui.f_Main.txtQAHTTPPass.PasswordChar("*")
+F.Intrinsic.Control.EndIf
+
+
+F.Intrinsic.Control.ExitSub
+F.Intrinsic.Control.Catch
+	F.Intrinsic.Control.CallSub(ErrorMessage, "ErrorNumber", V.Ambient.ErrorNumber, "ErrorDescription", V.Ambient.ErrorDescription, "Subroutine", V.Ambient.CurrentSubroutine, "UNATTENDED", V.Global.bUnattended, "Project", "6625", "ProjectTitle", "TCS Settings", "Callback", "f_Main_UnLoad")
+F.Intrinsic.Control.EndTry
+Program.Sub.LoadQASettings.End
+
+Program.Sub.LoadProdSettings.Start
+F.Intrinsic.Control.Try
+V.Local.baValue.Declare(ByteArray)
+V.Local.sTemp.Declare(String)
+V.Local.bSecGroup.Declare(Boolean)
+V.Local.sSecGroup.Declare(String)
+V.Local.sSQL.Declare(String)
+
+'check to see if datatable exists
+F.Intrinsic.Control.If(V.DataTable.HTTPSettings.Exists)
+	F.Data.DataTable.Close("HTTPSettings")
+F.Intrinsic.Control.EndIf
+
+F.Intrinsic.String.Build("SELECT * FROM GCG_6625_SETTINGS WHERE PRODENV = 'Y' AND CO_CODE = '{0}'", V.Caller.CompanyCode.Trim, V.Local.sSQL)
+F.Data.DataTable.CreateFromSQL("HTTPSettings", "con", V.Local.sSQL, True)
+F.Intrinsic.Control.If(V.DataTable.HTTPSettings.RowCount--,<>,-1)
+	'decrypt and set the credentials to the corresponding global variables
+	V.Local.sTemp.Set(V.DataTable.HTTPSettings(0).HTTPUSER!FieldValTrim)
+	F.Intrinsic.String.ConvertString2BA(V.Local.sTemp, V.Local.baValue)
+	F.Global.Encryption.Decrypt(V.Local.baValue,v.Local.sTemp)
+	gui.f_Main.txtUsername.Text(V.Local.sTemp.Trim)
+	
+	V.Local.sTemp.Set(V.DataTable.HTTPSettings(0).HTTPPASSWORD!FieldValTrim)
+	F.Intrinsic.String.ConvertString2BA(V.Local.sTemp, V.Local.baValue)
+	F.Global.Encryption.Decrypt(V.Local.baValue,v.Local.sTemp)
+	gui.f_Main.txtHTTPPass.Text(V.Local.sTemp.Trim)
+	
+	V.Local.sTemp.Set(V.DataTable.HTTPSettings(0).PARTNER_URL!FieldValTrim)
+	F.Intrinsic.String.ConvertString2BA(V.Local.sTemp, V.Local.baValue)
+	F.Global.Encryption.Decrypt(V.Local.baValue,v.Local.sTemp)
+	gui.f_Main.txtProdPartnerURL.Text(V.Local.sTemp.Trim)
+	
+	V.Local.sTemp.Set(V.DataTable.HTTPSettings(0).ORDER_URL!FieldValTrim)
+	F.Intrinsic.String.ConvertString2BA(V.Local.sTemp, V.Local.baValue)
+	F.Global.Encryption.Decrypt(V.Local.baValue,v.Local.sTemp)
+	gui.f_Main.txtProdOrderURL.Text(V.Local.sTemp.Trim)
+	
+	V.Local.sTemp.Set(V.DataTable.HTTPSettings(0).DELIV_URL!FieldValTrim)
+	F.Intrinsic.String.ConvertString2BA(V.Local.sTemp, V.Local.baValue)
+	F.Global.Encryption.Decrypt(V.Local.baValue,v.Local.sTemp)
+	gui.f_Main.txtProdDelivURL.Text(V.Local.sTemp.Trim)
+	
+	
+	V.Local.sTemp.Set(V.DataTable.HTTPSettings(0).PARTCLASS_URL!FieldValTrim)
+	F.Intrinsic.String.ConvertString2BA(V.Local.sTemp, V.Local.baValue)
+	F.Global.Encryption.Decrypt(V.Local.baValue,v.Local.sTemp)
+	gui.f_Main.txtProdPartClassURL.Text(V.Local.sTemp.Trim)
+F.Intrinsic.Control.EndIf
+
+'Check security group
+F.Global.Security.IsInGroup(V.Caller.User, "TASEC", V.Caller.CompanyCode, v.Local.bSecGroup)
+F.Intrinsic.Control.If(V.Local.bSecGroup,=,True)
+	Gui.f_Main.txtUsername.PasswordChar("")
+	Gui.f_Main.txtHTTPPass.PasswordChar("")
+F.Intrinsic.Control.Else
+	Gui.f_Main.txtUsername.PasswordChar("*")
+	Gui.f_Main.txtHTTPPass.PasswordChar("*")
+F.Intrinsic.Control.EndIf
+
+
+F.Intrinsic.Control.ExitSub
+F.Intrinsic.Control.Catch
+	F.Intrinsic.Control.CallSub(ErrorMessage, "ErrorNumber", V.Ambient.ErrorNumber, "ErrorDescription", V.Ambient.ErrorDescription, "Subroutine", V.Ambient.CurrentSubroutine, "UNATTENDED", V.Global.bUnattended, "Project", "6625", "ProjectTitle", "TCS Settings", "Callback", "f_Main_UnLoad")
+F.Intrinsic.Control.EndTry
+Program.Sub.LoadProdSettings.End
+
+Program.Sub.cmdSave_Click.Start
+F.Intrinsic.Control.Try
+V.Local.baValue.Declare(ByteArray)
+V.Local.iSize.Declare(Long,0)
+V.Local.sTemp.Declare(String)
+V.Local.sUsername.Declare(String)
+V.Local.sPassword.Declare(String)
+V.Local.sCustURL.Declare(String)
+V.Local.sOrderURL.Declare(String)
+V.Local.sDelivURL.Declare(String)
+V.Local.sVendorURL.Declare(String)
+V.Local.sSQL.Declare(String)
+V.Local.sContentType.Declare(String)
+
+'callsub to save the QA Settings
+F.Intrinsic.Control.CallSub(SaveQASettings)
+
+'Callsub to save the Prod Settings
+F.Intrinsic.Control.CallSub(SaveProdSettings)
+
+'Set the active flag for the record
+F.Intrinsic.Control.If(V.Screen.f_Main!optPROD.Value,=,True)
+	'update the active flag on the prod record
+	F.Intrinsic.String.Build("UPDATE GCG_6625_SETTINGS SET ACTIVEENV = 'Y' WHERE PRODENV = 'Y' AND CO_CODE ='{0}'", V.Caller.CompanyCode.Trim, V.Local.sSQL)
+	F.ODBC.Connection!con.Execute(V.Local.sSQL)
+	
+	'set the active flag to spaces for the qa record
+	F.Intrinsic.String.Build("UPDATE GCG_6625_SETTINGS SET ACTIVEENV = '' WHERE QAENV = 'Y' AND CO_CODE = '{0}'", v.Caller.CompanyCode.Trim, V.Local.sSQL)
+	F.ODBC.Connection!con.Execute(V.Local.sSQL)
+
+F.Intrinsic.Control.ElseIf(V.Screen.f_Main!optQA.Value,=,True)
+	'update the active flag on the qa record
+	F.Intrinsic.String.Build("UPDATE GCG_6625_SETTINGS SET ACTIVEENV = 'Y' WHERE QAENV = 'Y' AND CO_CODE = '{0}'", V.Caller.CompanyCode.Trim, V.Local.sSQL)
+	F.ODBC.Connection!con.Execute(V.Local.sSQL)
+	
+	'set the active flag to spaces for the prod record
+	F.Intrinsic.String.Build("UPDATE GCG_6625_SETTINGS SET ACTIVEENV = '' WHERE PRODENV = 'Y' AND CO_CODE = '{0}'", v.Caller.CompanyCode.Trim, v.Local.sSQL)
+	F.ODBC.Connection!con.Execute(V.Local.sSQL)
+F.Intrinsic.Control.EndIf
+
+F.Intrinsic.UI.Msgbox("HTTPS Settings Saved!", "Data Saved")
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.Control.CallSub(ErrorMessage, "ErrorNumber", V.Ambient.ErrorNumber, "ErrorDescription", V.Ambient.ErrorDescription, "Subroutine", V.Ambient.CurrentSubroutine, "UNATTENDED", V.Global.bUnattended, "Project", "6625", "ProjectTitle", "TCS Settings", "Callback", "f_Main_UnLoad")
+F.Intrinsic.Control.EndTry
+Program.Sub.cmdSave_Click.End
+
+Program.Sub.SaveQASettings.Start
+F.Intrinsic.Control.Try
+V.Local.baValue.Declare(ByteArray)
+V.Local.iSize.Declare(Long,0)
+V.Local.sTemp.Declare(String)
+V.Local.sUsername.Declare(String)
+V.Local.sPassword.Declare(String)
+V.Local.sCustURL.Declare(String)
+V.Local.sOrderURL.Declare(String)
+V.Local.sDelivURL.Declare(String)
+V.Local.sVendorURL.Declare(String)
+V.Local.sSQL.Declare(String)
+V.Local.sContentType.Declare(String)
+V.Local.sSSLCert.Declare(String)
+v.Local.sURL.Declare(String)
+V.Local.sPartClassURL.Declare(String)
+
+'pull the values from the textbox 
+'encrypt the values
+V.Local.sTemp.Set(V.Screen.f_Main!txtQAUsername.Text)
+F.Intrinsic.Control.If(V.Local.sTemp.Trim,<>,"")
+	F.Intrinsic.Math.Add(V.Local.sTemp.Length,1,V.Local.iSize)
+	F.Intrinsic.String.RPad(V.Local.sTemp.Trim, " ", V.Local.iSize, V.Local.sTemp)
+	F.Global.Encryption.Encrypt(V.Local.sTemp, V.Local.baValue)
+	F.Intrinsic.String.ConvertBA2String(V.Local.baValue, V.Local.sTemp)
+F.Intrinsic.Control.EndIf
+V.Local.sUsername.Set(V.Local.sTemp)
+
+V.Local.sTemp.Set(V.Screen.f_Main!txtQAHTTPPass.Text)
+F.Intrinsic.Control.If(V.Local.sTemp.Trim,<>,"")
+	F.Intrinsic.Math.Add(V.Local.sTemp.Length,1,V.Local.iSize)
+	F.Intrinsic.String.RPad(V.Local.sTemp.Trim, " ", V.Local.iSize, V.Local.sTemp)
+	F.Global.Encryption.Encrypt(V.Local.sTemp, V.Local.baValue)
+	F.Intrinsic.String.ConvertBA2String(V.Local.baValue, V.Local.sTemp)
+F.Intrinsic.Control.EndIf
+V.Local.sPassword.Set(V.Local.sTemp)
+
+V.Local.sTemp.Set(V.Screen.f_Main!txtPartnerURL.Text)
+F.Intrinsic.Control.If(V.Local.sTemp.Trim,<>,"")
+	F.Intrinsic.Math.Add(V.Local.sTemp.Length,1,V.Local.iSize)
+	F.Intrinsic.String.RPad(V.Local.sTemp.Trim, " ", V.Local.iSize, V.Local.sTemp)
+	F.Global.Encryption.Encrypt(V.Local.sTemp, V.Local.baValue)
+	F.Intrinsic.String.ConvertBA2String(V.Local.baValue, V.Local.sTemp)
+F.Intrinsic.Control.EndIf
+V.Local.sURL.Set(V.Local.sTemp)
+
+V.Local.sTemp.Set(V.Screen.f_Main!txtOrderURL.Text)
+F.Intrinsic.Control.If(V.Local.sTemp.Trim,<>,"")
+	F.Intrinsic.Math.Add(V.Local.sTemp.Length,1,V.Local.iSize)
+	F.Intrinsic.String.RPad(V.Local.sTemp.Trim, " ", V.Local.iSize, V.Local.sTemp)
+	F.Global.Encryption.Encrypt(V.Local.sTemp, V.Local.baValue)
+	F.Intrinsic.String.ConvertBA2String(V.Local.baValue, V.Local.sTemp)
+F.Intrinsic.Control.EndIf
+V.Local.sOrderURL.Set(V.Local.sTemp)
+
+V.Local.sTemp.Set(V.Screen.f_Main!txtDelivURL.Text)
+F.Intrinsic.Control.If(V.Local.sTemp.Trim,<>,"")
+	F.Intrinsic.Math.Add(V.Local.sTemp.Length,1,V.Local.iSize)
+	F.Intrinsic.String.RPad(V.Local.sTemp.Trim, " ", V.Local.iSize, V.Local.sTemp)
+	F.Global.Encryption.Encrypt(V.Local.sTemp, V.Local.baValue)
+	F.Intrinsic.String.ConvertBA2String(V.Local.baValue, V.Local.sTemp)
+F.Intrinsic.Control.EndIf
+V.Local.sDelivURL.Set(V.Local.sTemp)
+
+V.Local.sTemp.Set(V.Screen.f_Main!txtPartClassURL.Text)
+F.Intrinsic.Control.If(V.Local.sTemp.Trim,<>,"")
+	F.Intrinsic.Math.Add(V.Local.sTemp.Length,1,V.Local.iSize)
+	F.Intrinsic.String.RPad(V.Local.sTemp.Trim, " ", V.Local.iSize, V.Local.sTemp)
+	F.Global.Encryption.Encrypt(V.Local.sTemp, V.Local.baValue)
+	F.Intrinsic.String.ConvertBA2String(V.Local.baValue, V.Local.sTemp)
+F.Intrinsic.Control.EndIf
+V.Local.sPartClassURL.Set(V.Local.sTemp)
+
+'check to see if datatable exists
+F.Intrinsic.Control.If(V.DataTable.HTTPSettings.Exists)
+	F.Data.DataTable.Close("HTTPSettings")
+F.Intrinsic.Control.EndIf
+
+F.Intrinsic.String.Build("SELECT * FROM GCG_6625_SETTINGS WHERE QAENV = 'Y' AND CO_CODE = '{0}'", V.Caller.CompanyCode.Trim, V.Local.sSQL)
+F.Data.DataTable.CreateFromSQL("HTTPSettings", "con", V.Local.sSQL, True)
+
+'save to database
+F.Intrinsic.Control.If(V.DataTable.HTTPSettings.RowCount--,=,-1)
+	F.Intrinsic.String.Build("INSERT INTO GCG_6625_SETTINGS(HTTPUSER, HTTPPASSWORD, PARTNER_URL,ORDER_URL, DELIV_URL, QAENV, CO_CODE, PARTCLASS_URL) VALUES ('{0}', '{1}','{2}','{3}', '{4}','Y', '{5}', '{6}')", V.Local.sUsername, V.Local.sPassword, V.Local.sURL, V.Local.sOrderURL, V.Local.sDelivURL, V.Caller.CompanyCode.Trim, V.Local.sPartClassURL, V.Local.sSQL)
+	F.ODBC.Connection!con.Execute(V.Local.sSQL)
+F.Intrinsic.Control.Else
+	F.Intrinsic.String.Build("DELETE FROM GCG_6625_SETTINGS WHERE QAENV = 'Y' AND CO_CODE = '{0}'", v.Caller.CompanyCode.Trim, v.Local.sSQL)
+	F.ODBC.Connection!con.Execute(V.Local.sSQL)
+	
+	F.Intrinsic.String.Build("INSERT INTO GCG_6625_SETTINGS(HTTPUSER, HTTPPASSWORD, PARTNER_URL,ORDER_URL, DELIV_URL, QAENV, CO_CODE, PARTCLASS_URL) VALUES ('{0}', '{1}','{2}','{3}', '{4}','Y', '{5}', '{6}')", V.Local.sUsername, V.Local.sPassword, V.Local.sURL, V.Local.sOrderURL, V.Local.sDelivURL, V.Caller.CompanyCode.Trim, V.Local.sPartClassURL, V.Local.sSQL)
+	F.ODBC.Connection!con.Execute(V.Local.sSQL)
+F.Intrinsic.Control.EndIf
+
+F.Intrinsic.Control.ExitSub
+F.Intrinsic.Control.Catch
+	F.Intrinsic.Control.CallSub(ErrorMessage, "ErrorNumber", V.Ambient.ErrorNumber, "ErrorDescription", V.Ambient.ErrorDescription, "Subroutine", V.Ambient.CurrentSubroutine, "UNATTENDED", V.Global.bUnattended, "Project", "6625", "ProjectTitle", "TCS Settings", "Callback", "f_Main_UnLoad")
+F.Intrinsic.Control.EndTry
+Program.Sub.SaveQASettings.End
+
+Program.Sub.SaveProdSettings.Start
+F.Intrinsic.Control.Try
+V.Local.baValue.Declare(ByteArray)
+V.Local.iSize.Declare(Long,0)
+V.Local.sTemp.Declare(String)
+V.Local.sUsername.Declare(String)
+V.Local.sPassword.Declare(String)
+V.Local.sCustURL.Declare(String)
+V.Local.sOrderURL.Declare(String)
+V.Local.sDelivURL.Declare(String)
+V.Local.sVendorURL.Declare(String)
+V.Local.sSQL.Declare(String)
+V.Local.sContentType.Declare(String)
+V.Local.sSSLCert.Declare(String)
+V.Local.sURL.Declare(String)
+V.Local.sPartClassURL.Declare(String)
+
+'pull the values from the textbox 
+'encrypt the values
+
+V.Local.sTemp.Set(V.Screen.f_Main!txtUsername.Text)
+F.Intrinsic.Control.If(V.Local.sTemp.Trim,<>,"")
+	F.Intrinsic.Math.Add(V.Local.sTemp.Length,1,V.Local.iSize)
+	F.Intrinsic.String.RPad(V.Local.sTemp.Trim, " ", V.Local.iSize, V.Local.sTemp)
+	F.Global.Encryption.Encrypt(V.Local.sTemp, V.Local.baValue)
+	F.Intrinsic.String.ConvertBA2String(V.Local.baValue, V.Local.sTemp)
+F.Intrinsic.Control.EndIf
+V.Local.sUsername.Set(V.Local.sTemp)
+
+V.Local.sTemp.Set(V.Screen.f_Main!txtHTTPPass.Text)
+F.Intrinsic.Control.If(V.Local.sTemp.Trim,<>,"")
+	F.Intrinsic.Math.Add(V.Local.sTemp.Length,1,V.Local.iSize)
+	F.Intrinsic.String.RPad(V.Local.sTemp.Trim, " ", V.Local.iSize, V.Local.sTemp)
+	F.Global.Encryption.Encrypt(V.Local.sTemp, V.Local.baValue)
+	F.Intrinsic.String.ConvertBA2String(V.Local.baValue, V.Local.sTemp)
+F.Intrinsic.Control.EndIf
+V.Local.sPassword.Set(V.Local.sTemp)
+
+V.Local.sTemp.Set(V.Screen.f_Main!txtProdPartnerURL.Text)
+F.Intrinsic.Control.If(V.Local.sTemp.Trim,<>,"")
+	F.Intrinsic.Math.Add(V.Local.sTemp.Length,1,V.Local.iSize)
+	F.Intrinsic.String.RPad(V.Local.sTemp.Trim, " ", V.Local.iSize, V.Local.sTemp)
+	F.Global.Encryption.Encrypt(V.Local.sTemp, V.Local.baValue)
+	F.Intrinsic.String.ConvertBA2String(V.Local.baValue, V.Local.sTemp)
+F.Intrinsic.Control.EndIf
+V.Local.sURL.Set(V.Local.sTemp)
+
+V.Local.sTemp.Set(V.Screen.f_Main!txtProdOrderURL.Text)
+F.Intrinsic.Control.If(V.Local.sTemp.Trim,<>,"")
+	F.Intrinsic.Math.Add(V.Local.sTemp.Length,1,V.Local.iSize)
+	F.Intrinsic.String.RPad(V.Local.sTemp.Trim, " ", V.Local.iSize, V.Local.sTemp)
+	F.Global.Encryption.Encrypt(V.Local.sTemp, V.Local.baValue)
+	F.Intrinsic.String.ConvertBA2String(V.Local.baValue, V.Local.sTemp)
+F.Intrinsic.Control.EndIf
+V.Local.sOrderURL.Set(V.Local.sTemp)
+
+V.Local.sTemp.Set(V.Screen.f_Main!txtProdDelivURL.Text)
+F.Intrinsic.Control.If(V.Local.sTemp.Trim,<>,"")
+	F.Intrinsic.Math.Add(V.Local.sTemp.Length,1,V.Local.iSize)
+	F.Intrinsic.String.RPad(V.Local.sTemp.Trim, " ", V.Local.iSize, V.Local.sTemp)
+	F.Global.Encryption.Encrypt(V.Local.sTemp, V.Local.baValue)
+	F.Intrinsic.String.ConvertBA2String(V.Local.baValue, V.Local.sTemp)
+F.Intrinsic.Control.EndIf
+V.Local.sDelivURL.Set(V.Local.sTemp)
+
+V.Local.sTemp.Set(V.Screen.f_Main!txtProdPartClassURL.Text)
+F.Intrinsic.Control.If(V.Local.sTemp.Trim,<>,"")
+	F.Intrinsic.Math.Add(V.Local.sTemp.Length,1,V.Local.iSize)
+	F.Intrinsic.String.RPad(V.Local.sTemp.Trim, " ", V.Local.iSize, V.Local.sTemp)
+	F.Global.Encryption.Encrypt(V.Local.sTemp, V.Local.baValue)
+	F.Intrinsic.String.ConvertBA2String(V.Local.baValue, V.Local.sTemp)
+F.Intrinsic.Control.EndIf
+V.Local.sPartClassURL.Set(V.Local.sTemp)
+
+'check to see if datatable exists
+F.Intrinsic.Control.If(V.DataTable.HTTPSettings.Exists)
+	F.Data.DataTable.Close("HTTPSettings")
+F.Intrinsic.Control.EndIf
+
+F.Intrinsic.String.Build("SELECT * FROM GCG_6625_SETTINGS WHERE PRODENV = 'Y' AND CO_CODE = '{0}'", V.Caller.CompanyCode.Trim, V.Local.sSQL)
+F.Data.DataTable.CreateFromSQL("HTTPSettings", "con", V.Local.sSQL, True)
+
+'save to database
+F.Intrinsic.Control.If(V.DataTable.HTTPSettings.RowCount--,=,-1)
+	F.Intrinsic.String.Build("INSERT INTO GCG_6625_SETTINGS(HTTPUSER, HTTPPASSWORD, PARTNER_URL,ORDER_URL, DELIV_URL, PRODENV, CO_CODE, PARTCLASS_URL) VALUES ('{0}', '{1}','{2}','{3}', '{4}','Y', '{5}', '{6}')", V.Local.sUsername, V.Local.sPassword, V.Local.sURL, V.Local.sOrderURL, V.Local.sDelivURL, V.Caller.CompanyCode.Trim, V.Local.sPartClassURL, V.Local.sSQL)
+	F.ODBC.Connection!con.Execute(V.Local.sSQL)
+F.Intrinsic.Control.Else
+	F.Intrinsic.String.Build("DELETE FROM GCG_6625_SETTINGS WHERE PRODENV = 'Y' AND CO_CODE = '{0}'", v.Caller.CompanyCode.Trim, v.Local.sSQL)
+	F.ODBC.Connection!con.Execute(v.Local.sSQL)
+	F.Intrinsic.String.Build("INSERT INTO GCG_6625_SETTINGS(HTTPUSER, HTTPPASSWORD, PARTNER_URL,ORDER_URL, DELIV_URL, PRODENV, CO_CODE, PARTCLASS_URL) VALUES ('{0}', '{1}','{2}','{3}', '{4}','Y', '{5}', '{6}')", V.Local.sUsername, V.Local.sPassword, V.Local.sURL, V.Local.sOrderURL, V.Local.sDelivURL, V.Caller.CompanyCode.Trim, V.Local.sPartClassURL, V.Local.sSQL)
+	F.ODBC.Connection!con.Execute(V.Local.sSQL)
+F.Intrinsic.Control.EndIf
+
+F.Intrinsic.Control.ExitSub
+F.Intrinsic.Control.Catch
+	F.Intrinsic.Control.CallSub(ErrorMessage, "ErrorNumber", V.Ambient.ErrorNumber, "ErrorDescription", V.Ambient.ErrorDescription, "Subroutine", V.Ambient.CurrentSubroutine, "UNATTENDED", V.Global.bUnattended, "Project", "6625", "ProjectTitle", "TCS Settings", "Callback", "f_Main_UnLoad")
+F.Intrinsic.Control.EndTry
+Program.Sub.SaveProdSettings.End
+
+Program.Sub.cmdCoCode_Click.Start
+F.Intrinsic.Control.Try
+V.Local.sSQL.Declare(String)
+V.Local.sRet.Declare(String)
+V.Local.sGV.Declare(String)
+V.Local.sDefault.Declare(String)
+V.Local.sProperty.Declare(String)
+
+'open local connection
+F.ODBC.Connection!con2.OpenConnection(V.Ambient.PDSN, V.Ambient.PUser, V.Ambient.PPass)
+'load current records from SAP CoCode Maintenance
+'create datatable
+F.Intrinsic.Control.If(V.DataTable.dtCoCodes.Exists)
+	F.Data.DataTable.Close("dtCoCodes")
+F.Intrinsic.Control.EndIf
+
+F.Data.DataTable.CreateFromSQL("dtCoCodes", "con2", "SELECT * FROM GCG_6625_CCODE_MAINT ORDER BY GSS_CODE", True)
+
+'format the grid
+Gui.f_CoCode.GsGcCodes.AddGridviewFromDatatable("gvCodes", "dtCoCodes")
+V.Local.sGV.Set("gvCodes")
+Gui.f_CoCode.GsGcCodes.SetGridviewProperty(V.Local.sGV, "MultiSelect", False)
+Gui.f_CoCode.GsGcCodes.SetGridviewProperty(V.Local.sGV, "AllowFilter", False)
+Gui.f_CoCode.GsGcCodes.SetGridviewProperty(V.Local.sGV, "OptionsViewShowGroupPanel", False)
+Gui.f_CoCode.GsGcCodes.SetGridviewProperty(V.Local.sGV, "AllowColumnResizing", False)
+Gui.f_CoCode.GsGcCodes.SetGridviewProperty(V.Local.sGV, "AllowColumnMoving", False)
+Gui.f_CoCode.GsGcCodes.SetGridviewProperty(V.Local.sGV, "OptionsViewColumnAutoWidth", True)
+Gui.f_CoCode.GsGcCodes.SetGridviewProperty(V.Local.sGV, "AllowDeleteRows", True)
+Gui.f_CoCode.GsGcCodes.SetGridviewProperty(V.Local.sGV, "Editable", True)
+
+V.Local.sProperty.Set("Caption")
+V.Local.sDefault.Set(" ")
+Gui.f_CoCode.GsGcCodes.SetColumnProperty(V.Local.sGV, "GSS_CODE", V.Local.sProperty, "GSS Code")
+Gui.f_CoCode.GsGcCodes.SetColumnProperty(V.Local.sGV, "SAP_CODE", V.Local.sProperty, "SAP Code")
+Gui.f_CoCode.GsGcCodes.SetColumnProperty(V.Local.sGV, "ORG_CODE", V.Local.sProperty, "Org Code")
+Gui.f_CoCode.GsGcCodes.SetColumnProperty(V.Local.sGV, "SALES_ORG", V.Local.sProperty, "Sales Org")
+Gui.f_CoCode.GsGcCodes.SetColumnProperty(V.Local.sGV, "TEC_PLANT", V.Local.sProperty, "Plant")
+
+V.Local.sProperty.Set("AllowEdit")
+V.Local.sDefault.Set("False")
+Gui.f_CoCode.GsGcCodes.SetColumnProperty(V.Local.sGV, "GSS_CODE", V.Local.sProperty, V.Local.sDefault)
+Gui.f_CoCode.GsGcCodes.SetColumnProperty(V.Local.sGV, "SAP_CODE", V.Local.sProperty, True)
+Gui.f_CoCode.GsGcCodes.SetColumnProperty(V.Local.sGV, "ORG_CODE", V.Local.sProperty, True)
+Gui.f_CoCode.GsGcCodes.SetColumnProperty(V.Local.sGV, "SALES_ORG", V.Local.sProperty, True)
+Gui.f_CoCode.GsGcCodes.SetColumnProperty(V.Local.sGV, "TEC_PLANT", V.Local.sProperty, True)
+
+V.Local.sProperty.Set("ReadOnly")
+V.Local.sDefault.Set("True")
+Gui.f_CoCode.GsGcCodes.SetColumnProperty(V.Local.sGV, "GSS_CODE", V.Local.sProperty, V.Local.sDefault)
+Gui.f_CoCode.GsGcCodes.SetColumnProperty(V.Local.sGV, "SAP_CODE", V.Local.sProperty, False)
+Gui.f_CoCode.GsGcCodes.SetColumnProperty(V.Local.sGV, "ORG_CODE", V.Local.sProperty, False)
+Gui.f_CoCode.GsGcCodes.SetColumnProperty(V.Local.sGV, "SALES_ORG", V.Local.sProperty, False)
+Gui.f_CoCode.GsGcCodes.SetColumnProperty(V.Local.sGV, "TEC_PLANT", V.Local.sProperty, False)
+
+V.Local.sProperty.Set("HeaderFontBold")
+V.Local.sDefault.Set("True")
+Gui.f_CoCode.GsGcCodes.SetColumnProperty(V.Local.sGV, "GSS_CODE", V.Local.sProperty, V.Local.sDefault)
+Gui.f_CoCode.GsGcCodes.SetColumnProperty(V.Local.sGV, "SAP_CODE", V.Local.sProperty, V.Local.sDefault)
+Gui.f_CoCode.GsGcCodes.SetColumnProperty(V.Local.sGV, "ORG_CODE", V.Local.sProperty, V.Local.sDefault)
+Gui.f_CoCode.GsGcCodes.SetColumnProperty(V.Local.sGV, "SALES_ORG", V.Local.sProperty, V.Local.sDefault)
+Gui.f_CoCode.GsGcCodes.SetColumnProperty(V.Local.sGV, "TEC_PLANT", V.Local.sProperty, V.Local.sDefault)
+
+V.Local.sProperty.Set("HeaderHAlignment")
+V.Local.sDefault.Set("Center")
+Gui.f_CoCode.GsGcCodes.SetColumnProperty(V.Local.sGV, "GSS_CODE", V.Local.sProperty, V.Local.sDefault)
+Gui.f_CoCode.GsGcCodes.SetColumnProperty(V.Local.sGV, "SAP_CODE", V.Local.sProperty, V.Local.sDefault)
+Gui.f_CoCode.GsGcCodes.SetColumnProperty(V.Local.sGV, "ORG_CODE", V.Local.sProperty, V.Local.sDefault)
+Gui.f_CoCode.GsGcCodes.SetColumnProperty(V.Local.sGV, "SALES_ORG", V.Local.sProperty, V.Local.sDefault)
+Gui.f_CoCode.GsGcCodes.SetColumnProperty(V.Local.sGV, "TEC_PLANT", V.Local.sProperty, V.Local.sDefault)
+
+Gui.f_CoCode.GsGcCodes.MainView("gvCodes")
+
+F.Data.DataTable.AddRowChangedEventHandler("dtCoCodes", "RowRemoved")
+'show the form
+Gui.f_CoCode..Show
+
+'close the connection
+F.ODBC.Connection!con2.Close
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.Control.CallSub(ErrorMessage, "ErrorNumber", V.Ambient.ErrorNumber, "ErrorDescription", V.Ambient.ErrorDescription, "Subroutine", V.Ambient.CurrentSubroutine, "UNATTENDED", V.Global.bUnattended, "Project", "6625", "ProjectTitle", "TCS Settings", "Callback", "f_Main_UnLoad")
+F.Intrinsic.Control.EndTry
+Program.Sub.cmdCoCode_Click.End
+
+Program.Sub.RowRemoved.Start
+F.Intrinsic.Control.Try
+V.Local.iCnt.Declare(Long)
+V.Local.sSQL.Declare(String)
+V.Local.sGSSCode.Declare(String)
+V.Local.sSAPCode.Declare(String)
+V.Local.sOrgCode.Declare(String)
+V.Local.sSalesOrg.Declare(String)
+V.Local.sPlant.Declare(String)
+
+F.Intrinsic.Control.BlockEvents
+
+'open local company connection
+F.ODBC.Connection!con2.OpenConnection(V.Ambient.PDSN, V.Ambient.PUser, V.Ambient.PPass)
+
+F.Intrinsic.Control.If(V.Args.RowState,=,8)
+	F.Intrinsic.Control.If(V.DataView.dtCoCodes!dvDeleted.Exists)
+		F.Data.DataView.Close("dtCoCodes", "dvDeleted")
+	F.Intrinsic.Control.EndIf
+	
+	F.Data.DataView.Create("dtCoCodes", "dvDeleted", 8)
+	
+	F.Intrinsic.Control.For(V.Local.iCnt, 0, V.DataView.dtCoCodes!dvDeleted.RowCount--,1)
+		V.Local.sGSSCode.Set(V.DataView.dtCoCodes!dvDeleted(V.Local.iCnt).GSS_CODE!FieldValTrim)
+		V.Local.sSAPCode.Set(V.DataView.dtCoCodes!dvDeleted(V.Local.iCnt).SAP_CODE!FieldValTrim)
+		V.Local.sOrgCode.Set(V.DataView.dtCoCodes!dvDeleted(V.Local.iCnt).ORG_CODE!FieldValTrim)
+		V.Local.sSalesOrg.Set(V.DataView.dtCoCodes!dvDeleted(V.Local.iCnt).SALES_ORG!FieldValTrim)
+		V.Local.sPlant.Set(V.DataView.dtCoCodes!dvDeleted(V.Local.iCnt).TEC_PLANT!FieldValTrim)
+		
+		F.Intrinsic.String.Build("DELETE FROM GCG_6625_CCODE_MAINT WHERE GSS_CODE = '{0}' AND SAP_CODE = '{1}' AND ORG_CODE = '{2}' AND SALES_ORG = '{3}' AND TEC_PLANT = '{4}'", V.Local.sGSSCode.Trim, V.Local.sSAPCode.Trim, V.Local.sOrgCode.Trim, V.Local.sSalesOrg.Trim, V.Local.sPlant.Trim, V.Local.sSQL)
+		F.ODBC.Connection!con2.Execute(V.Local.sSQL)
+		F.Data.DataTable.AcceptChanges("dtCoCodes")
+	F.Intrinsic.Control.Next(V.Local.iCnt)
+F.Intrinsic.Control.EndIf
+
+F.Intrinsic.Control.UnBlockEvents
+
+F.ODBC.Connection!con2.Close
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.Control.CallSub(ErrorMessage, "ErrorNumber", V.Ambient.ErrorNumber, "ErrorDescription", V.Ambient.ErrorDescription, "Subroutine", V.Ambient.CurrentSubroutine, "UNATTENDED", V.Global.bUnattended, "Project", "6625", "ProjectTitle", "TCS Settings", "Callback", "f_Main_UnLoad")
+F.Intrinsic.Control.EndTry
+Program.Sub.RowRemoved.End
+
+Program.Sub.cmdAdd_Click.Start
+F.Intrinsic.Control.Try
+V.Local.sGSSCode.Declare(String)
+V.Local.sSAPCode.Declare(String)
+V.Local.sOrgCode.Declare(String)
+V.Local.sSalesOrg.Declare(String)
+v.Local.sPlant.Declare(String)
+
+'check to see that both text boxes have data
+F.Intrinsic.Control.If(V.Screen.f_CoCode!txtGSS.Text,<>,"")
+	F.Intrinsic.Control.If(V.Screen.f_CoCode!txtSAP.Text,<>,"")
+		V.Local.sGSSCode.Set(V.Screen.f_CoCode!txtGSS.Text)
+		V.Local.sSAPCode.Set(V.Screen.f_CoCode!txtSAP.Text)
+		V.Local.sOrgCode.Set(V.Screen.f_CoCode!txtOrgCode.Text)
+		V.Local.sSalesOrg.Set(V.Screen.f_CoCode!txtSalesOrg.Text)
+		v.Local.sPlant.Set(V.Screen.f_CoCode!txtPlant.Text)
+		'add row to datatable
+		F.Data.DataTable.AddRow("dtCoCodes", "GSS_CODE", V.Local.sGSSCode.Trim, "SAP_CODE", V.Local.sSAPCode.Trim, "ORG_CODE", V.Local.sOrgCode.Trim, "SALES_ORG", V.Local.sSalesOrg.Trim, "TEC_PLANT", V.Local.sPlant.Trim)
+		Gui.f_CoCode.txtGSS.Text("")
+		Gui.f_CoCode.txtSAP.Text("")
+		Gui.f_CoCode.txtOrgCode.Text("")
+		Gui.f_CoCode.txtSalesOrg.Text("")
+		Gui.f_CoCode.txtPlant.Text("")
+		F.Intrinsic.Control.ExitSub
+	F.Intrinsic.Control.Else
+		F.Intrinsic.UI.Msgbox("You must enter the corresponding SAP Code before you can continue.", Required Field)
+		F.Intrinsic.Control.ExitSub
+	F.Intrinsic.Control.EndIf
+F.Intrinsic.Control.Else
+	F.Intrinsic.UI.Msgbox("You must enter the GSS Code before you can continue.", Required Field)
+		F.Intrinsic.Control.ExitSub
+F.Intrinsic.Control.EndIf
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.Control.CallSub(ErrorMessage, "ErrorNumber", V.Ambient.ErrorNumber, "ErrorDescription", V.Ambient.ErrorDescription, "Subroutine", V.Ambient.CurrentSubroutine, "UNATTENDED", V.Global.bUnattended, "Project", "6625", "ProjectTitle", "TCS Settings", "Callback", "f_Main_UnLoad")
+F.Intrinsic.Control.EndTry
+Program.Sub.cmdAdd_Click.End
+
+Program.Sub.cmdUpdate_Click.Start
+F.Intrinsic.Control.Try
+'open local connection
+F.ODBC.Connection!con2.OpenConnection(V.Ambient.PDSN, V.Ambient.PUser, V.Ambient.PPass)
+
+'save the datatable to the custom table GCG_6625_CCODE_MAINT
+F.Data.DataTable.SaveToDB("dtCoCodes", "con2", "GCG_6625_CCODE_MAINT", "GSS_CODE", 256)
+
+F.Intrinsic.UI.Msgbox("Update Successful!")
+'close the connection
+F.ODBC.Connection!con2.Close
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.Control.CallSub(ErrorMessage, "ErrorNumber", V.Ambient.ErrorNumber, "ErrorDescription", V.Ambient.ErrorDescription, "Subroutine", V.Ambient.CurrentSubroutine, "UNATTENDED", V.Global.bUnattended, "Project", "6625", "ProjectTitle", "TCS Settings", "Callback", "f_Main_UnLoad")
+F.Intrinsic.Control.EndTry
+Program.Sub.cmdUpdate_Click.End
+
+Program.Sub.cmdCoCodeCancel_Click.Start
+F.Intrinsic.Control.Try
+
+
+Gui.f_CoCode..Visible(False)
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.Control.CallSub(ErrorMessage, "ErrorNumber", V.Ambient.ErrorNumber, "ErrorDescription", V.Ambient.ErrorDescription, "Subroutine", V.Ambient.CurrentSubroutine, "UNATTENDED", V.Global.bUnattended, "Project", "6625", "ProjectTitle", "TCS Settings", "Callback", "f_Main_UnLoad")
+F.Intrinsic.Control.EndTry
+Program.Sub.cmdCoCodeCancel_Click.End
+
+Program.Sub.f_Main_UnLoad.Start
+F.Intrinsic.Control.Try
+
+
+'close the common connection
+F.ODBC.Connection!con.Close
+
+'end the program
+F.Intrinsic.Control.End
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.Control.CallSub(ErrorMessage, "ErrorNumber", V.Ambient.ErrorNumber, "ErrorDescription", V.Ambient.ErrorDescription, "Subroutine", V.Ambient.CurrentSubroutine, "UNATTENDED", V.Global.bUnattended, "Project", "6625", "ProjectTitle", "TCS Settings", "Callback", "f_Main_UnLoad")
+F.Intrinsic.Control.EndTry
+Program.Sub.f_Main_UnLoad.End
+
+Program.Sub.ErrorMessage.Start
+'basic error message for replacing catch block
+'this is really just for when printing the message and ending program
+'pass error number, error description, current subroutine
+'optional callback sub, this will be called before ending
+'optional unattended parameters, those subs may not exist if not using them but won't be called
+F.Intrinsic.Control.Try
+
+V.Local.iError.Declare(Long)
+V.Local.sErrorDescription.Declare(String)
+V.Local.sSubroutine.Declare(String)
+V.Local.sError.Declare(String)
+V.Local.bExists.Declare(Boolean)
+V.Local.sCallback.Declare(String)
+
+V.Local.iError.Set(V.Args.ErrorNumber)
+V.Local.sErrorDescription.Set(V.Args.ErrorDescription)
+V.Local.sSubroutine.Set(V.Args.Subroutine)
+
+'make sure we aren't in an error loop
+F.Intrinsic.Control.If(V.Global.bError)
+	F.Intrinsic.Control.End
+
+F.Intrinsic.Control.EndIf
+V.Global.bError.Set(True)
+
+F.Intrinsic.String.Build("Project: {0}{1}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}{1}{1}GAB Version: {5}", V.Caller.ScriptFile, V.Ambient.Newline, V.Local.sSubroutine, V.Local.iError, V.Local.sErrorDescription, V.Ambient.GABVersion, V.Local.sError)
+
+F.Intrinsic.Variable.ArgExists("UNATTENDED", V.Local.bExists)
+F.Intrinsic.Control.If(V.Local.bExists)
+	F.Intrinsic.Control.If(V.Args.UNATTENDED)
+		F.Intrinsic.Control.CallSub(UnattendedErrorMessage, "MESSAGE", V.Local.sError, "PROJECT", V.Args.PROJECT, "PROJECTTITLE", V.Args.PROJECTTITLE)
+	F.Intrinsic.Control.Else
+		F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.EndIf
+F.Intrinsic.Control.Else
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+F.Intrinsic.Control.EndIf
+
+F.Intrinsic.Variable.ArgExists("Callback", V.Local.bExists)
+F.Intrinsic.Control.If(V.Local.bExists)
+	V.Local.sCallback.Set(V.Args.Callback.Trim)
+	F.Intrinsic.Control.CallSub(V.Local.sCallback)
+F.Intrinsic.Control.EndIf
+
+F.Intrinsic.Control.End
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.String.Build("Project: {0}{1}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}{1}{1}GAB Version: {5}",V.Caller.ScriptFile,V.Ambient.Newline,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Ambient.GABVersion,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.End
+
+F.Intrinsic.Control.EndTry
+Program.Sub.ErrorMessage.End
+
+Program.Sub.Comments.Start
+${$5$}$20.1.8578.15441$}$1
+${$6$}$acollins$}$20230725171531836$}$h98hERc2yV72q0GaUGlwSaoK/aefTdVk4pnMIo1oXFYDzLv9nZtWQEK9r8HJsKPG4yi5rFjYQ3P4nBZ3W0T/sQ==
+Program.Sub.Comments.End
