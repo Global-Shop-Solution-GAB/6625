@@ -1,0 +1,362 @@
+﻿Program.Sub.Preflight.Start
+V.Global.bError.Declare(Boolean)
+V.Global.bUnattended.Declare(Boolean)
+V.Global.sExit.Declare(String,"N")
+Program.Sub.Preflight.End
+
+Program.Sub.Main.Start
+F.Intrinsic.Control.Try
+V.Local.sVendor.Declare(String)
+Function.Intrinsic.UI.UsePixels ' Allows you to use Pixels instead of Twips throughout
+
+'open the connection
+F.ODBC.Connection!con.OpenConnection(V.Ambient.PDSN, V.Ambient.PUser, V.Ambient.PPass)
+
+F.Intrinsic.Control.SelectCase(V.Caller.Hook)
+F.Intrinsic.Control.Case(16850)
+'PO Header Populate Hook
+	V.Local.sVendor.Set(V.Passed.000011)
+	'callsub to set up screen elements
+	F.Intrinsic.Control.CallSub(ScreenSetup)
+	F.Intrinsic.Control.If(V.Local.sVendor.Trim,<>,"")
+		'callsub to load the statuses for the vendor
+		F.Intrinsic.Control.CallSub(LoadStatus)
+	F.Intrinsic.Control.EndIf
+	'callsub to end the script
+	F.Intrinsic.Control.CallSub(f_Main_UnLoad)
+F.Intrinsic.Control.Case(16855)
+'PO Header Change Hook
+	'callsub to load the statuses for the vendor
+	F.Intrinsic.Control.CallSub(LoadStatus)
+	'callsub to end the script
+	F.Intrinsic.Control.CallSub(f_Main_UnLoad)
+F.Intrinsic.Control.Case(16860)
+'PO Header Exit Pre Hook
+	V.Global.sExit.Set("Y")
+	F.Intrinsic.Control.CallSub(LoadStatus)
+	'callsub to end the script
+	F.Intrinsic.Control.CallSub(f_Main_UnLoad)
+F.Intrinsic.Control.Case(16870)
+'PO Header Pre Save Hook
+'Override Supported
+	F.Intrinsic.Control.CallSub(LoadStatus)
+	'callsub to end the script
+	F.Intrinsic.Control.CallSub(f_Main_UnLoad)
+F.Intrinsic.Control.CaseElse
+	F.Intrinsic.Control.CallSub(f_Main_UnLoad)
+F.Intrinsic.Control.EndSelect
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.Control.CallSub(ErrorMessage, "ErrorNumber", V.Ambient.ErrorNumber, "ErrorDescription", V.Ambient.ErrorDescription, "Subroutine", V.Ambient.CurrentSubroutine, "UNATTENDED", V.Global.bUnattended, "Project", "6625", "ProjectTitle", "TCS PO Process", "Callback", "f_Main_UnLoad")
+F.Intrinsic.Control.EndTry
+Program.Sub.Main.End
+
+Program.Sub.ScreenSetup.Start
+F.Intrinsic.Control.Try
+
+'GAB-LBL-1
+'BILL-TO ADDR TRADE STATUS
+'set horizontal position
+'F.Intrinsic.Variable.SetProperty("GAB-LBL-1", "PL",450)
+F.Intrinsic.Variable.SetProperty("GAB-LBL-1", "PL",290)
+'set verticial position
+F.Intrinsic.Variable.SetProperty("GAB-LBL-1", "PT", 20)
+'set width
+F.Intrinsic.Variable.SetProperty("GAB-LBL-1", "PW", 150)
+'screen caller properties
+F.Intrinsic.UI.ChangeCallerProperty(V.Passed.GAB-LBL-1, "HIDE",0)
+F.Intrinsic.UI.ChangeCallerProperty(V.Passed.GAB-LBL-1, "LOCK",0)
+'set label text
+V.Passed.GAB-LBL-1.Set("Buy From Addr Trade Status")
+
+'GAB-TEXT-1
+'set horizontal position
+F.Intrinsic.Variable.SetProperty("GAB-TEXT-1", "PL",290)
+'set verticial position
+F.Intrinsic.Variable.SetProperty("GAB-TEXT-1", "PT", 40)
+'set width
+'F.Intrinsic.Variable.SetProperty("GAB-TEXT-1", "PW", 2000)
+'screen caller properties
+F.Intrinsic.UI.ChangeCallerProperty(V.Passed.GAB-TEXT-1, "HIDE",0)
+F.Intrinsic.UI.ChangeCallerProperty(V.Passed.GAB-TEXT-1, "LOCK",1)
+
+'GAB-LBL-2
+'SHIP-TO ADDR TRADE STATUS
+'set horizontal position
+'F.Intrinsic.Variable.SetProperty("GAB-LBL-2", "PL",290)
+'set verticial position
+'F.Intrinsic.Variable.SetProperty("GAB-LBL-2", "PT", 44)
+'set width
+'F.Intrinsic.Variable.SetProperty("GAB-LBL-2", "PW", 150)
+'screen caller properties
+'F.Intrinsic.UI.ChangeCallerProperty(V.Passed.GAB-LBL-2, "HIDE",0)
+'F.Intrinsic.UI.ChangeCallerProperty(V.Passed.GAB-LBL-2, "LOCK",0)
+'set label text
+'V.Passed.GAB-LBL-2.Set("Pay To Addr Trade Status")
+
+'GAB-TEXT-2
+'set horizontal position
+'F.Intrinsic.Variable.SetProperty("GAB-TEXT-2", "PL",290)
+'set verticial position
+'F.Intrinsic.Variable.SetProperty("GAB-TEXT-2", "PT", 60)
+'set width
+'F.Intrinsic.Variable.SetProperty("GAB-TEXT-1", "PW", 2000)
+'screen caller properties
+'F.Intrinsic.UI.ChangeCallerProperty(V.Passed.GAB-TEXT-2, "HIDE",0)
+'F.Intrinsic.UI.ChangeCallerProperty(V.Passed.GAB-TEXT-2, "LOCK",1)
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.Control.CallSub(ErrorMessage, "ErrorNumber", V.Ambient.ErrorNumber, "ErrorDescription", V.Ambient.ErrorDescription, "Subroutine", V.Ambient.CurrentSubroutine, "UNATTENDED", V.Global.bUnattended, "Project", "6625", "ProjectTitle", "TCS PO Process", "Callback", "f_Main_UnLoad")
+F.Intrinsic.Control.EndTry
+Program.Sub.ScreenSetup.End
+
+Program.Sub.LoadStatus.Start
+F.Intrinsic.Control.Try
+V.Local.sVendor.Declare(String)
+V.Local.sStatus.Declare(String)
+V.Local.sVendorShipTo.Declare(String)
+V.Local.sSQL.Declare(String)
+V.Local.sRet.Declare(String)
+V.Local.sBuyFromStatus.Declare(String)
+V.Local.sPayToStatus.Declare(String)
+
+'set passed variable
+V.Local.sVendor.Set(V.Passed.000011)
+
+F.Intrinsic.String.Build("SELECT PARTNER_ID, DECISION FROM GCG_6625_PARTNER WHERE CO_CODE = '{0}' AND PARTNER_TYPE = 'V' AND PARTNER_ID = '{1}'", V.Caller.CompanyCode, V.Local.sVendor.Trim, V.Local.sSQL)
+F.ODBC.Connection!con.ExecuteAndReturn(V.Local.sSQL, V.Local.sRet)
+F.Intrinsic.Control.If(V.Local.sRet.Trim,<>,"")
+	F.Intrinsic.String.Split(V.Local.sRet,"*!*", V.Local.sRet)
+	V.Local.sStatus.Set(V.Local.sRet(1).Trim)
+	V.Local.sBuyFromStatus.Set(V.Local.sStatus.Trim)
+	F.Intrinsic.Control.SelectCase(V.Local.sStatus.Trim)
+		F.Intrinsic.Control.Case("N")
+			V.Passed.GAB-TEXT-1.Set("No Match, Approved")
+		F.Intrinsic.Control.Case("P")
+			V.Passed.GAB-TEXT-1.Set("Potential Match")
+		F.Intrinsic.Control.Case("M")
+			V.Passed.GAB-TEXT-1.Set("Match")
+		F.Intrinsic.Control.Case("X")
+			V.Passed.GAB-TEXT-1.Set("Awaiting TCS Status")
+	F.Intrinsic.Control.EndSelect
+F.Intrinsic.Control.Else
+	V.Local.sBuyFromStatus.Set("")
+	V.Passed.GAB-TEXT-1.Set("Unscreened Vendor")
+F.Intrinsic.Control.EndIf
+
+'F.Intrinsic.String.Build("{0}_000", V.Local.sVendor.Trim, V.Local.sVendorShipTo)
+'F.Intrinsic.String.Build("SELECT PARTNER_ID, DECISION FROM GCG_6625_PARTNER WHERE CO_CODE = '{0}' AND PARTNER_TYPE = 'V' AND PARTNER_ID = '{1}'", V.Caller.CompanyCode, V.Local.sVendorShipTo.Trim, V.Local.sSQL)
+'F.ODBC.Connection!con.ExecuteAndReturn(V.Local.sSQL, V.Local.sRet)
+'F.Intrinsic.Control.If(V.Local.sRet.Trim,<>,"")
+'	F.Intrinsic.String.Split(V.Local.sRet,"*!*", V.Local.sRet)
+'	V.Local.sStatus.Set(V.Local.sRet(1).Trim)
+'	V.Local.sPayToStatus.Set(V.Local.sStatus.Trim)
+'	F.Intrinsic.Control.SelectCase(V.Local.sStatus.Trim)
+'		F.Intrinsic.Control.Case("N")
+'			V.Passed.GAB-TEXT-2.Set("No Match, Approved")
+'		F.Intrinsic.Control.Case("P")
+'			V.Passed.GAB-TEXT-2.Set("Potential Match")
+'		F.Intrinsic.Control.Case("M")
+'			V.Passed.GAB-TEXT-2.Set("Match")
+'		F.Intrinsic.Control.Case("")
+'			V.Passed.GAB-TEXT-2.Set("Awaiting TCS Status")
+'	F.Intrinsic.Control.EndSelect
+'F.Intrinsic.Control.EndIf
+
+'check values
+'if any of the statuses are blocked, diasble the save, print, email and lines button and set message box that the vendor is blocked and the order cannot be entered
+F.Intrinsic.Control.If(V.Local.sBuyFromStatus.Trim,=,"P", "OR", V.Local.sBuyFromStatus.Trim,=,"M")
+	'Print Button
+	'V.Passed.000064
+	F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000064, "LOCK",0)
+	F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000064, "LOCK",1)
+	'Save Button
+	'V.Passed.000002
+	F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000002, "LOCK",0)
+	F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000002, "LOCK",1)
+	'Email Button
+	'V.Passed.000047
+	F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000047, "LOCK",0)
+	F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000047, "LOCK",1)
+	'Line Button
+	'V.Passed.000054
+	F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000054, "LOCK",0)
+	F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000054, "LOCK",1)
+	F.Intrinsic.Control.If(V.Global.sExit.Trim,=,"N")
+		V.Passed.777777.Set(1)
+		'show message box that tells the user that the vendor is blocked by TCS
+		F.Intrinsic.UI.Msgbox("The Vendor has been blocked by Trade Automation. The Purchase Order cannot be created.", "Vendor Blocked")
+		F.Intrinsic.Task.TerminatePID(V.Caller.PID)
+		F.Intrinsic.Control.ExitSub
+	
+	F.Intrinsic.Control.Else
+		V.Passed.777777.Set(0)
+	F.Intrinsic.Control.EndIf
+F.Intrinsic.Control.ElseIf(V.Local.sBuyFromStatus.Trim,=,"X")
+	'Print Button
+	'V.Passed.000064
+	F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000064, "LOCK",0)
+	F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000064, "LOCK",1)
+	'Save Button
+	'V.Passed.000002
+	F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000002, "LOCK",0)
+	F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000002, "LOCK",1)
+	'Email Button
+	'V.Passed.000047
+	F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000047, "LOCK",0)
+	F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000047, "LOCK",1)
+	'Line Button
+	'V.Passed.000054
+	F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000054, "LOCK",0)
+	F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000054, "LOCK",1)
+	F.Intrinsic.Control.If(V.Global.sExit.Trim,=,"N")
+		V.Passed.777777.Set(1)
+		'show message box that tells the user that the vendor is blocked by TCS
+		F.Intrinsic.UI.Msgbox("The Vendor is awaiting screening. The Purchase Order cannot be created.", "Global Trade Block")
+		F.Intrinsic.Task.TerminatePID(V.Caller.PID)
+		F.Intrinsic.Control.ExitSub
+	
+	F.Intrinsic.Control.Else
+		V.Passed.777777.Set(0)
+	F.Intrinsic.Control.EndIf
+F.Intrinsic.Control.ElseIf(V.Local.sBuyFromStatus.Trim,=,"")
+	'Print Button
+	'V.Passed.000064
+	F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000064, "LOCK",0)
+	F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000064, "LOCK",1)
+	'Save Button
+	'V.Passed.000002
+	F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000002, "LOCK",0)
+	F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000002, "LOCK",1)
+	'Email Button
+	'V.Passed.000047
+	F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000047, "LOCK",0)
+	F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000047, "LOCK",1)
+	'Line Button
+	'V.Passed.000054
+	F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000054, "LOCK",0)
+	F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000054, "LOCK",1)
+	F.Intrinsic.Control.If(V.Global.sExit.Trim,=,"N")
+		V.Passed.777777.Set(1)
+		'show message box that tells the user that the vendor is blocked by TCS
+		F.Intrinsic.UI.Msgbox("The Vendor has not been sent to TA for screening. The Purchase Order cannot be created.", "Global Trade Block")
+		F.Intrinsic.Task.TerminatePID(V.Caller.PID)
+		F.Intrinsic.Control.ExitSub
+	
+	F.Intrinsic.Control.Else
+		V.Passed.777777.Set(0)
+	F.Intrinsic.Control.EndIf
+F.Intrinsic.Control.ElseIf(V.Local.sBuyFromStatus.Trim,=,"N")
+'F.Intrinsic.Control.ElseIf(V.Local.sBuyFromStatus.Trim,=,"N", "OR", V.Local.sBuyFromStatus.Trim,=,"")
+	'check the status for the pay to address 
+'	F.Intrinsic.Control.If(V.Local.sPayToStatus.Trim,=,"P", "OR", V.Local.sPayToStatus.Trim,=,"M")
+'		'Print Button
+'		'V.Passed.000064
+'		F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000064, "LOCK",0)
+'		F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000064, "LOCK",1)
+'		'Save Button
+'		'V.Passed.000002
+'		F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000002, "LOCK",0)
+'		F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000002, "LOCK",1)
+'		'Email Button
+'		'V.Passed.000047
+'		F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000047, "LOCK",0)
+'		F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000047, "LOCK",1)
+'		'Line Button
+'		'V.Passed.000054
+'		F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000054, "LOCK",0)
+'		F.Intrinsic.UI.ChangeCallerProperty(V.Passed.000054, "LOCK",1)
+'		F.Intrinsic.Control.If(V.Global.sExit.Trim,=,"N")
+'			V.Passed.777777.Set(1)
+'		
+'			'show message box that tells the user that the vendor is blocked by TCS
+'			F.Intrinsic.UI.Msgbox("The Vendor has been blocked by Trade Automation. The Order cannot be created.", "Vendor Blocked")
+'			F.Intrinsic.Control.ExitSub
+'		F.Intrinsic.Control.Else
+			V.Passed.777777.Set(0)
+'		F.Intrinsic.Control.EndIf
+'	F.Intrinsic.Control.EndIf
+F.Intrinsic.Control.EndIf
+
+
+F.Intrinsic.Control.ExitSub
+F.Intrinsic.Control.Catch
+	F.Intrinsic.Control.CallSub(ErrorMessage, "ErrorNumber", V.Ambient.ErrorNumber, "ErrorDescription", V.Ambient.ErrorDescription, "Subroutine", V.Ambient.CurrentSubroutine, "UNATTENDED", V.Global.bUnattended, "Project", "6625", "ProjectTitle", "TCS PO Process", "Callback", "f_Main_UnLoad")
+F.Intrinsic.Control.EndTry
+Program.Sub.LoadStatus.End
+
+Program.Sub.f_Main_UnLoad.Start
+F.Intrinsic.Control.Try
+
+'close the connection
+F.ODBC.Connection!con.Close
+
+'end the program
+F.Intrinsic.Control.End
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.Control.CallSub(ErrorMessage, "ErrorNumber", V.Ambient.ErrorNumber, "ErrorDescription", V.Ambient.ErrorDescription, "Subroutine", V.Ambient.CurrentSubroutine, "UNATTENDED", V.Global.bUnattended, "Project", "6625", "ProjectTitle", "TCS PO Process", "Callback", "f_Main_UnLoad")
+F.Intrinsic.Control.EndTry
+Program.Sub.f_Main_UnLoad.End
+
+Program.Sub.ErrorMessage.Start
+'basic error message for replacing catch block
+'this is really just for when printing the message and ending program
+'pass error number, error description, current subroutine
+'optional callback sub, this will be called before ending
+'optional unattended parameters, those subs may not exist if not using them but won't be called
+F.Intrinsic.Control.Try
+
+V.Local.iError.Declare(Long)
+V.Local.sErrorDescription.Declare(String)
+V.Local.sSubroutine.Declare(String)
+V.Local.sError.Declare(String)
+V.Local.bExists.Declare(Boolean)
+V.Local.sCallback.Declare(String)
+
+V.Local.iError.Set(V.Args.ErrorNumber)
+V.Local.sErrorDescription.Set(V.Args.ErrorDescription)
+V.Local.sSubroutine.Set(V.Args.Subroutine)
+
+'make sure we aren't in an error loop
+F.Intrinsic.Control.If(V.Global.bError)
+	F.Intrinsic.Control.End
+
+F.Intrinsic.Control.EndIf
+V.Global.bError.Set(True)
+
+F.Intrinsic.String.Build("Project: {0}{1}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}{1}{1}GAB Version: {5}", V.Caller.ScriptFile, V.Ambient.Newline, V.Local.sSubroutine, V.Local.iError, V.Local.sErrorDescription, V.Ambient.GABVersion, V.Local.sError)
+
+F.Intrinsic.Variable.ArgExists("UNATTENDED", V.Local.bExists)
+F.Intrinsic.Control.If(V.Local.bExists)
+	F.Intrinsic.Control.If(V.Args.UNATTENDED)
+		F.Intrinsic.Control.CallSub(UnattendedErrorMessage, "MESSAGE", V.Local.sError, "PROJECT", V.Args.PROJECT, "PROJECTTITLE", V.Args.PROJECTTITLE)
+	F.Intrinsic.Control.Else
+		F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.EndIf
+F.Intrinsic.Control.Else
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+F.Intrinsic.Control.EndIf
+
+F.Intrinsic.Variable.ArgExists("Callback", V.Local.bExists)
+F.Intrinsic.Control.If(V.Local.bExists)
+	V.Local.sCallback.Set(V.Args.Callback.Trim)
+	F.Intrinsic.Control.CallSub(V.Local.sCallback)
+F.Intrinsic.Control.EndIf
+
+F.Intrinsic.Control.End
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.String.Build("Project: {0}{1}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}{1}{1}GAB Version: {5}",V.Caller.ScriptFile,V.Ambient.Newline,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Ambient.GABVersion,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.End
+
+F.Intrinsic.Control.EndTry
+Program.Sub.ErrorMessage.End
+
+Program.Sub.Comments.Start
+${$5$}$20.1.8693.27812$}$1
+${$6$}$acollins$}$20231115195825564$}$h98hERc2yV72q0GaUGlwSaoK/aefTdVkjusxYiJF5MCqzvwS9jmIwUWkozPdJBZ6c7GNcxNkuOU3NdZnbaKoVw==
+Program.Sub.Comments.End
